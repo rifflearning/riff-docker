@@ -1,0 +1,23 @@
+---
+version: '3'
+services:
+  rhythm-server:
+    build: rhythm-server
+    ports:
+      - '3000:3000'
+    volumes:
+      - ${RHYTHM_SERVER_PATH-../rhythm-server}:/app
+    depends_on:
+      - mongo-server
+  rhythm-rtc:
+    build: rhythm-rtc
+    ports:
+      - '3001:3001'
+    volumes:
+      - ${RHYTHM_RTC_PATH-../rhythm-rtc}:/app
+    depends_on:
+      - rhythm-server
+  mongo-server:
+    image: mongo:latest
+    volumes:
+      - ${RHYTHM_DB_PATH-./mongodata}:/data/db

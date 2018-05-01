@@ -1,0 +1,6 @@
+# This directory is bound to the mongodb container for its data storage.
+# That data should never be committed.
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore
