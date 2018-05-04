@@ -4,6 +4,10 @@ LABEL Description="This image runs the rhythm-server which collects utterance in
 # Modified bashrc which defines some aliases and an interactive prompt (for both root & node users)
 COPY bashrc /root/.bashrc
 
+# set the root password to password (I don't care that it's simple it's only for development
+# this shouldn't exist in a production container
+RUN echo "root:password" | chpasswd
+
 # node images have a node user w/ UID 1000 (works well for me for now, but more thought may be needed later) -mjl
 USER node
 COPY bashrc /home/node/.bashrc
