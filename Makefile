@@ -32,6 +32,6 @@ dev-rtc : start-dev
 
 start-dev :
 	$(call ndef,CONTAINER-NAME)
-	-docker-compose run $(CONTAINER-NAME) bash
+	-docker-compose run --service-ports $(CONTAINER-NAME) bash
 	-docker-compose rm --force
 	-docker-compose stop
