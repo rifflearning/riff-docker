@@ -14,9 +14,10 @@ to be in peer directories of this repository's working directory (although you m
 variables to override this).
 
 ```
-Prj-rhythm-docker
-   -rhythm-server
-   -rhythm-rtc
+.
+├── rhythm-docker
+├── rhythm-rtc
+└── rhythm-server
 ```
 
 ### rhythm-server configuration
