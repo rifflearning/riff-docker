@@ -8,6 +8,9 @@ COPY bashrc /root/.bashrc
 # this shouldn't exist in a production container
 RUN echo "root:password" | chpasswd
 
+# The node:8 npm v 5.6 has some issues, update it to 6.0
+RUN npm install -g npm
+
 # node images have a node user w/ UID 1000 (works well for me for now, but more thought may be needed later) -mjl
 USER node
 COPY bashrc /home/node/.bashrc
