@@ -13,6 +13,8 @@ help :
 	@echo ""                                                                     ; \
 	echo "Useful targets in this rhythm-docker Makefile:"                        ; \
 	echo "- up         : run docker-compose up"                                  ; \
+	echo "- down       : run docker-compose down"                                ; \
+	echo "- stop       : run docker-compose stop"                                ; \
 	echo "- rebuild    : rebuild the images pulling the latest dependent images" ; \
 	echo "- dev-server : start a dev container for the rhythm-server"            ; \
 	echo "- dev-rtc    : start a dev container for the rhythm-rtc"               ; \
@@ -20,6 +22,12 @@ help :
 
 up :
 	docker-compose up
+
+down :
+	docker-compose down
+
+stop :
+	docker-compose stop
 
 rebuild :
 	docker-compose build --pull
