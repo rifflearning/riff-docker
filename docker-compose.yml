@@ -23,6 +23,8 @@ services:
       - '80:80'
     volumes:
         - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
+    depends_on:
+      - riff-rtc
   mongo-server:
     image: mongo:latest
     volumes:
