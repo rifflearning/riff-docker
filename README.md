@@ -49,7 +49,7 @@ END_MEETING_AFTER_MINUTES=2
 `.env` file:
 ```
 REACT_APP_SERVER_TOKEN=my-secret
-REACT_APP_SERVER_URL=localhost:3000
+REACT_APP_SERVER_URL=
 REACT_APP_SERVER_EMAIL=default-user-email
 REACT_APP_SERVER_PASSWORD=default-user-password
 REACT_APP_TRACK_FACE=false
@@ -68,8 +68,20 @@ resource that must be provided.
 
 The `REDIS_URL` is only needed when the `ROOM_MAP_URL` value is not `nope` for LTI launches.
 
+The `REACT_APP_SERVER_URL=localhost:3000` value points to the URL for the videodata server (`riff-server`).
+The `web-server` container (nginx) is no configured to reverse proxy at the http port (80) both
+`riff-rtc` and `riff-server`, so that property should now be blank.
 
 ## Usage
+
+### Running
+
+run `make up`
+Then access `http://localhost/chat` optionally appending `?user=<name>&email=<email>&room=<roomName>`
+
+Use &lt;ctrl>-c to stop the containers.
+
+### Makefile
 
 The `Makefile` provides useful targets for doing development on the `riff-server` and `riff-rtc`
 repositories as well as other actions.
@@ -84,3 +96,4 @@ repositories as well as other actions.
 * `make down`       : docker-compose down
 * `make stop`       : docker-compose stop
 * `make rebuild`    : rebuild images pulling latest dependent FROM images
+
