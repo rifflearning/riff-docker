@@ -7,7 +7,7 @@
 ndef = $(if $(value $(1)),,$(error $(1) not set))
 
 .DELETE_ON_ERROR :
-.PHONY : help up rebuild dev-server dev-rtc start-dev
+.PHONY : help up down stop rebuild dev-server dev-rtc start-dev image-web-server
 
 help :
 	@echo ""                                                                     ; \
@@ -18,6 +18,7 @@ help :
 	echo "- rebuild    : rebuild the images pulling the latest dependent images" ; \
 	echo "- dev-server : start a dev container for the riff-server"              ; \
 	echo "- dev-rtc    : start a dev container for the riff-rtc"                 ; \
+	echo "- image-web-server : rebuild the web-server image"                     ; \
 	echo ""
 
 up :
@@ -29,10 +30,13 @@ down :
 stop :
 	docker-compose stop
 
-rebuild :
-	docker-compose build --pull
+logs :
+	docker-compose logs $(CONTAINER-NAME)
 
-dev-server :  CONTAINER-NAME = riff-server
+rebuild :
+	docker-compose build --pull $(CONTAINER-NAME)
+
+dev-server : CONTAINER-NAME = riff-server
 dev-server : start-dev
 
 dev-rtc : CONTAINER-NAME = riff-rtc
@@ -43,3 +47,17 @@ start-dev :
 	-docker-compose run --service-ports $(CONTAINER-NAME) bash
 	-docker-compose rm --force
 	-docker-compose stop
+
+image-web-server : CONTAINER-NAME = web-server
+image-web-server : rebuild
+
+logs-web : CONTAINER-NAME = web-server
+logs-web : logs
+
+logs-rtc : CONTAINER-NAME = riff-rtc
+logs-rtc : logs
+
+logs-mongo : CONTAINER-NAME = mongo-server
+logs-mongo : logs
+
+

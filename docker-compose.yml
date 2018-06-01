@@ -25,6 +25,7 @@ services:
         - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
     depends_on:
       - riff-rtc
+      - riff-server
   mongo-server:
     image: mongo:latest
     volumes:
