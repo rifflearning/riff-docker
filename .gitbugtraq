@@ -1,5 +1,5 @@
 [bugtraq]
-	url = https://github.com/mlippert/rhythm-docker/issues/%BUGID%
+	url = https://github.com/rifflearning/riff-docker/issues/%BUGID%
 	logfilterregex = "[Ii]ssues?:?((?:\\s*(?:,|and)?\\s*#\\d+)+)"
 	loglinkregex = "(#\\d+)"
 	logregex = "(\\d+)"

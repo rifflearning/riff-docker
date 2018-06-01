@@ -1,5 +1,5 @@
 FROM node:8
-LABEL Description="This image runs rhythm-rtc which serves the pages to enable video chat w/ the Media Manager"
+LABEL Description="This image runs the riff-server which collects utterance info made by participants in meetings"
 
 # Modified bashrc which defines some aliases and an interactive prompt (for both root & node users)
 COPY bashrc /root/.bashrc
@@ -15,9 +15,9 @@ RUN npm install -g npm
 USER node
 COPY bashrc /home/node/.bashrc
 
-EXPOSE 3001
+EXPOSE 3000
 
-# rhythm-rtc repository working directory must be bound at /app and all dependent packages installed
+# riff-server repository working directory must be bound at /app and all dependent packages installed
 VOLUME /app
 WORKDIR /app
 CMD ["npm", "start"]
