@@ -9,6 +9,7 @@ services:
       - ${RIFF_SERVER_PATH-../riff-server}:/app
     depends_on:
       - mongo-server
+
   riff-rtc:
     build: riff-rtc
     ports:
@@ -17,6 +18,7 @@ services:
       - ${RIFF_RTC_PATH-../riff-rtc}:/app
     depends_on:
       - riff-server
+
   web-server:
     build: web-server
     ports:
@@ -26,7 +28,15 @@ services:
     depends_on:
       - riff-rtc
       - riff-server
+
   mongo-server:
     image: mongo:latest
     volumes:
       - ${RIFF_DB_PATH-./mongodata}:/data/db
+
+  signalmaster:
+    build: https://github.com/andyet/signalmaster.git
+    ports:
+      - "3002:8888"
+    environment:
+      - STUNSERVER_URL=stun:stun.services.mozilla.com
