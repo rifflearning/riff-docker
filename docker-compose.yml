@@ -4,7 +4,7 @@ services:
   riff-server:
     build: riff-server
     ports:
-      - '3000:3000'
+      - '3000'
     volumes:
       - ${RIFF_SERVER_PATH-../riff-server}:/app
     depends_on:
@@ -13,7 +13,7 @@ services:
   riff-rtc:
     build: riff-rtc
     ports:
-      - '3001:3001'
+      - '3001'
     volumes:
       - ${RIFF_RTC_PATH-../riff-rtc}:/app
     depends_on:
@@ -37,6 +37,6 @@ services:
   signalmaster:
     build: https://github.com/andyet/signalmaster.git
     ports:
-      - "3002:8888"
+      - "8888"
     environment:
       - STUNSERVER_URL=stun:stun.services.mozilla.com
