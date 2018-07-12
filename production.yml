@@ -2,7 +2,8 @@
 version: '3'
 services:
   riff-server:
-    build:
+    image: 127.0.0.1:5000/riff-server
+    build: 
       context: ../riff-server
       args:
         - AUTH_ON=true
@@ -25,8 +26,6 @@ services:
         - END_MEETING_AFTER_MINUTES=2
     ports:
       - '3000'
-    volumes:
-      - ${RIFF_SERVER_PATH-../riff-server}:/app
     depends_on:
       - mongo-server
     deploy:
@@ -38,6 +37,7 @@ services:
         condition: on-failure
 
   riff-rtc:
+    image: 127.0.0.1:5000/riff-rtc
     build:
       context: ../riff-rtc
       args:
@@ -51,25 +51,6 @@ services:
         - CONSUMER_SECRET=secret
     ports:
       - '3001'
-    volumes:
-      - ${RIFF_RTC_PATH-../riff-rtc}:/app
-    depends_on:
-      - riff-server
-      - web-server
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-
-  web-server:
-    build: web-server
-    ports:
-      - '80:80'
-    volumes:
-        - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
     depends_on:
       - riff-server
     deploy:
@@ -83,7 +64,7 @@ services:
   mongo-server:
     image: mongo:latest
     volumes:
-      - ${RIFF_DB_PATH-./mongodata}:/data/db
+      - db-data:/data/db
     deploy:
       replicas: 1
       update_config:
@@ -96,6 +77,7 @@ services:
 
   signalmaster:
     build: https://github.com/andyet/signalmaster.git
+    image: 127.0.0.1:5000/signalmaster
     ports:
       - "8888"
     environment:
@@ -118,3 +100,22 @@ services:
     deploy:
       placement:
         constraints: [node.role == manager]
+
+  web-server:
+    image: 127.0.0.1:5000/web-server
+    build: web-server
+    ports:
+      - '80:80'
+    depends_on:
+      - riff-rtc
+      - riff-server
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  db-data:
