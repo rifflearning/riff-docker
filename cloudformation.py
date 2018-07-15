@@ -40,6 +40,7 @@ def create_docker_stack(stack_name, key_name, cluster_size, manager_size, instan
     https://editions-us-east-1.s3.amazonaws.com/aws/stable/Docker.tmpl
 
     with the given stack_name and cluster_size.
+
     """
     create_stack_cmd = """
     aws cloudformation create-stack  \
@@ -66,7 +67,7 @@ def create_docker_stack(stack_name, key_name, cluster_size, manager_size, instan
     while stat == None:
         stat = ps.poll()
     if stat == 0:
-        jsonS,_ = ps.communicate()
+        jsonS, _ = ps.communicate()
         d = json.loads(jsonS.decode('utf8'))
         stack_id = d['StackId']
         _highlight("Created stack.")
@@ -102,6 +103,7 @@ def delete_stack(stack_name):
 @click.argument("stack_name", required=True)
 def get_stack_dns(stack_name):
     """Gets the public DNS of a stack with the name stack_name
+
     """
     client = boto3.client('cloudformation')
     d = client.describe_stacks(StackName=stack_name)
@@ -123,7 +125,7 @@ def get_stack_manager_ip(stack_name):
     asg_client = boto3.client('autoscaling')
     d = asg_client.describe_auto_scaling_groups(AutoScalingGroupNames=[manager_asg])
     manager_instances = d['AutoScalingGroups'][0]['Instances']
-    instance_string = "\n".join(["\t{0}) {1}".format(n, i['InstanceId']) for n,i in enumerate(manager_instances)])
+    instance_string = "\n".join(["\t{0}) {1}".format(n, i['InstanceId']) for n, i in enumerate(manager_instances)])
     _highlight("Instance IDs:\n {}".format(instance_string))
     instance_id = manager_instances[click.prompt('Enter the instance index', type=int)]['InstanceId']
     ec2 = boto3.resource('ec2')
@@ -144,9 +146,9 @@ def ssh_stack_manager(ctx, stack_name, key, user):
     manager_ip = ctx.invoke(get_stack_manager_ip, stack_name=stack_name)
     #manager_ip = ctx.invoke(get_stack_manager_ip, content=ctx.forward(stack_name))
     if (key == ""):
-        cmd = ["tmux", "-c", "ssh {}@{}".format(user,manager_ip)]
+        cmd = ["tmux", "-c", "ssh {}@{}".format(user, manager_ip)]
     else:
-        cmd = ["tmux", "-c", "ssh -i {} {}@{}".format(key,user,manager_ip)]
+        cmd = ["tmux", "-c", "ssh -i {} {}@{}".format(key, user, manager_ip)]
     print(">> connecting using: ", cmd)
     subprocess.call(cmd)
 
@@ -197,9 +199,10 @@ def tunnel(ctx, stack_name, key, user, port):
 
     To drop the tunnel and reset your docker env, run `cloudformation.py tunnel_down`.
 
-
-
     """
+    # how to tunnel to the docker swarm manager is described at
+    # https://docs.docker.com/docker-for-aws/deploy/#manager-nodes
+
     status = ctx.invoke(stack_status, stack_name=stack_name)
     if status != 'CREATE_COMPLETE':
         _highlight("Stack not ready. Status: {}".format(status), fg='red')
@@ -226,9 +229,9 @@ def tunnel(ctx, stack_name, key, user, port):
         return
 
     if (key == ""):
-        cmd = ["ssh", "-f", "-NL", "localhost:{}:/var/run/docker.sock".format(port), "{}@{}".format(user,manager_ip)]
+        cmd = ["ssh", "-f", "-NL", "localhost:{}:/var/run/docker.sock".format(port), "{}@{}".format(user, manager_ip)]
     else:
-        cmd = ["ssh", "-i", "{}".format(key),  "-f", "-NL", "localhost:{}:/var/run/docker.sock".format(port), "{}@{}".format(user,manager_ip)]
+        cmd = ["ssh", "-i", "{}".format(key),  "-f", "-NL", "localhost:{}:/var/run/docker.sock".format(port), "{}@{}".format(user, manager_ip)]
     cmd = " ".join(cmd)
     print(">> tunneling using: ", cmd)
 
