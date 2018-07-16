@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # cloudformation.py
 # author: Dan Calacci dan@rifflearning.com
