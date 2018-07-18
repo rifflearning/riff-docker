@@ -4,8 +4,6 @@
 # author: Dan Calacci dan@rifflearning.com
 # Command line tool for managing local and remote Docker swarms
 
-import cloudformation
-import os
 import subprocess
 import json
 import click
