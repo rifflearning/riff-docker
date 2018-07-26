@@ -1,0 +1,46 @@
+---
+# override/additions to docker-compose.yml for production
+# - the image names are set for deploying to a registry service running
+#   on a local swarm (or tunneled into a swarm manager in the cloud)
+# - the defaults in this file are set for doing development
+#   - uses prod Dockerfile for riff-server & riff-rtc from a ref in the github repo
+#     use these env vars to override the git ref (ie use a specific version
+#     instead of master):
+#     - RIFF_SERVER_REF
+#     - RIFF_RTC_REF
+#   - riff-server & riff-rtc have all files needed copied to the image
+#   - mongodb data is stored on a named volume
+#   - tags riff-server, riff-rtc & web-server images w/ "latest"
+#     use these env vars to override:
+#     - RIFF_SERVER_TAG
+#     - RIFF_RTC_TAG
+version: '3'
+services:
+  riff-server:
+    image: 'localhost:5000/rifflearning/riff-server:${RIFF_SERVER_TAG-latest}'
+    build:
+      context: https://github.com/rifflearning/riff-server.git#${RIFF_SERVER_REF-master}
+      dockerfile: Dockerfile
+
+  riff-rtc:
+    image: 'localhost:5000/rifflearning/riff-rtc:${RIFF_RTC_TAG-latest}'
+    build:
+      context: https://github.com/rifflearning/riff-rtc.git#${RIFF_RTC_REF-master}
+      dockerfile: docker/Dockerfile-prod-server
+      args:
+        - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
+
+  web-server:
+    image: 'localhost:5000/rifflearning/web-server:${RIFF_RTC_TAG-latest}'
+    build:
+      context:  web-server
+      dockerfile: Dockerfile-prod
+      args:
+        - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
+
+  mongo-server:
+    volumes:
+      - db-data:/data/db
+
+volumes:
+  db-data:

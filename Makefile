@@ -2,6 +2,10 @@
 # Makefile to manipulate docker containers for riff (server and rtc)
 #
 
+COMPOSE_CONF_DEV = -f docker-compose.yml -f docker-compose.dev.yml
+COMPOSE_CONF_PROD = -f docker-compose.yml -f docker-compose.prod.yml
+COMPOSE_CONF_STACK = -f docker-compose.yml -f docker-compose-prod.yml -f docker-stack.yml
+
 # Test if a variable has a value, callable from a recipe
 # like $(call ndef,ENV)
 ndef = $(if $(value $(1)),,$(error $(1) not set))
@@ -25,7 +29,7 @@ help :
 	echo ""
 
 up :
-	docker-compose up
+	docker-compose $(COMPOSE_CONF_DEV) up
 
 down :
 	docker-compose down
@@ -47,8 +51,8 @@ dev-rtc : _start-dev
 
 _start-dev :
 	$(call ndef,SERVICE-NAME)
-	-docker-compose run --service-ports $(SERVICE-NAME) bash
-	-docker-compose rm --force
+	-docker-compose $(COMPOSE_CONF_DEV) run --service-ports $(SERVICE-NAME) bash
+	-docker-compose rm --force -v
 	-docker-compose stop
 
 # The build-init-image is a node based docker image used by the init-rtc and
@@ -83,4 +87,10 @@ logs-rtc : logs
 logs-mongo : SERVICE-NAME = mongo-server
 logs-mongo : logs
 
-
+# The rtc-build-image contains the riff-rtc built files. These built files are copied from this
+# image to the rtc-server and web-server images.
+# TODO: This target is setting the context for the image to the current riff-rtc working directory,
+# at some point this will need to be configurable so that a github repo ref can be used as the
+# context.
+rtc-build-image :
+	docker build -f ../riff-rtc/Dockerfile-prod --target build -t rifflearning/rtc-build ../riff-rtc

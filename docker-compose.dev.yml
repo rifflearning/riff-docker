@@ -1,0 +1,35 @@
+---
+# override/additions to docker-compose.yml for development
+# because these setting need to not exist for production they
+# have to be defined here and not in the base docker-compose.yml.
+#
+# Base configuration for the services that are required to run the riff platform
+# - the image names are set for deploying to a registry service running on a local swarm
+# - the defaults in this file are set for doing development
+#   - uses dev Dockerfile for riff-server & riff-rtc from local working directories
+#     use these env vars to override local directory locations:
+#     - RIFF_SERVER_PATH
+#     - RIFF_RTC_PATH
+#   - binds local working directories of riff-server & riff-rtc
+#   - binds mongodb data to local ./mongodata directory
+#   - tags riff-server, riff-rtc & web-server images w/ "dev"
+#     use these env vars to override:
+#     - RIFF_SERVER_TAG
+#     - RIFF_RTC_TAG
+version: '3'
+services:
+  riff-server:
+    volumes:
+      - ${RIFF_SERVER_PATH-../riff-server}:/app
+
+  riff-rtc:
+    volumes:
+      - ${RIFF_RTC_PATH-../riff-rtc}:/app
+
+  web-server:
+    volumes:
+        - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
+
+  mongo-server:
+    volumes:
+      - ${RIFF_DB_PATH-./mongodata}:/data/db
