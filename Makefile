@@ -31,33 +31,33 @@ stop :
 	docker-compose stop
 
 logs :
-	docker-compose logs $(CONTAINER-NAME)
+	docker-compose logs $(SERVICE-NAME)
 
 rebuild :
-	docker-compose build --pull $(CONTAINER-NAME)
+	docker-compose build --pull $(SERVICE-NAME)
 
-dev-server : CONTAINER-NAME = riff-server
-dev-server : start-dev
+dev-server : SERVICE-NAME = riff-server
+dev-server : _start-dev
 
-dev-rtc : CONTAINER-NAME = riff-rtc
-dev-rtc : start-dev
+dev-rtc : SERVICE-NAME = riff-rtc
+dev-rtc : _start-dev
 
-start-dev :
-	$(call ndef,CONTAINER-NAME)
-	-docker-compose run --service-ports $(CONTAINER-NAME) bash
+_start-dev :
+	$(call ndef,SERVICE-NAME)
+	-docker-compose run --service-ports $(SERVICE-NAME) bash
 	-docker-compose rm --force
 	-docker-compose stop
 
-image-web-server : CONTAINER-NAME = web-server
+image-web-server : SERVICE-NAME = web-server
 image-web-server : rebuild
 
-logs-web : CONTAINER-NAME = web-server
+logs-web : SERVICE-NAME = web-server
 logs-web : logs
 
-logs-rtc : CONTAINER-NAME = riff-rtc
+logs-rtc : SERVICE-NAME = riff-rtc
 logs-rtc : logs
 
-logs-mongo : CONTAINER-NAME = mongo-server
+logs-mongo : SERVICE-NAME = mongo-server
 logs-mongo : logs
 
 
