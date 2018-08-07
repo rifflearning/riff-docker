@@ -232,3 +232,23 @@ This URL is the url you can use to access your newly deployed app!
 [cloudformation]: <https://aws.amazon.com/cloudformation/> "AWS CloudFormation"
 [docker swarm]: <https://docs.docker.com/engine/swarm/> "Swarm mode overview"
 [getstarted swarm]: <https://docs.docker.com/get-started/part4/> "Get Started, Part 4: Swarms"
+
+
+## Bugs
+
+init failed but continued.
+```
+(venv) mjl@lm18x ~/Projects/riff/riff-docker $ ./swarm.py init
+Initializing docker swarm...
+> docker swarm init
+Starting registry at localhost:5000 named registry
+> docker service create --name registry --publish published=5000,target=5000 registry:2
+Error response from daemon: could not choose an IP address to advertise since this system has multiple addresses on different interfaces (10.0.2.15 on enp0s3 and 192.168.56.101 on enp0s8) - specify one with --advertise-addr
+
+Failed to create registry. You may already have another one running:                                                    
+Error response from daemon: This node is not a swarm manager. Use "docker swarm init" or "docker swarm join" to connect this node to swarm and try again.
+Do you  want to use an existing registry? (y/n): n
+Enter registry name: registry
+Registry 'registry' up, docker in swarm mode
+Ready to deploy to local swarm.
+```
