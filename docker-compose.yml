@@ -20,7 +20,7 @@ services:
       context: ${RIFF_SERVER_PATH-../riff-server}/docker
       dockerfile: Dockerfile-dev
       args:
-        - NODE_VER=8
+        - NODE_VER=10
         - PORT=3000
         - AUTH_ON=true
         - AUTH_TOKEN_EXPIRESIN=1000d
@@ -49,7 +49,7 @@ services:
       context: ${RIFF_RTC_PATH-../riff-rtc}/docker
       dockerfile: Dockerfile-dev
       args:
-        - NODE_VER=8
+        - NODE_VER=10
         - PORT=3001
         - DATASERVER_EMAIL=default-user-email
         - DATASERVER_PASSWORD=default-user-password
