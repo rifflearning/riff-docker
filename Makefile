@@ -1,35 +1,108 @@
 #
-# Makefile to manipulate docker containers for riff (server and rtc)
+# Makefile to manipulate docker images and containers for riff services
 #
 
-COMPOSE_CONF_DEV = -f docker-compose.yml -f docker-compose.dev.yml
-COMPOSE_CONF_PROD = -f docker-compose.yml -f docker-compose.prod.yml
-COMPOSE_CONF_STACK = -f docker-compose.yml -f docker-compose-prod.yml -f docker-stack.yml
+# force the shell used to be bash because for some commands we want to use
+# set -o pipefail
+SHELL=/bin/bash
+
+# Directory where the files representing built images are located
+IMAGE_DIR := images
+DOCKER_LOG := $(IMAGE_DIR)/docker.log
+
+# The order to combine the compose/stack config files for spinning up
+# the riff services using either docker-compose or docker stack
+# for development, production or deployment in a docker swarm
+CONF_BASE   := docker-compose.yml
+CONF_DEV    := $(CONF_BASE) docker-compose.dev.yml
+CONF_PROD   := $(CONF_BASE) docker-compose.prod.yml
+CONF_DEPLOY := $(CONF_PROD) docker-stack.yml
+
+COMPOSE_CONF_DEV := $(patsubst %,-f %,$(CONF_DEV))
+COMPOSE_CONF_PROD := $(patsubst %,-f %,$(CONF_PROD))
+STACK_CONF_DEPLOY := $(patsubst %,-c %,$(CONF_DEPLOY))
+
+# These environment variables are used as build arguments by the docker-compose
+# and docker-stack configuration files.
+# The BUILD_ARG_OPTIONS build-prod target-specific variable contains a --build-arg
+# option for each of these BUILD_ARGS which has a non-empty value.
+# NOTE: spaces in the values of these environment variables will cause problems.
+#       If spaces are needed in these values additional work will be needed to
+#       support them.
+BUILD_ARGS := \
+	RIFF_RTC_REF \
+	RIFF_RTC_TAG \
+	RTC_BUILD_TAG \
+	RIFF_SERVER_REF \
+	RIFF_SERVER_TAG \
+
+# Not sure listing the other env vars that are used by the compose files
+# and maybe by the Dockerfiles is useful here, so this is currently an
+# unused variable
+OTHER_ENV_ARGS := \
+	MONGO_VER \
+	NGINX_VER \
+
+# command string which displays the values of all BUILD_ARGS
+SHOW_ENV = $(patsubst %,echo '%';,$(foreach var,$(BUILD_ARGS),$(var)=$($(var))))
+
+# If not defined on the make commandline or set in the environment set the default
+# git ref for the commit in the riff-rtc repo to be used to create the rtc-build
+# docker image.
+# (see rtc-build-image target)
+RIFF_RTC_REF ?= master
+riff_rtc_context = https://github.com/rifflearning/riff-rtc.git\#$(RIFF_RTC_REF)
+# The build tag that will be used for the created rtc-build docker images
+# (see rtc-build-image target)
+RTC_BUILD_TAG ?= latest
+
+# if the RTC_BUILD_TAG is 'dev' build the rtc-build image from the local
+# repo at ../riff-rtc instead of from a commit in the github repo.
+ifeq ($(RTC_BUILD_TAG), dev)
+	RIFF_RTC_REF := _LocalWorkingDirectory_
+	RIFF_RTC_PATH ?= ../riff-rtc
+	riff_rtc_context := $(RIFF_RTC_PATH)
+endif
+
 
 # Test if a variable has a value, callable from a recipe
 # like $(call ndef,ENV)
 ndef = $(if $(value $(1)),,$(error $(1) not set))
 
 .DELETE_ON_ERROR :
-.PHONY : help up down stop rebuild dev-server dev-rtc start-dev image-web-server
+.PHONY : help up down stop logs dev-server dev-rtc
+.PHONY : logs logs-rtc logs-server logs-web logs-mongo
+.PHONY : build-init-image init-rtc init-server rtc-build-image
+.PHONY : show-env build-dev build-prod push-prod
 
 help :
-	@echo ""                                                                     ; \
-	echo "Useful targets in this riff-docker Makefile:"                          ; \
-	echo "- up          : run docker-compose up (w/ dev images)"                  ; \
-	echo "- down        : run docker-compose down"                                ; \
-	echo "- stop        : run docker-compose stop"                                ; \
-	echo "- logs        : run docker-compose logs"                                ; \
-	echo "- rebuild     : rebuild the images pulling the latest dependent images" ; \
-	echo "- dev-server  : start a dev container for the riff-server"              ; \
-	echo "- dev-rtc     : start a dev container for the riff-rtc"                 ; \
+	@echo ""                                                                           ; \
+	echo "Useful targets in this riff-docker Makefile:"                                ; \
+	echo "- up           : run docker-compose up (w/ dev config)"                      ; \
+	echo "- prod-up      : run docker-compose up (w/ prod config)"                     ; \
+	echo "- down         : run docker-compose down"                                    ; \
+	echo "- stop         : run docker-compose stop"                                    ; \
+	echo "- logs         : run docker-compose logs"                                    ; \
+	echo "- build-dev    : (re)build the dev images pulling the latest base images"    ; \
+	echo "- build-prod   : (re)build the prod images pulling the latest base images"   ; \
+	echo "- push-prod    : push the prod images to the localhost registry"             ; \
+	echo "- deploy-stack : deploy the riff-stack that was last pushed"                 ; \
+	echo "- dev-server   : start a dev container for the riff-server"                  ; \
+	echo "- dev-rtc      : start a dev container for the riff-rtc"                     ; \
 	echo "- build-init-image : build the initialization image used by init-rtc and init-server" ; \
-	echo "- init-rtc    : initialize the riff-rtc repo by running using the init-image to run 'make init'" ; \
-	echo "- init-server : initialize the riff-server repo by running using the init-image to run 'make init'" ; \
+	echo "- init-rtc     : initialize the riff-rtc repo using the init-image to run 'make init'" ; \
+	echo "- init-server  : initialize the riff-server repo using the init-image to run 'make init'" ; \
+	echo "- rtc-build-image : create the rifflearning/rtc-build image needed as"      ; \
+	echo "                    a base image for building the production riff-rtc"      ; \
+	echo "                    and web-server images"                                  ; \
+	echo "                    uses the RIFF_RTC_REF and RTC_BUILD_TAG vars."          ; \
 	echo ""
 
 up :
-	docker-compose $(COMPOSE_CONF_DEV) up
+	docker-compose $(COMPOSE_CONF_DEV) up --detach
+
+prod-up :
+	docker-compose $(COMPOSE_CONF_PROD) up --detach
 
 down :
 	docker-compose down
@@ -38,20 +111,40 @@ stop :
 	docker-compose stop
 
 logs :
-	docker-compose logs $(SERVICE-NAME)
+	docker-compose logs $(SERVICE_NAME)
 
-rebuild :
-	docker-compose build --pull $(SERVICE-NAME)
+clean :
+	-rm $(IMAGE_DIR)/*
 
-dev-server : SERVICE-NAME = riff-server
+show-env :
+	@echo ""                                          ; \
+	echo "Here are the current environment settings:" ; \
+	$(SHOW_ENV)                                         \
+	echo ""
+
+build-dev :
+	docker-compose build --pull $(SERVICE_NAME)
+
+build-prod : BUILD_ARG_OPTIONS := $(patsubst %,--build-arg %,$(filter-out %=,$(foreach var,$(BUILD_ARGS),$(var)=$($(var)))))
+build-prod : rtc-build-image
+	docker-compose $(COMPOSE_CONF_PROD) build $(BUILD_ARG_OPTIONS) $(SERVICE_NAME)
+
+push-prod :
+	docker-compose $(COMPOSE_CONF_PROD) push $(SERVICE_NAME)
+
+deploy-stack :
+	docker stack deploy $(STACK_CONF_DEPLOY) riff-stack
+
+dev-server : SERVICE_NAME = riff-server
 dev-server : _start-dev
 
-dev-rtc : SERVICE-NAME = riff-rtc
+dev-rtc : SERVICE_NAME = riff-rtc
 dev-rtc : _start-dev
 
+.PHONY : _start-dev
 _start-dev :
-	$(call ndef,SERVICE-NAME)
-	-docker-compose $(COMPOSE_CONF_DEV) run --service-ports $(SERVICE-NAME) bash
+	$(call ndef,SERVICE_NAME)
+	-docker-compose $(COMPOSE_CONF_DEV) run --service-ports $(SERVICE_NAME) bash
 	-docker-compose rm --force -v
 	-docker-compose stop
 
@@ -60,37 +153,49 @@ _start-dev :
 # on has been updated.
 # See the _nodeapp-init target for its use. It will run 'make init' in the directory
 # bound at /app and then exit.
-build-init-image :
-	docker build --pull -t rifflearning/nodeapp-init nodeapp-init
+build-init-image : $(IMAGE_DIR)/nodeapp-init.latest
 
-init-rtc : NODEAPP-PATH = $(realpath ../riff-rtc)
+init-rtc : NODEAPP_PATH = $(realpath ../riff-rtc)
 init-rtc : _nodeapp-init
 
-init-server : NODEAPP-PATH = $(realpath ../riff-server)
+init-server : NODEAPP_PATH = $(realpath ../riff-server)
 init-server : _nodeapp-init
 
-_nodeapp-init :
-	$(call ndef,NODEAPP-PATH)
-	docker run --rm --tty --mount type=bind,src=$(NODEAPP-PATH),dst=/app rifflearning/nodeapp-init
+.PHONY : _nodeapp-init
+_nodeapp-init : build-init-image
+	$(call ndef,NODEAPP_PATH)
+	docker run --rm --tty --mount type=bind,src=$(NODEAPP_PATH),dst=/app rifflearning/nodeapp-init
 
 # I'm leaving this target although I've removed it from the help because
 # it's not as generally needed anymore.
-image-web-server : SERVICE-NAME = web-server
-image-web-server : rebuild
+.PHONY : image-web-server
+image-web-server : SERVICE_NAME = web-server
+image-web-server : build-dev
 
-logs-web : SERVICE-NAME = web-server
+.PHONY : logs-web logs-rtc logs-server logs-mongo
+logs-web : SERVICE_NAME = web-server
 logs-web : logs
 
-logs-rtc : SERVICE-NAME = riff-rtc
+logs-rtc : SERVICE_NAME = riff-rtc
 logs-rtc : logs
 
-logs-mongo : SERVICE-NAME = mongo-server
+logs-server : SERVICE_NAME = riff-server
+logs-server : logs
+
+logs-mongo : SERVICE_NAME = mongo-server
 logs-mongo : logs
 
 # The rtc-build-image contains the riff-rtc built files. These built files are copied from this
 # image to the rtc-server and web-server images.
-# TODO: This target is setting the context for the image to the current riff-rtc working directory,
-# at some point this will need to be configurable so that a github repo ref can be used as the
-# context.
-rtc-build-image :
-	docker build -f ../riff-rtc/Dockerfile-prod --target build -t rifflearning/rtc-build ../riff-rtc
+rtc-build-image : $(IMAGE_DIR)/rtc-build.$(notdir $(RTC_BUILD_TAG))
+
+$(IMAGE_DIR) :
+	@mkdir -p $(IMAGE_DIR)
+
+$(IMAGE_DIR)/rtc-build.$(notdir $(RTC_BUILD_TAG)) : | $(IMAGE_DIR)
+	set -o pipefail ; docker build --rm --force-rm --pull --target build -t rifflearning/rtc-build:$(RTC_BUILD_TAG) $(riff_rtc_context)  2>&1 | tee $(DOCKER_LOG).$(notdir $@)
+	@touch $@
+
+$(IMAGE_DIR)/nodeapp-init.latest : | $(IMAGE_DIR)
+	set -o pipefail ; docker build --rm --force-rm --pull -t rifflearning/nodeapp-init:latest nodeapp-init 2>&1 | tee $(DOCKER_LOG).$(notdir $@)
+	@touch $@
