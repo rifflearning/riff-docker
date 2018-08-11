@@ -63,12 +63,13 @@ def init(ctx, registry_name):
     _highlight("Ready to deploy to local swarm.")
 
 @click.command()
-@click.option("--dockerfile", "-f", default="docker-compose.yml", help="path to docker-compose file")
+@click.option("--compose-file", "-f", default="docker-compose.yml", multiple=True, help="path to docker-compose file(s) <multiple allowed>")
 @click.pass_context
-def push(ctx, dockerfile):
-    build_cmd = "docker-compose -f {} build".format(dockerfile)
-    push_cmd = "docker-compose -f {} push".format(dockerfile)
-    _highlight("\nBuilding from {}".format(dockerfile))
+def push(ctx, compose_file):
+    compose_file_opts = ' '.join(['--file {}'.format(f) for f in compose_file])
+    build_cmd = "docker-compose {} build".format(compose_file_opts)
+    push_cmd = "docker-compose {} push".format(compose_file_opts)
+    _highlight("\nBuilding from {}".format(', '.join(compose_file)))
 
     cont = click.prompt('Continue? (y/n)', type=bool)
     if cont:
@@ -87,14 +88,16 @@ def push(ctx, dockerfile):
     _highlight("To deploy the images you just pushed, run `swarm.py deploy`")
 
 @click.command()
-@click.option("--dockerfile", "-f", default="docker-compose.yml", help="path to docker-compose file")
+@click.option("--compose-file", "-f", default="docker-compose.yml", multiple=True, help="path to docker-compose file(s) <multiple allowed>")
 @click.option("--stack-name", "-n", default="docker-stack", help="Name to give to your stack")
 @click.pass_context
-def deploy(ctx, dockerfile, stack_name):
-    """Deploy dockerfile that has already been pushed to a repo
+def deploy(ctx, compose_file, stack_name):
+    """Deploy stack defined by compose files whose services have been built and pushed
+       to an accessible registry
     """
     if (click.prompt("Have you already pushed this project to your repo? (y/n)")):
-        cmd = "docker stack deploy --compose-file {} {}".format(dockerfile, stack_name)
+        compose_file_opts = ' '.join(['--compose-file {}'.format(f) for f in compose_file])
+        cmd = "docker stack deploy {} {}".format(compose_file_opts, stack_name)
         ps = subprocess.Popen(cmd, shell=True)
         ps.wait()
     else:
