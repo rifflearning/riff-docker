@@ -1,9 +1,18 @@
 # Files we don't want in *this* repository #
 ############################################
 
+# files containing local and/or possibly secret values #
+########################################################
+.env
+config/local*
+
 # created distribution files (e.g. compiled typescript) #
 #########################################################
 dist/
+
+# files used to track when a docker image was created #
+#######################################################
+images/
 
 # Compiled source #
 ###################
