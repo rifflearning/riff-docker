@@ -22,7 +22,7 @@ services:
       args:
         NODE_VER: 10
         PORT: 3000
-        AUTH_ON: true
+        AUTH_ON: 'true'
         AUTH_TOKEN_EXPIRESIN: 1000d
         AUTH_TOKEN_SECRET: my-secret
         CRYPTO_KEY: "'your-key-here'"
@@ -36,7 +36,7 @@ services:
         REPORT_EMAIL_PASSWORD: emailpassword
         REPORT_EMAIL_SUBJECT: "Your Group Discussion Report"
         REPORT_EMAIL_TEXT: "See attached for a visual report of your recent group discussion!"
-        SEND_REPORT: false
+        SEND_REPORT: 'false'
         END_MEETING_AFTER_MINUTES: 2
     ports:
       - '3000'
