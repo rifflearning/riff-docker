@@ -20,24 +20,24 @@ services:
       context: ${RIFF_SERVER_PATH-../riff-server}/docker
       dockerfile: Dockerfile-dev
       args:
-        - NODE_VER=10
-        - PORT=3000
-        - AUTH_ON=true
-        - AUTH_TOKEN_EXPIRESIN=1000d
-        - AUTH_TOKEN_SECRET=my-secret
-        - CRYPTO_KEY="'your-key-here'"
-        - DEFAULT_USER_EMAIL=default-user-email
-        - DEFAULT_USER_PASSWORD=default-user-password
-        - MONGODB_URI=mongodb://mongo-server/riff-test
-        - MONGO_CERT=some-fake-cert
-        - REPORT_EMAIL_FROM="'MM Reports' <email@address.com>"
-        - REPORT_EMAIL_HOST="smtp server here"
-        - REPORT_EMAIL_LOGIN=email@address.com
-        - REPORT_EMAIL_PASSWORD=emailpassword
-        - REPORT_EMAIL_SUBJECT="Your Group Discussion Report"
-        - REPORT_EMAIL_TEXT="See attached for a visual report of your recent group discussion!"
-        - SEND_REPORT=false
-        - END_MEETING_AFTER_MINUTES=2
+        NODE_VER: 10
+        PORT: 3000
+        AUTH_ON: true
+        AUTH_TOKEN_EXPIRESIN: 1000d
+        AUTH_TOKEN_SECRET: my-secret
+        CRYPTO_KEY: "'your-key-here'"
+        DEFAULT_USER_EMAIL: default-user-email
+        DEFAULT_USER_PASSWORD: default-user-password
+        MONGODB_URI: mongodb://mongo-server/riff-test
+        MONGO_CERT: some-fake-cert
+        REPORT_EMAIL_FROM: "'MM Reports' <email@address.com>"
+        REPORT_EMAIL_HOST: "smtp server here"
+        REPORT_EMAIL_LOGIN: email@address.com
+        REPORT_EMAIL_PASSWORD: emailpassword
+        REPORT_EMAIL_SUBJECT: "Your Group Discussion Report"
+        REPORT_EMAIL_TEXT: "See attached for a visual report of your recent group discussion!"
+        SEND_REPORT: false
+        END_MEETING_AFTER_MINUTES: 2
     ports:
       - '3000'
     depends_on:
@@ -49,13 +49,14 @@ services:
       context: ${RIFF_RTC_PATH-../riff-rtc}/docker
       dockerfile: Dockerfile-dev
       args:
-        - NODE_VER=10
-        - PORT=3001
-        - DATASERVER_EMAIL=default-user-email
-        - DATASERVER_PASSWORD=default-user-password
-        - SESSION_SECRET=secret
-        - CONSUMER_SECRET=key
-        - CONSUMER_SECRET=secret
+        NODE_VER: 10
+        PORT: 3001
+        FIREBASE_CONFIG: '${FIREBASE_CONFIG?FIREBASE_CONFIG must be defined in .env, as env var or on cmd line}'
+        DATASERVER_EMAIL: default-user-email
+        DATASERVER_PASSWORD: default-user-password
+        SESSION_SECRET: secret
+        CONSUMER_KEY: key
+        CONSUMER_SECRET: secret
     ports:
       - '3001'
 
