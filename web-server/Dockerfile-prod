@@ -1,0 +1,27 @@
+# Args for FROM directives
+ARG NGINX_VER=latest
+ARG RTC_BUILD_TAG=latest
+
+#
+# ---- Base web-server image ----
+FROM nginx:${NGINX_VER} AS base
+# Remove any existing sample configurations so they don't get loaded
+RUN rm /etc/nginx/conf.d/*.conf
+# Copy the nginx configuration files that set up nginx to serve
+# static client files and reverse proxy the riff api servers (data, platform, signalmaster...)
+COPY conf /etc/nginx/
+# Copy the favicon for the riffplatform
+COPY favicon.ico /usr/share/nginx/html/favicon.ico
+# Expose both the standard http and standard https ports
+EXPOSE 80 443
+
+#
+# ---- existing rtc build image ----
+FROM rifflearning/rtc-build:${RTC_BUILD_TAG} AS build
+
+#
+# ---- Release ----
+FROM base AS release
+LABEL Description="This image is used to start the riff reverse proxy server"
+# copy rtc client build artifacts to be served by nginx
+COPY --from=build /app/build/ /usr/share/nginx/html/rtc/

@@ -1,9 +1,18 @@
 # Files we don't want in *this* repository #
 ############################################
 
+# files containing local and/or possibly secret values #
+########################################################
+.env
+config/local*
+
 # created distribution files (e.g. compiled typescript) #
 #########################################################
 dist/
+
+# files used to track when a docker image was created #
+#######################################################
+images/
 
 # Compiled source #
 ###################
@@ -13,6 +22,12 @@ dist/
 *.exe
 *.o
 *.so
+
+# Python Byte-compiled / optimized / DLL files
+##############################################
+__pycache__/
+*.py[cod]
+*$py.class
 
 # Installed node packages #
 ###########################
@@ -67,4 +82,11 @@ Thumbs.db
 # Cached #
 ##########
 .sonar
+
+# Python virtualenv #
+#####################
+activate
+.venv
+venv/
+ENV/
 
