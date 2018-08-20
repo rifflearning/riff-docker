@@ -10,6 +10,9 @@ SHELL=/bin/bash
 IMAGE_DIR := images
 DOCKER_LOG := $(IMAGE_DIR)/docker.log
 
+# Directory where the ssl keys should be created/found
+SSL_DIR := web-server/ssl
+
 # The order to combine the compose/stack config files for spinning up
 # the riff services using either docker-compose or docker stack
 # for development, production or deployment in a docker swarm
@@ -69,6 +72,12 @@ endif
 # like $(call ndef,ENV)
 ndef = $(if $(value $(1)),,$(error $(1) not set))
 
+SSL_FILES := \
+	$(SSL_DIR)/private/nginx-selfsigned.key \
+	$(SSL_DIR)/certs/nginx-selfsigned.crt \
+	$(SSL_DIR)/certs/dhparam.pem \
+
+
 .DELETE_ON_ERROR :
 .PHONY : help up down stop logs dev-server dev-rtc
 .PHONY : logs logs-rtc logs-server logs-web logs-mongo
@@ -122,11 +131,11 @@ show-env :
 	$(SHOW_ENV)                                         \
 	echo ""
 
-build-dev :
+build-dev : $(SSL_FILES)
 	docker-compose build --pull $(SERVICE_NAME)
 
 build-prod : BUILD_ARG_OPTIONS := $(patsubst %,--build-arg %,$(filter-out %=,$(foreach var,$(BUILD_ARGS),$(var)=$($(var)))))
-build-prod : rtc-build-image
+build-prod : rtc-build-image $(SSL_FILES)
 	docker-compose $(COMPOSE_CONF_PROD) build $(BUILD_ARG_OPTIONS) $(SERVICE_NAME)
 
 push-prod :
@@ -184,6 +193,19 @@ logs-server : logs
 
 logs-mongo : SERVICE_NAME = mongo-server
 logs-mongo : logs
+
+$(SSL_DIR)/certs :
+$(SSL_DIR)/private :
+	@mkdir -p $(SSL_DIR)/certs $(SSL_DIR)/private
+
+# Create the self-signed key & cert for https
+$(SSL_DIR)/private/nginx-selfsigned.key : | $(SSL_DIR)/private
+$(SSL_DIR)/certs/nginx-selfsigned.crt : | $(SSL_DIR)/certs
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(SSL_DIR)/private/nginx-selfsigned.key -out $(SSL_DIR)/certs/nginx-selfsigned.crt
+
+# Create a strong Diffie-Hellman group, which is used in negotiating Perfect Forward Secrecy with clients.
+$(SSL_DIR)/certs/dhparam.pem : | $(SSL_DIR)/certs
+	openssl dhparam -out $(SSL_DIR)/certs/dhparam.pem 2048
 
 # The rtc-build-image contains the riff-rtc built files. These built files are copied from this
 # image to the rtc-server and web-server images.

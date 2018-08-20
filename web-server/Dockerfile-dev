@@ -4,6 +4,8 @@ ARG NGINX_VER=latest
 #
 # ---- Base web-server image ----
 FROM nginx:${NGINX_VER} AS base
+# Copy the self-signed ssl files
+COPY ssl/ /etc/ssl/
 # Remove any existing sample configurations so they don't get loaded
 RUN rm /etc/nginx/conf.d/*.conf
 # Copy the nginx configuration files that set up nginx to serve
