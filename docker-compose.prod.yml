@@ -17,13 +17,13 @@
 version: '3'
 services:
   riff-server:
-    image: 'localhost:5000/rifflearning/riff-server:${RIFF_SERVER_TAG-latest}'
+    image: '127.0.0.1:5000/rifflearning/riff-server:${RIFF_SERVER_TAG-latest}'
     build:
       context: https://github.com/rifflearning/riff-server.git#${RIFF_SERVER_REF-master}
       dockerfile: Dockerfile
 
   riff-rtc:
-    image: 'localhost:5000/rifflearning/riff-rtc:${RIFF_RTC_TAG-latest}'
+    image: '127.0.0.1:5000/rifflearning/riff-rtc:${RIFF_RTC_TAG-latest}'
     build:
       context: https://github.com/rifflearning/riff-rtc.git#${RIFF_RTC_REF-master}
       dockerfile: docker/Dockerfile-prod-server
@@ -31,7 +31,7 @@ services:
         - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
 
   web-server:
-    image: 'localhost:5000/rifflearning/web-server:${RIFF_RTC_TAG-latest}'
+    image: '127.0.0.1:5000/rifflearning/web-server:${RIFF_RTC_TAG-latest}'
     build:
       context:  web-server
       dockerfile: Dockerfile-prod

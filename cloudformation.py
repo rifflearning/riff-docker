@@ -197,7 +197,7 @@ def tunnel(ctx, stack_name, key, user, port):
     """Creates an SSH tunnel to the stack with stack_name to use a selected manager
     node for all docker commands in this shell.
 
-    To drop the tunnel and reset your docker env, run `cloudformation.py tunnel_down`.
+    To drop the tunnel and reset your docker env, run `cloudformation.py kill_tunnel`.
 
     """
     # how to tunnel to the docker swarm manager is described at

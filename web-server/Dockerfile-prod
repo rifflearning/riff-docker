@@ -5,11 +5,13 @@ ARG RTC_BUILD_TAG=latest
 #
 # ---- Base web-server image ----
 FROM nginx:${NGINX_VER} AS base
+# Copy the self-signed ssl files
+COPY ssl/ /etc/ssl/
 # Remove any existing sample configurations so they don't get loaded
 RUN rm /etc/nginx/conf.d/*.conf
 # Copy the nginx configuration files that set up nginx to serve
 # static client files and reverse proxy the riff api servers (data, platform, signalmaster...)
-COPY conf /etc/nginx/
+COPY conf/ /etc/nginx/
 # Copy the favicon for the riffplatform
 COPY favicon.ico /usr/share/nginx/html/favicon.ico
 # Expose both the standard http and standard https ports

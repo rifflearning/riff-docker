@@ -4,7 +4,8 @@
 
 We include two scripts to make deployment to a public Docker swarm "easy":
 `cloudformation.py` and `swarm.py`. (if you have problems getting those scripts
-to run see the [setup python][] doc.)
+to run see the [setup python][] doc.) You will also need to have [docker][docker install]
+and the [AWS CLI][] installed.
 
 The basic usage for deployment involves:
 
@@ -228,6 +229,8 @@ This URL is the url you can use to access your newly deployed app!
 
 
 [setup python]: <./python-setup.md> "Set up python virtual environment for scripts"
+[docker install]: <https://docs.docker.com/install/> "Installing Docker"
+[AWS CLI]: <https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html> "AWS Command Line Interface"
 [docker for AWS]: <https://docs.docker.com/docker-for-aws/why/> "Docker for AWS"
 [cloudformation]: <https://aws.amazon.com/cloudformation/> "AWS CloudFormation"
 [docker swarm]: <https://docs.docker.com/engine/swarm/> "Swarm mode overview"
