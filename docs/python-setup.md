@@ -24,3 +24,19 @@ is active.
 
 (Note: you can use `deactivate` to deactivate the python3 virtual environment)
 
+## Useful commands for maintenance
+
+To list all outdated packages
+```
+pip list --outdated
+```
+
+To upgrade an outdated package
+```
+pip install --upgrade <pkgname>
+```
+
+To list the installed packages in requirements format
+```
+pip freeze
+```
