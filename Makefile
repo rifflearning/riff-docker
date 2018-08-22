@@ -142,7 +142,9 @@ push-prod :
 	docker-compose $(COMPOSE_CONF_PROD) push $(SERVICE_NAME)
 
 deploy-stack :
-	docker stack deploy $(STACK_CONF_DEPLOY) riff-stack
+# Setting FIREBASE_CONFIG is a hack because docker stack deploy doesn't process the .env file
+# where it is expected to be set and therefore the docker-compose.yml file causes an error.
+	FIREBASE_CONFIG='' docker stack deploy $(STACK_CONF_DEPLOY) riff-stack
 
 dev-server : SERVICE_NAME = riff-server
 dev-server : _start-dev
