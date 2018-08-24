@@ -5,6 +5,7 @@
 ########################################################
 .env
 config/local*
+web-server/ssl/
 
 # created distribution files (e.g. compiled typescript) #
 #########################################################
