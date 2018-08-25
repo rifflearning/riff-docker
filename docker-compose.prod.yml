@@ -14,7 +14,7 @@
 #     use these env vars to override:
 #     - RIFF_SERVER_TAG
 #     - RIFF_RTC_TAG
-version: '3'
+version: '3.7'
 services:
   riff-server:
     image: '127.0.0.1:5000/rifflearning/riff-server:${RIFF_SERVER_TAG-latest}'
