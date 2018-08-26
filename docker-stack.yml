@@ -1,7 +1,7 @@
 ---
 # override/additions to docker-compose.yml for deploying to a swarm
 # $ docker stack deploy -c docker-compose.yml -c docker-swarm.yml STACK_NAME
-version: '3.7'
+version: '3.6'
 services:
   # The visualizer service is only needed when running in a swarm stack
   visualizer:
@@ -32,6 +32,9 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+    configs:
+      - source: riff-rtc.local-production.yml.1
+        target: /app/config/local-production.yml
 
   mongo-server:
     deploy:
@@ -66,6 +69,9 @@ services:
         target: site.key
       - source: beta.riffplatform.com.crt.1
         target: site.crt
+configs:
+  riff-rtc.local-production.yml.1:
+    external: true
 secrets:
   beta.riffplatform.com.key.1:
     external: true
