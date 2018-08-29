@@ -71,13 +71,15 @@ services:
       - riff-server
       - signalmaster
 
-  mongo-server:
-    image: mongo:${MONGO_VER-latest}
-
   signalmaster:
-    image: '127.0.0.1:5000/rifflearning/signalmaster:1.1.0'
-    build: 'https://github.com/rifflearning/signalmaster.git#v1.1.0'
+    image: '127.0.0.1:5000/rifflearning/signalmaster:${SIGNALMASTER_TAG-dev}'
+    build:
+      context: ${SIGNALMASTER_PATH-../signalmaster}/docker
+      dockerfile: Dockerfile-dev
     environment:
       STUNSERVER_URL: 'stun:stun.services.mozilla.com'
       TWILIO_ID:
       TWILIO_TOKEN:
+
+  mongo-server:
+    image: mongo:${MONGO_VER-latest}

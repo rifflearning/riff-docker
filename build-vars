@@ -19,3 +19,8 @@ export RIFF_RTC_TAG=$RTC_BUILD_TAG
 export RIFF_SERVER_REF=0.4.0-dev.4
 export RIFF_SERVER_TAG=$RIFF_SERVER_REF
 
+# Specify the github rifflearning/signalmaster git commit reference for the
+# production signalmaster docker image
+export SIGNALMASTER_REF=2.0.0
+export SIGNALMASTER_TAG=$SIGNALMASTER_REF
+

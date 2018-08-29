@@ -33,7 +33,7 @@ services:
       restart_policy:
         condition: on-failure
     configs:
-      - source: riff-rtc.local-production.yml.1
+      - source: riff-rtc.local-production.yml.2
         target: /app/config/local-production.yml
 
   mongo-server:
@@ -55,6 +55,9 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+    configs:
+      - source: signalmaster.local-production.yml.1
+        target: /app/config/local-production.yml
 
   web-server:
     deploy:
@@ -70,7 +73,9 @@ services:
       - source: beta.riffplatform.com.crt.1
         target: site.crt
 configs:
-  riff-rtc.local-production.yml.1:
+  riff-rtc.local-production.yml.2:
+    external: true
+  signalmaster.local-production.yml.1:
     external: true
 secrets:
   beta.riffplatform.com.key.1:

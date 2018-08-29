@@ -38,6 +38,12 @@ services:
       args:
         - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
 
+  signalmaster:
+    image: '127.0.0.1:5000/rifflearning/signalmaster:${SIGNALMASTER_TAG-latest}'
+    build:
+      context: https://github.com/rifflearning/signalmaster.git#${SIGNALMASTER_REF-master}
+      dockerfile: Dockerfile
+
   mongo-server:
     volumes:
       - db-data:/data/db

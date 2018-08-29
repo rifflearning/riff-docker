@@ -38,6 +38,8 @@ BUILD_ARGS := \
 	RTC_BUILD_TAG \
 	RIFF_SERVER_REF \
 	RIFF_SERVER_TAG \
+	SIGNALMASTER_TAG \
+	SIGNALMASTER_REF \
 
 # Not sure listing the other env vars that are used by the compose files
 # and maybe by the Dockerfiles is useful here, so this is currently an
@@ -108,7 +110,7 @@ help :
 	echo ""
 
 up :
-	docker-compose $(COMPOSE_CONF_DEV) up 
+	docker-compose $(COMPOSE_CONF_DEV) up ${MAKE_UP_OPTS}
 
 prod-up :
 	docker-compose $(COMPOSE_CONF_PROD) up --detach
@@ -152,10 +154,13 @@ dev-server : _start-dev
 dev-rtc : SERVICE_NAME = riff-rtc
 dev-rtc : _start-dev
 
+dev-sm : SERVICE_NAME = signalmaster
+dev-sm : _start-dev
+
 .PHONY : _start-dev
 _start-dev :
 	$(call ndef,SERVICE_NAME)
-	-docker-compose $(COMPOSE_CONF_DEV) run --service-ports $(SERVICE_NAME) bash
+	-docker-compose $(COMPOSE_CONF_DEV) run --service-ports $(SERVICE_NAME) sh
 	-docker-compose rm --force -v
 	-docker-compose stop
 

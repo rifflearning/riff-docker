@@ -17,3 +17,9 @@ unset RIFF_RTC_TAG
 # production riff-server docker image
 unset RIFF_SERVER_REF
 unset RIFF_SERVER_TAG
+#
+# Specify the github rifflearning/signalmaster git commit reference for the
+# production signalmaster docker image
+unset SIGNALMASTER_REF
+unset SIGNALMASTER_TAG
+
