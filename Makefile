@@ -108,7 +108,7 @@ help :
 	echo ""
 
 up :
-	docker-compose $(COMPOSE_CONF_DEV) up --detach
+	docker-compose $(COMPOSE_CONF_DEV) up 
 
 prod-up :
 	docker-compose $(COMPOSE_CONF_PROD) up --detach

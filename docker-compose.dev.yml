@@ -30,6 +30,10 @@ services:
     volumes:
         - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
 
+  signalmaster:
+    volumes:
+        - ${SIGNALMASTER_PATH-../signalmaster}:/app
+
   mongo-server:
     volumes:
       - ${RIFF_DB_PATH-./mongodata}:/data/db
