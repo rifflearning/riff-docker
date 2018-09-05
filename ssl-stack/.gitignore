@@ -1,0 +1,4 @@
+# This subdirectory has been a reasonable place to unpack
+# the ssl certificates in order to create the docker secrets
+# BUT it should NOT be committed!
+letsencrypt/

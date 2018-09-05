@@ -1,11 +1,30 @@
 # Manually getting LetsEncrypt SSL certs for AWS Docker Swarm #
 
+## Notes ##
+
+I'm trying to streamline some of this by creating an image based on
+nginx which already has certbot installed. Whether that is actually
+faster is yet to be determined. But I've created an `ssl-stack`
+subdirectory in the riff-docker repo with files in it that should
+use the following **UNTESTED** commands:
+
+```sh
+cd ssl-stack
+docker-compose build
+docker-compose push
+docker stack deploy ssl-stack
+```
+
+Then follow the steps below to exec in and run certbot and download the certs.
+
+----
+
 ## Summary
 
 What I did to get my initial letsencrypt certificates was:
 1. create an nginx service constrained to run on the swarm manager
 2. exec an interactive bash console in that nginx container
-3. [install certbot](https://certbot.eff.org/docs/install.html)
+3. [install certbot][certbot-install]
 4. run certbot webroot pointing at the nginx html root
 5. tar the etc/letsencrypt directory and copy the tar file to the nginx root
 6. download the tar file
@@ -14,6 +33,8 @@ What I did to get my initial letsencrypt certificates was:
 9. remove the temp nginx service
 10. deploy my real stack w/ my nginx web-server service using the secrets as you've defined here.
 
+[certbot]: <https://certbot.eff.org/docs/intro.html> "Certbot documentation introduction"
+[certbot-install]: <https://certbot.eff.org/docs/install.html> "Certbot installation"
 
 ## Details
 
