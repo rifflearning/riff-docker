@@ -47,6 +47,15 @@ services:
       placement:
         constraints: [node.role == manager]
 
+  redis-server:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
   signalmaster:
     deploy:
       replicas: 1

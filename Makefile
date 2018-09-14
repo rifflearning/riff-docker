@@ -48,6 +48,7 @@ OTHER_ENV_ARGS := \
 	NODE_VER \
 	MONGO_VER \
 	NGINX_VER \
+	REDIS_VER \
 	DEPLOY_STACK \
 
 # command string which displays the values of all BUILD_ARGS

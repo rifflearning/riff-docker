@@ -55,6 +55,8 @@ services:
         SESSION_SECRET: secret
         CONSUMER_KEY: key
         CONSUMER_SECRET: secret
+    depends_on:
+      - redis-server
 
   web-server:
     image: '127.0.0.1:5000/rifflearning/web-server:${RIFF_RTC_TAG-dev}'
@@ -76,10 +78,9 @@ services:
     build:
       context: ${SIGNALMASTER_PATH-../signalmaster}/docker
       dockerfile: Dockerfile-dev
-    environment:
-      STUNSERVER_URL: 'stun:stun.services.mozilla.com'
-      TWILIO_ID:
-      TWILIO_TOKEN:
 
   mongo-server:
     image: mongo:${MONGO_VER-latest}
+
+  redis-server:
+    image: redis:${REDIS_VER-latest}
