@@ -1,0 +1,16 @@
+---
+# override/additions to docker-stack.yml for deploying to the staging swarm
+version: '3.6'
+services:
+  web-server:
+    secrets:
+      - source: staging.riffplatform.com.key.1
+        target: site.key
+      - source: staging.riffplatform.com.crt.1
+        target: site.crt
+
+secrets:
+  staging.riffplatform.com.key.1:
+    external: true
+  staging.riffplatform.com.crt.1:
+    external: true

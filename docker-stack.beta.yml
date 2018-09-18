@@ -1,0 +1,16 @@
+---
+# override/additions to docker-stack.yml for deploying to the beta swarm
+version: '3.6'
+services:
+  web-server:
+    secrets:
+      - source: beta.riffplatform.com.key.1
+        target: site.key
+      - source: beta.riffplatform.com.crt.1
+        target: site.crt
+
+secrets:
+  beta.riffplatform.com.key.1:
+    external: true
+  beta.riffplatform.com.crt.1:
+    external: true
