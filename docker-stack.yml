@@ -33,7 +33,7 @@ services:
       restart_policy:
         condition: on-failure
     configs:
-      - source: riff-rtc.local-production.yml.3
+      - source: riff-rtc.local-production.yml.4
         target: /app/config/local-production.yml
 
   mongo-server:
@@ -78,7 +78,7 @@ services:
         condition: on-failure
 
 configs:
-  riff-rtc.local-production.yml.3:
+  riff-rtc.local-production.yml.4:
     external: true
   signalmaster.local-production.yml.1:
     external: true
