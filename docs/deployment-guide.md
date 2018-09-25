@@ -13,7 +13,8 @@ The basic usage for deployment involves:
 1. SSH tunnel to a manager in the cloudformation docker swarm you just made
 1. Initialize the swarm by making a registry and starting everything in swarm mode
 1. Build and push docker images to the remote registry in your swarm
-1. Bring your swarm up!
+1. Deploy the docker stack to the docker swarm running in the cloudformation
+   stack. (Note that there are 2 different types of stacks referenced in this step!)
 
 I go through the steps in detail below:
 
