@@ -67,18 +67,9 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
-    secrets:
-      - source: beta.riffplatform.com.key.1
-        target: site.key
-      - source: beta.riffplatform.com.crt.1
-        target: site.crt
+
 configs:
   riff-rtc.local-production.yml.3:
     external: true
   signalmaster.local-production.yml.1:
-    external: true
-secrets:
-  beta.riffplatform.com.key.1:
-    external: true
-  beta.riffplatform.com.crt.1:
     external: true
