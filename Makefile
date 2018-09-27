@@ -49,10 +49,10 @@ OTHER_ENV_ARGS := \
 	MONGO_VER \
 	NGINX_VER \
 	REDIS_VER \
-	DEPLOY_STACK \
+	DEPLOY_SWARM \
 
 # command string which displays the values of all BUILD_ARGS
-SHOW_ENV = $(patsubst %,echo '%';,$(foreach var,$(BUILD_ARGS),$(var)=$($(var))))
+SHOW_ENV = $(patsubst %,echo '%';,$(foreach var,$(BUILD_ARGS) $(OTHER_ENV_ARGS),$(var)=$($(var))))
 
 # If not defined on the make commandline or set in the environment set the default
 # git ref for the commit in the riff-rtc repo to be used to create the rtc-build
