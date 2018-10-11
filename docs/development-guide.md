@@ -12,7 +12,8 @@ this relative directory layout.
 .
 ├── riff-docker
 ├── riff-rtc
-└── riff-server
+├── riff-server
+└── signalmaster
 ```
 
 ## Initial setup
@@ -22,7 +23,7 @@ this relative directory layout.
 - git
 - docker
 - make
-- Python 3
+- Python 3 (only for needed for deploying)
 
 ### Clone and initialize working directories
 
@@ -32,6 +33,7 @@ cd riff
 git clone https://github.com/rifflearning/riff-docker.git
 git clone https://github.com/rifflearning/riff-rtc.git
 git clone https://github.com/rifflearning/riff-server.git
+git clone https://github.com/rifflearning/signalmaster.git
 cd riff-docker
 make init-rtc
 make init-server
@@ -57,14 +59,33 @@ variables which would set the image tags. Those environment variables are most o
 used when building production images.
 
 The `build-dev` target depends on (and therefore will create if they don't exist)
-the self-signed ssl files.
+the self-signed ssl files used by the `web-server` dev image.
+
+## Working on the code
+
+### riff-rtc and riff-server
+
+These 2 projects use nodejs. You must either have the correct version of nodejs
+installed locally or you may also use a container to run node commands such as
+`npm` to update and install packages.
+
+The Makefile has 2 targets to start an interactive commandline with the correct
+node environment, `dev-rtc` and `dev-server`.
+
 
 ## Running
 
-run `make up` Then access `http://localhost`.
+run `make up` Then access `https://localhost`.
 
-The containers are started detached so use `make stop` to stop the containers.
-You can use `make down` to stop (if running) and remove the containers.
+You can use `export MAKE_UP_OPTS=-d` to have `make up` start the containers
+detached in which case you will want to use `make stop` to stop the containers.
+If the containers aren't running detached use `CTRL-C` to stop the containers.
+
+If the containers are running detached you probably would like to follow the
+logs (stdout) from one of them, likely the `riff-rtc` container. You can use
+`make logs-rtc OPTS=-f`.
+
+Use `make down` to stop (if running) and remove the containers.
 
 ### Configuration
 
