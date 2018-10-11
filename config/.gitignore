@@ -1,0 +1,5 @@
+# ignore everything except .gitignore and encrypted files (*.gpg) and scripts
+*
+!.gitignore
+!*.gpg
+!*.sh
