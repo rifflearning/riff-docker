@@ -44,7 +44,7 @@ make init-server
 from the riff-docker working directory:
 
 ```sh
-. nobuild-vars
+. bin/nobuild-vars
 make build-dev
 ```
 
@@ -54,9 +54,9 @@ need to rebuild when you want to refresh the base image (ie update node w/ any n
 patches).
 
 It's best if you tag the development images w/ the `dev` tag, which will be set if
-you don't override it. Running `. nobuild-vars` will unset all of the environment
+you don't override it. Running `. bin/nobuild-vars` will unset all of the environment
 variables which would set the image tags. Those environment variables are most often
-used when building production images.
+used when building production or staging images.
 
 The `build-dev` target depends on (and therefore will create if they don't exist)
 the self-signed ssl files used by the `web-server` dev image.
