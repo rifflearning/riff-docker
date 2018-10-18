@@ -49,12 +49,6 @@ services:
       args:
         NODE_VER: 10
         PORT: 3001
-        FIREBASE_CONFIG: '${FIREBASE_CONFIG?FIREBASE_CONFIG must be defined in .env, as env var or on cmd line}'
-        DATASERVER_EMAIL: default-user-email
-        DATASERVER_PASSWORD: default-user-password
-        SESSION_SECRET: secret
-        CONSUMER_KEY: key
-        CONSUMER_SECRET: secret
     depends_on:
       - redis-server
 
