@@ -47,10 +47,13 @@ cd ../riff-docker
 ```
 
 Lastly you will need to create a local development configuration file
-that contains the _secret_ values such as firebase keys. Ask another
-developer for it on our slack, it should be named `local-development.yml`
+that contains the _secret_ values such as firebase keys for riff-rtc.
+Ask another developer for it on our slack, it should be named `local-development.yml`
 and will be copied to `riff-rtc/config`. This file should never be
 committed to the repository.
+
+You may also need a `local-development.yml` file w/ the keys for using twilio
+in signalmaster/config. But you may also be fine w/o using twilio for signaling.
 
 ### Create development docker images
 
