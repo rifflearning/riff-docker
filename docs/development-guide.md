@@ -38,6 +38,19 @@ cd riff-docker
 make init-rtc
 make init-server
 ```
+for now (we need to set up `make init-signalmaster`)
+you also have to initialize the signalmaster working directory by:
+```
+cd ../signalmaster
+npm install
+cd ../riff-docker
+```
+
+Lastly you will need to create a local development configuration file
+that contains the _secret_ values such as firebase keys. Ask another
+developer for it on our slack, it should be named `local-development.yml`
+and will be copied to `riff-rtc/config`. This file should never be
+committed to the repository.
 
 ### Create development docker images
 
