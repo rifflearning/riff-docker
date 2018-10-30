@@ -182,9 +182,10 @@ At this point the QA engineer or Product manager takes over.
    not be testable on their own, in which case it seems reasonable to just consider them "good".
 1. If the fix/feature meets the requirements, move it to _Done_. Moving a Trello card to _Done_
    should **only** be done by QA or Product management and not by developers.
-1. If there are issues with the fix/feature, use comments in the Trello card for disucssion with
-   the implementing developer to determine if the issues are real, and if new code will be needed
-   to address them.
+1. If there are issues with the fix/feature, comments in the Trello card are the best place to
+   record any needed discussion with the implementing developer to determine if the issues are
+   real, and if new code will be needed to address them. If the need for new code is obvious
+   just move to the next step.
 1. If new code is needed to fix issues w/ a fix/feature in _Testing_, a new card should be created
    in _To Do_ and a link to the original card should be in the new card's description. A link to
    the new card should be added to the original card in a comment. It is possible that several new
