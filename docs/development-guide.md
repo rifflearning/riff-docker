@@ -194,3 +194,11 @@ At this point the QA engineer or Product manager takes over.
 1. When testing is complete and there are no issues or there are new cards and links for all
    issues found the card should be moved to _Done_.
 
+<!-- Amy wanted something about making sure that product management got the chance to prioritize
+     but found this to be confusing, so I'm leaving it, but commenting it out. -mjl
+It should also be noted that sometimes testing uncovers new functionality/behavior that could
+be desireable. This new functionality/behavior could reasonably be considered not a bug in the
+initial implementation but an enhancement. These should be treated as new features by the QA
+engineer and a card in Trello created and put in the _Backlog_ for prioritization by the product
+manager.
+-->
