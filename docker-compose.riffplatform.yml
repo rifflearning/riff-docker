@@ -1,0 +1,90 @@
+---
+# Base configuration for the services that are required to run the riff platform
+# - the image names are set for deploying to a registry service running on a local swarm
+# - the defaults in this file are set for doing development
+#   - uses dev Dockerfile for riff-server & riff-rtc from local working directories
+#     use these env vars to override local directory locations:
+#     - RIFF_SERVER_PATH
+#     - RIFF_RTC_PATH
+#   - binds local working directories of riff-server & riff-rtc
+#   - binds mongodb data to local ./mongodata directory
+#   - tags riff-server, riff-rtc & web-server images w/ "dev"
+#     use these env vars to override:
+#     - RIFF_SERVER_TAG
+#     - RIFF_RTC_TAG
+version: '3.6'
+services:
+  riff-server:
+    image: '127.0.0.1:5000/rifflearning/riff-server:${RIFF_SERVER_TAG-dev}'
+    build:
+      context: ${RIFF_SERVER_PATH-../riff-server}/docker
+      dockerfile: Dockerfile-dev
+      args:
+        NODE_VER: 10
+        PORT: 3000
+        AUTH_ON: 'true'
+        AUTH_TOKEN_EXPIRESIN: 1000d
+        AUTH_TOKEN_SECRET: my-secret
+        CRYPTO_KEY: "'your-key-here'"
+        DEFAULT_USER_EMAIL: default-user-email
+        DEFAULT_USER_PASSWORD: default-user-password
+        MONGODB_URI: mongodb://mongo-server/riff-test
+        MONGO_CERT: some-fake-cert
+        REPORT_EMAIL_FROM: "'MM Reports' <email@address.com>"
+        REPORT_EMAIL_HOST: "smtp server here"
+        REPORT_EMAIL_LOGIN: email@address.com
+        REPORT_EMAIL_PASSWORD: emailpassword
+        REPORT_EMAIL_SUBJECT: "Your Group Discussion Report"
+        REPORT_EMAIL_TEXT: "See attached for a visual report of your recent group discussion!"
+        SEND_REPORT: 'false'
+        END_MEETING_AFTER_MINUTES: 10
+    depends_on:
+      - mongo-server
+
+  riff-rtc:
+    image: '127.0.0.1:5000/rifflearning/riff-rtc:${RIFF_RTC_TAG-dev}'
+    build:
+      context: ${RIFF_RTC_PATH-../riff-rtc}/docker
+      dockerfile: Dockerfile-dev
+      args:
+        NODE_VER: 10
+        PORT: 3001
+    depends_on:
+      - redis-server
+
+  web-server:
+    image: '127.0.0.1:5000/rifflearning/web-server:${RIFF_RTC_TAG-dev}'
+    build:
+      context:  web-server
+      dockerfile: Dockerfile-dev
+      args:
+        - NGINX_VER=latest
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - riff-rtc
+      - riff-server
+      - signalmaster
+
+  signalmaster:
+    image: '127.0.0.1:5000/rifflearning/signalmaster:${SIGNALMASTER_TAG-dev}'
+    build:
+      context: ${SIGNALMASTER_PATH-../signalmaster}/docker
+      dockerfile: Dockerfile-dev
+
+  mongo-server:
+    image: mongo:${MONGO_VER-latest}
+    volumes:
+      - mongo-data:/data/db
+      - mongo-configdb:/data/configdb
+
+  redis-server:
+    image: redis:${REDIS_VER-latest}
+    volumes:
+      - redis-data:/data
+
+volumes:
+  mongo-data:
+  mongo-configdb:
+  redis-data:

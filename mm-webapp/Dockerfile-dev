@@ -1,0 +1,35 @@
+# Args for FROM directives
+ARG NODE_VER=10
+
+#
+# ---- Base Node image ----
+FROM node:${NODE_VER} AS base
+# The node:8 npm (v 5.6) has some issues, update it to latest
+RUN npm install -g npm
+# Modified bashrc which defines some aliases and an interactive prompt
+COPY bashrc /root/.bashrc
+COPY --chown=node:node bashrc /home/node/.bashrc
+# set the root password to password (I don't care that it's simple it's only for development)
+# this shouldn't exist in a production container
+RUN echo "root:password" | chpasswd
+# create and set working directory owned by non-root user; set that user
+WORKDIR /app
+RUN chown node:node /app
+USER node
+
+#
+# ---- Development ----
+FROM base AS development
+LABEL Description="dev: This image runs the mattermost-webapp"
+# This is the development image, set NODE_ENV to reflect that
+ENV NODE_ENV=development
+# npm install (and build if needed) must exist in the volume bound at /app
+# expected to be the local repo working directory.
+#
+# expose port
+EXPOSE 3001
+# when a container is started w/ this image the mattermost-webapp repository working
+# directory must be bound at /app and all dependent packages installed for this
+# command to correctly start the mattermost-webapp
+VOLUME ["/app"]
+CMD ["npm", "run", "run"]

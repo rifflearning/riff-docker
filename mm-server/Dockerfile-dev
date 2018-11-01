@@ -1,0 +1,47 @@
+# Args for FROM directives
+ARG GOLANG_VER=latest
+ARG MM_SERVER_BUILD_TAG=latest
+
+#
+# ---- Base mm-server image ----
+FROM golang:${GOLANG_VER} AS base
+EXPOSE 8065
+WORKDIR /go/src/github.com/mattermost/mattermost-server
+
+
+
+
+
+
+# Copy the self-signed ssl files
+#    COPY ssl/ /etc/ssl/
+# Point the site ssl key and crt to the self-signed ones if the docker secrets aren't loaded.
+# Remove any existing sample configurations so they don't get loaded
+#    RUN mkdir -p /run/secrets && \
+#        ln -s /etc/ssl/private/nginx-selfsigned.key /run/secrets/site.key && \
+#        ln -s /etc/ssl/certs/nginx-selfsigned.crt /run/secrets/site.crt && \
+#        rm /etc/nginx/conf.d/*.conf
+# Copy the nginx configuration files that set up nginx to serve
+# static client files and reverse proxy the riff api servers (data, platform, signalmaster...)
+#    COPY conf/ /etc/nginx/
+# Copy the favicon for the riffplatform
+#    COPY favicon.ico /usr/share/nginx/html/favicon.ico
+# Expose the standard mattermost-server port see config ServiceSettings.ListenAddress
+
+#
+# ---- existing rtc build image ----
+#    FROM rifflearning/rtc-build:${RTC_BUILD_TAG} AS build
+
+#
+# ---- Development ----
+FROM base AS development
+LABEL Description="dev: This image is used to start the riff mattermost server"
+
+# when a container is started w/ this image the mattermost-server repository working
+# directory must be bound at /go/src/github.com/mattermost/mattermost-server
+# and the mattermost-webapp repository working directory must be bound at
+# /go/src/github.com/mattermost/mattermost-webapp
+# for this command to correctly start the mm-server
+VOLUME ["/go/src/github.com/mattermost/mattermost-server"]
+VOLUME ["/go/src/github.com/mattermost/mattermost-webapp"]
+CMD ["make", "run-server-in-container"]
