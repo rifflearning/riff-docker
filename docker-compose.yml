@@ -14,6 +14,17 @@
 #     - RIFF_RTC_TAG
 version: '3.6'
 services:
+  riff-mm:
+    image: '127.0.0.1:5000/rifflearning/riff-mm:${MM_SERVER_TAG-dev}'
+    build:
+      context: mm-combined
+      dockerfile: Dockerfile-dev
+    ports:
+      - '8065:8065'
+    volumes:
+      - ${MM_SERVER_PATH-../mattermost-server}:/go/src/github.com/mattermost/mattermost-server
+      - ${MM_WEBAPP_PATH-../mattermost-webapp}:/go/src/github.com/mattermost/mattermost-webapp
+
   mm-server:
     image: '127.0.0.1:5000/rifflearning/mm-server:${MM_SERVER_TAG-dev}'
     build:
