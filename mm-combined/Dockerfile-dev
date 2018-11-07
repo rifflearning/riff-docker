@@ -6,65 +6,33 @@ ARG UBUNTU_VER=latest
 FROM ubuntu:${UBUNTU_VER} AS base
 ARG NODE_VER=10
 ARG GOLANG_VER=1.11.2
-ARG DEBIAN_FRONTEND=noninteractive
 
-# Modified bashrc which defines some aliases and an interactive prompt
-COPY bashrc /root/.bashrc
+# Copy setup files to the image
+COPY bashrc run.sh riffmm-setup.sh /setupfiles/
 
-# packages needed to install
-RUN apt-get update && apt-get install -y \
-    apt-utils \
-    && apt-get install -y \
-    curl \
-    gcc \
-    g++ \
-    make \
-    wget \
-    gnupg2
+# run the setup script
+RUN chmod +x /setupfiles/*.sh \
+    && /setupfiles/riffmm-setup.sh
 
-# Install node
-RUN (curl -sL https://deb.nodesource.com/setup_10.x | bash -) \
-    && apt-get install -y nodejs \
-    && npm install -g npm
-
-# Install golang
-RUN wget --progress=dot:mega "https://dl.google.com/go/go${GOLANG_VER}.linux-amd64.tar.gz" \
-    && tar -C /usr/local -xzf "go${GOLANG_VER}.linux-amd64.tar.gz" \
-    && rm "go${GOLANG_VER}.linux-amd64.tar.gz" \
-    && echo 'export PATH=$PATH:/usr/local/go/bin' >> /etc/profile
-
-# Install mattermost dependencies and clean up apt package cache
-RUN apt-get install -y \
-    build-essential \
-    libpng-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-
-
-# Create a non root user
-RUN useradd mmuser --uid 1000 --shell /bin/bash --create-home
-
-COPY --chown=mmuser:mmuser bashrc /home/mmuser/.bashrc
-# set the root password to password (I don't care that it's simple it's only for development)
-# this shouldn't exist in a production container
-RUN echo "root:password" | chpasswd
-# install dependencies
 # create and set working directory owned by non-root user; set that user
-WORKDIR /home/mmuser/go/src/github.com/mattermost/mattermost-server
-RUN chown -R mmuser:mmuser /home/mmuser/go
+WORKDIR /home/mmuser
 USER mmuser
+
+# set the GOPATH and the PATH to find the go executables
+ENV GOPATH /home/mmuser/go
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 #
 # ---- Development ----
 FROM base AS development
 LABEL Description="dev: This image runs the mattermost-server and webpack watch of mattermost-webapp"
+
 # This is the development image, set NODE_ENV to reflect that
 ENV NODE_ENV=development
-# npm install (and build if needed) must exist in the volume bound at /app
-# expected to be the local repo working directory.
-#
-# expose port
+
+# expose port that the mattermost server listens to
 EXPOSE 8065
+
 # when a container is started w/ this image the mattermost-webapp repository working
 # directory must be bound at /home/mmuser/go/src/github.com/mattermost/mattermost-webapp
 # and all dependent packages installed AND the mattermost-server repository working
@@ -72,4 +40,4 @@ EXPOSE 8065
 # for this command to correctly start the mattermost-webapp
 VOLUME ["/home/mmuser/go/src/github.com/mattermost/mattermost-server"]
 VOLUME ["/home/mmuser/go/src/github.com/mattermost/mattermost-webapp"]
-#CMD ["make", "run-in-container"]
+CMD ["./run.sh"]

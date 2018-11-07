@@ -22,32 +22,10 @@ services:
     ports:
       - '8065:8065'
     volumes:
-      - ${MM_SERVER_PATH-../mattermost-server}:/go/src/github.com/mattermost/mattermost-server
-      - ${MM_WEBAPP_PATH-../mattermost-webapp}:/go/src/github.com/mattermost/mattermost-webapp
-
-  mm-server:
-    image: '127.0.0.1:5000/rifflearning/mm-server:${MM_SERVER_TAG-dev}'
-    build:
-      context: mm-server
-      dockerfile: Dockerfile-dev
-    ports:
-      - '80:80'
-      - '443:443'
-      - '8065:8065'
-    volumes:
-      - ${MM_SERVER_PATH-../mattermost-server}:/go/src/github.com/mattermost/mattermost-server
-      - ${MM_WEBAPP_PATH-../mattermost-webapp}:/go/src/github.com/mattermost/mattermost-webapp
+      - ${MM_SERVER_PATH-../mattermost-server}:/home/mmuser/go/src/github.com/mattermost/mattermost-server
+      - ${MM_WEBAPP_PATH-../mattermost-webapp}:/home/mmuser/go/src/github.com/mattermost/mattermost-webapp
     depends_on:
       - mm-mysql
-      - mm-webapp
-
-  mm-webapp:
-    image: '127.0.0.1:5000/rifflearning/mm-webapp:${MM_WEBAPP_TAG-dev}'
-    build:
-      context: mm-webapp
-      dockerfile: Dockerfile-dev
-    volumes:
-      - ${MM_WEBAPP_PATH-../mattermost-webapp}:/app
 
   mm-mysql:
     image: mysql:5.7
