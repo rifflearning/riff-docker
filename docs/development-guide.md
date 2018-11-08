@@ -11,7 +11,8 @@ this relative directory layout.
 ```
 .
 ├── riff-docker
-├── riff-rtc
+├── mattermost-server
+├── mattermost-webapp
 ├── riff-server
 └── signalmaster
 ```
@@ -31,19 +32,22 @@ this relative directory layout.
 mkdir riff
 cd riff
 git clone https://github.com/rifflearning/riff-docker.git
-git clone https://github.com/rifflearning/riff-rtc.git
+git clone https://github.com/rifflearning/mattermost-server.git
+git clone https://github.com/rifflearning/mattermost-webapp.git
 git clone https://github.com/rifflearning/riff-server.git
 git clone https://github.com/rifflearning/signalmaster.git
-cd riff-docker
-make init-rtc
+pushd riff-docker
 make init-server
+pushd ../mattermost-server/config
+ln -s config-dev.json config.json
+popd
 ```
 for now (we need to set up `make init-signalmaster`)
 you also have to initialize the signalmaster working directory by:
 ```
-cd ../signalmaster
+pushd ../signalmaster
 npm install
-cd ../riff-docker
+popd ../riff-docker
 ```
 
 Lastly you will need to create a local development configuration file
@@ -76,6 +80,13 @@ used when building production or staging images.
 
 The `build-dev` target depends on (and therefore will create if they don't exist)
 the self-signed ssl files used by the `web-server` dev image.
+
+You may want to run `make up` once to get things started. It is important that
+the `mattermost-webapp/node_modules` NOT EXIST the 1st time you run `make up`.
+Some of the mattermost-webapp dependent packages MUST be installed from inside
+the container.
+
+
 
 ## Working on the code
 
