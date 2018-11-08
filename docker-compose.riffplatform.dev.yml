@@ -18,14 +18,17 @@
 #     - RIFF_RTC_TAG
 version: '3.6'
 services:
-  riff-mm:
-    volumes:
-      - ${MM_SERVER_PATH-../mattermost-server}:/home/mmuser/go/src/github.com/mattermost/mattermost-server
-      - ${MM_WEBAPP_PATH-../mattermost-webapp}:/home/mmuser/go/src/github.com/mattermost/mattermost-webapp
-
   riff-server:
     volumes:
       - ${RIFF_SERVER_PATH-../riff-server}:/app
+
+  riff-rtc:
+    volumes:
+      - ${RIFF_RTC_PATH-../riff-rtc}:/app
+
+  web-server:
+    volumes:
+        - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
 
   signalmaster:
     volumes:
