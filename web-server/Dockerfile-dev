@@ -15,17 +15,10 @@ RUN mkdir -p /run/secrets && \
 # Copy the nginx configuration files that set up nginx to serve
 # static client files and reverse proxy the riff api servers (data, platform, signalmaster...)
 COPY conf /etc/nginx/
-# Copy the favicon for the riffplatform
-COPY favicon.ico /usr/share/nginx/html/favicon.ico
 # Expose both the standard http and standard https ports
 EXPOSE 80 443
 
 #
 # ---- Development ----
 FROM base AS development
-LABEL Description="dev: This image is used to start the riff reverse proxy server"
-# when a container is started w/ this image the riff-rtc repository working
-# directory `build` subdirectory must be bound at /usr/share/nginx/html/rtc
-# and populated w/ the client build artifacts expected to be served by
-# this web-server
-VOLUME ["/usr/share/nginx/html/rtc"]
+LABEL Description="dev: This image is used to start the riff mattermost reverse proxy server"

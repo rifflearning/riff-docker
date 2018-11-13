@@ -51,6 +51,21 @@ services:
     depends_on:
       - mongo-server
 
+  web-server:
+    image: '127.0.0.1:5000/rifflearning/web-server:${RIFF_RTC_TAG-dev}'
+    build:
+      context:  web-server
+      dockerfile: Dockerfile-dev
+      args:
+        - NGINX_VER=latest
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - riff-mm
+      - riff-server
+      - signalmaster
+
   signalmaster:
     image: '127.0.0.1:5000/rifflearning/signalmaster:${SIGNALMASTER_TAG-dev}'
     build:
