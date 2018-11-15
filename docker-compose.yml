@@ -19,6 +19,7 @@ services:
     build:
       context: mm-combined
       dockerfile: Dockerfile-dev
+    # ports are a temporary stopgap. the riff-mm should only be accessed via the web-server rev proxy
     ports:
       - '8065:8065'
     depends_on:
@@ -48,6 +49,9 @@ services:
         REPORT_EMAIL_TEXT: "See attached for a visual report of your recent group discussion!"
         SEND_REPORT: 'false'
         END_MEETING_AFTER_MINUTES: 10
+    # ports are a temporary stopgap. the riff-server should only be accessed via the web-server rev proxy
+    ports:
+      - '3000:3000'
     depends_on:
       - mongo-server
 
@@ -71,6 +75,9 @@ services:
     build:
       context: ${SIGNALMASTER_PATH-../signalmaster}/docker
       dockerfile: Dockerfile-dev
+    # ports are a temporary stopgap. the signalmaster should only be accessed via the web-server rev proxy
+    ports:
+      - '8888:8888'
 
   mongo-server:
     image: mongo:${MONGO_VER-latest}
