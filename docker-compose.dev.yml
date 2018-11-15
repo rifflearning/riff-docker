@@ -33,7 +33,3 @@ services:
   signalmaster:
     volumes:
         - ${SIGNALMASTER_PATH-../signalmaster}:/app
-
-  mongo-server:
-    volumes:
-      - ${RIFF_DB_PATH-./mongodata}:/data/db

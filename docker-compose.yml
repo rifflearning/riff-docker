@@ -75,6 +75,16 @@ services:
 
   mongo-server:
     image: mongo:${MONGO_VER-latest}
+    volumes:
+      - mongo-data:/data/db
+      - mongo-configdb:/data/configdb
 
   redis-server:
     image: redis:${REDIS_VER-latest}
+    volumes:
+      - redis-data:/data
+
+volumes:
+  mongo-data:
+  mongo-configdb:
+  redis-data:

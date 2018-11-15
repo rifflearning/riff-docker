@@ -43,10 +43,3 @@ services:
     build:
       context: https://github.com/rifflearning/signalmaster.git#${SIGNALMASTER_REF-master}
       dockerfile: Dockerfile
-
-  mongo-server:
-    volumes:
-      - db-data:/data/db
-
-volumes:
-  db-data:
