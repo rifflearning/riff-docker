@@ -22,6 +22,9 @@ services:
     volumes:
       - ${MM_SERVER_PATH-../mattermost-server}:/home/mmuser/go/src/github.com/mattermost/mattermost-server
       - ${MM_WEBAPP_PATH-../mattermost-webapp}:/home/mmuser/go/src/github.com/mattermost/mattermost-webapp
+    environment:
+      SIGNALMASTER_URL: :8888
+      RIFF_SERVER_URL: :3000
 
   riff-server:
     volumes:
