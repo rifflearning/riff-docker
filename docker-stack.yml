@@ -1,20 +1,9 @@
 ---
-# override/additions to docker-compose.yml for deploying to a swarm
-# $ docker stack deploy -c docker-compose.yml -c docker-swarm.yml STACK_NAME
+# override/additions to docker-compose.yml for deploying to a docker swarm
+# $ docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml -c docker-stack.yml STACK_NAME
+# better to use make deploy-stack
 version: '3.6'
 services:
-  # The visualizer service is only needed when running in a swarm stack
-  visualizer:
-    image: dockersamples/visualizer:stable
-    ports:
-      - "8080:8080"
-    stop_grace_period: 1m30s
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-
   riff-server:
     deploy:
       replicas: 1
@@ -23,6 +12,8 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: [node.labels.mongo == true]
 
   riff-rtc:
     deploy:
@@ -32,6 +23,8 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: [node.labels.web == true]
     configs:
       - source: riff-rtc.local-production.yml.7.debug
         target: /app/config/local-production.yml
@@ -45,7 +38,7 @@ services:
       restart_policy:
         condition: on-failure
       placement:
-        constraints: [node.role == manager]
+        constraints: [node.labels.mongo == true]
 
   redis-server:
     deploy:
@@ -55,6 +48,8 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: [node.labels.web == true]
 
   signalmaster:
     deploy:
@@ -76,6 +71,11 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: [node.labels.web == true]
+
+volumes:
+  registry-data:
 
 configs:
   riff-rtc.local-production.yml.7.debug:

@@ -149,9 +149,7 @@ push-prod :
 deploy-stack :
 # require that the DEPLOY_SWARM be explicitly defined.
 	$(call ndef,DEPLOY_SWARM)
-# Setting FIREBASE_CONFIG is a hack because docker stack deploy doesn't process the .env file
-# where it is expected to be set and therefore the docker-compose.yml file causes an error.
-	FIREBASE_CONFIG='' docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml riff-stack
+	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml riff-stack
 
 dev-server : SERVICE_NAME = riff-server
 dev-server : _start-dev

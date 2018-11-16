@@ -4,13 +4,13 @@ version: '3.6'
 services:
   web-server:
     secrets:
-      - source: beta.riffplatform.com.key.1
+      - source: beta.riffplatform.com.key.2
         target: site.key
-      - source: beta.riffplatform.com.crt.1
+      - source: beta.riffplatform.com.crt.2
         target: site.crt
 
 secrets:
-  beta.riffplatform.com.key.1:
+  beta.riffplatform.com.key.2:
     external: true
-  beta.riffplatform.com.crt.1:
+  beta.riffplatform.com.crt.2:
     external: true
