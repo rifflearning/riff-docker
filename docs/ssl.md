@@ -12,10 +12,31 @@ use the following **UNTESTED** commands:
 cd ssl-stack
 docker-compose build
 docker-compose push
-docker stack deploy ssl-stack
+docker stack deploy -c docker-compose.yml ssl-stack
 ```
 
 Then follow the steps below to exec in and run certbot and download the certs.
+
+If you're renewing (not getting a new cert) then make sure that the `certbot`
+container has the info from the previous time a letsencrypt cert was gotten or
+renewed. Use `docker cp` to get the saved tar file back into the container
+and untar it if necessary.
+
+```sh
+docker cp ~/Downloads/letsencrypt-riffplatform-20181116.tar.gz ssl-stack_certbot.1.joc5p7an6ews92l6yx4bl5onj:/
+docker exec -it ssl-stack_certbot.1.joc5p7an6ews92l6yx4bl5onj bash
+tar -xvzf letsencrypt-riffplatform-20181116.tar.gz
+rm letsencrypt-riffplatform-20181116.tar.gz
+certbot certonly --domain beta.riffplatform.com --webroot-path /usr/share/nginx/html
+# It doesn't matter but I've been picking the 1st account: ea745093e479@2018-09-04T21:04:31Z (8450)
+# Update the Route 53 alias and do it again for another domain if you want
+#certbot certonly --domain staging.riffplatform.com --webroot-path /usr/share/nginx/html
+# create the tar file w/ the renewed certs and any other updated letsencrypt info
+tar -cvzf letsencrypt-riffplatform-NEWDATE.tar.gz /etc/letsencrypt/
+exit
+docker cp ssl-stack_certbot.1.joc5p7an6ews92l6yx4bl5onj:/letsencrypt-riffplatform-NEWDATE.tar.gz letsencrypt-riffplatform-NEWDATE.tar.gz
+docker stack rm ssl-stack
+```
 
 ----
 
