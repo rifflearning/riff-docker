@@ -8,18 +8,11 @@ services:
     ports:
       - '80:80'
       - '443:443'
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-  visualizer:
-    image: dockersamples/visualizer:stable
-    ports:
-      - "8080:8080"
-    stop_grace_period: 1m30s
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - letsencrypt-data:/etc/letsencrypt
     deploy:
       placement:
         constraints: [node.role == manager]
 
-
+volumes:
+  letsencrypt-data:
