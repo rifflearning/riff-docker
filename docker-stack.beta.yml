@@ -9,6 +9,7 @@ services:
       - source: beta.riffplatform.com.crt.2
         target: site.crt
 
+# Your cert will expire on 2019-02-14 (beta key.2 & crt.2)
 secrets:
   beta.riffplatform.com.key.2:
     external: true

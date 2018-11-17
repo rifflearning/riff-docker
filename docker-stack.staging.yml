@@ -4,13 +4,14 @@ version: '3.6'
 services:
   web-server:
     secrets:
-      - source: staging.riffplatform.com.key.1
+      - source: staging.riffplatform.com.key.2
         target: site.key
-      - source: staging.riffplatform.com.crt.1
+      - source: staging.riffplatform.com.crt.2
         target: site.crt
 
+# Your cert will expire on 2019-02-14 (staging key.2 & crt.2)
 secrets:
-  staging.riffplatform.com.key.1:
+  staging.riffplatform.com.key.2:
     external: true
-  staging.riffplatform.com.crt.1:
+  staging.riffplatform.com.crt.2:
     external: true
