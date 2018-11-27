@@ -23,8 +23,10 @@ services:
       - ${MM_SERVER_PATH-../mattermost-server}:/home/mmuser/go/src/github.com/mattermost/mattermost-server
       - ${MM_WEBAPP_PATH-../mattermost-webapp}:/home/mmuser/go/src/github.com/mattermost/mattermost-webapp
     environment:
-      SIGNALMASTER_URL: :8888
-      RIFF_SERVER_URL: :3000
+      SIGNALMASTER_URL: /
+      SIGNALMASTER_PATH: /api/signalmaster
+      RIFF_SERVER_URL: /
+      RIFF_SERVER_PATH: /api/videodata
 
   riff-server:
     volumes:
