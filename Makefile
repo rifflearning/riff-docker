@@ -180,6 +180,9 @@ init-rtc : _nodeapp-init
 init-server : NODEAPP_PATH = $(realpath ../riff-server)
 init-server : _nodeapp-init
 
+init-signalmaster : NODEAPP_PATH = $(realpath ../signalmaster)
+init-signalmaster : _nodeapp-init
+
 .PHONY : _nodeapp-init
 _nodeapp-init : build-init-image
 	$(call ndef,NODEAPP_PATH)
