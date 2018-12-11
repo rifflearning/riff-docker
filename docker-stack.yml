@@ -26,7 +26,7 @@ services:
       placement:
         constraints: [node.labels.web == true]
     configs:
-      - source: riff-rtc.local-production.yml.7.debug
+      - source: riff-rtc.local-production.yml.8.debug
         target: /app/config/local-production.yml
 
   mongo-server:
@@ -78,7 +78,7 @@ volumes:
   registry-data:
 
 configs:
-  riff-rtc.local-production.yml.7.debug:
+  riff-rtc.local-production.yml.8.debug:
     external: true
   signalmaster.local-production.yml.1:
     external: true
