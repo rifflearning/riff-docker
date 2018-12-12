@@ -30,9 +30,10 @@ STACK_CONF_DEPLOY := $(patsubst %,-c %,$(CONF_DEPLOY))
 BASE_IMAGES := \
 	node:10 \
 	mhart/alpine-node:10 \
-	redis:latest \
+	mysql:5.7 \
 	mongo:latest \
-	nginx:latest
+	nginx:latest \
+	ubuntu:latest
 
 
 # These environment variables are used as build arguments by the docker-compose
@@ -43,9 +44,6 @@ BASE_IMAGES := \
 #       If spaces are needed in these values additional work will be needed to
 #       support them.
 BUILD_ARGS := \
-	RIFF_RTC_REF \
-	RIFF_RTC_TAG \
-	RTC_BUILD_TAG \
 	RIFF_SERVER_REF \
 	RIFF_SERVER_TAG \
 	SIGNALMASTER_TAG \
@@ -55,32 +53,15 @@ BUILD_ARGS := \
 # and maybe by the Dockerfiles is useful here, so this is currently an
 # unused variable
 OTHER_ENV_ARGS := \
+	UBUNTU_VER \
 	NODE_VER \
+	GOLANG_VER \
 	MONGO_VER \
 	NGINX_VER \
-	REDIS_VER \
 	DEPLOY_SWARM \
 
 # command string which displays the values of all BUILD_ARGS
 SHOW_ENV = $(patsubst %,echo '%';,$(foreach var,$(BUILD_ARGS) $(OTHER_ENV_ARGS),$(var)=$($(var))))
-
-# If not defined on the make commandline or set in the environment set the default
-# git ref for the commit in the riff-rtc repo to be used to create the rtc-build
-# docker image.
-# (see rtc-build-image target)
-RIFF_RTC_REF ?= master
-riff_rtc_context = https://github.com/rifflearning/riff-rtc.git\#$(RIFF_RTC_REF)
-# The build tag that will be used for the created rtc-build docker images
-# (see rtc-build-image target)
-RTC_BUILD_TAG ?= latest
-
-# if the RTC_BUILD_TAG is 'dev' build the rtc-build image from the local
-# repo at ../riff-rtc instead of from a commit in the github repo.
-ifeq ($(RTC_BUILD_TAG), dev)
-	RIFF_RTC_REF := _LocalWorkingDirectory_
-	RIFF_RTC_PATH ?= ../riff-rtc
-	riff_rtc_context := $(RIFF_RTC_PATH)
-endif
 
 
 # Test if a variable has a value, callable from a recipe
@@ -94,9 +75,9 @@ SSL_FILES := \
 
 
 .DELETE_ON_ERROR :
-.PHONY : help up down stop up-dev up-prod clean dev-server dev-rtc
-.PHONY : logs logs-rtc logs-server logs-web logs-mongo
-.PHONY : build-init-image init-rtc init-server init-signalmaster rtc-build-image
+.PHONY : help up down stop up-dev up-prod clean dev-server dev-sm
+.PHONY : logs logs-mm logs-server logs-web logs-mongo
+.PHONY : build-init-image init-server init-signalmaster
 .PHONY : show-env build-dev build-prod push-prod
 
 help :
@@ -107,7 +88,7 @@ help :
 	echo "- down         : run docker-compose down"                                    ; \
 	echo "- stop         : run docker-compose stop"                                    ; \
 	echo "- logs         : run docker-compose logs"                                    ; \
-	echo "- logs-rtc     : run docker-compose logs for the riff-rtc service"           ; \
+	echo "- logs-mm      : run docker-compose logs for the riff-mm service"            ; \
 	echo "- logs-web     : run docker-compose logs for the web-server service"         ; \
 	echo "- show-env     : displays the env var values used for building"              ; \
 	echo "- build-dev    : (re)build the dev images pulling the latest base images"    ; \
@@ -115,15 +96,9 @@ help :
 	echo "- push-prod    : push the prod images to the localhost registry"             ; \
 	echo "- deploy-stack : deploy the riff-stack that was last pushed"                 ; \
 	echo "- dev-server   : start a dev container for the riff-server"                  ; \
-	echo "- dev-rtc      : start a dev container for the riff-rtc"                     ; \
-	echo "- build-init-image  : build the initialization image used by init-rtc and init-server"          ; \
-	echo "- init-rtc          : initialize the riff-rtc repo using the init-image to run 'make init'"     ; \
+	echo "- build-init-image  : build the initialization image used by init-signalmaster and init-server" ; \
 	echo "- init-server       : initialize the riff-server repo using the init-image to run 'make init'"  ; \
 	echo "- init-signalmaster : initialize the signalmaster repo using the init-image to run 'make init'" ; \
-	echo "- rtc-build-image   : create the rifflearning/rtc-build image needed as"     ; \
-	echo "                      a base image for building the production riff-rtc"     ; \
-	echo "                      and web-server images"                                 ; \
-	echo "                      uses the RIFF_RTC_REF and RTC_BUILD_TAG vars."         ; \
 	echo "- dev-swarm-labels  : add all constraint labels to single swarm node"        ; \
 	echo "- deploy-support-stack : deploy the support stack needed for deploying other local images" ; \
 	echo ""
@@ -158,7 +133,7 @@ build-dev : $(SSL_FILES)
 	docker-compose build --pull $(OPTS) $(SERVICE_NAME)
 
 build-prod : BUILD_ARG_OPTIONS := $(patsubst %,--build-arg %,$(filter-out %=,$(foreach var,$(BUILD_ARGS),$(var)=$($(var)))))
-build-prod : rtc-build-image $(SSL_FILES)
+build-prod : $(SSL_FILES)
 	docker-compose $(COMPOSE_CONF_PROD) build $(BUILD_ARG_OPTIONS) $(SERVICE_NAME)
 
 push-prod :
@@ -176,11 +151,11 @@ pull-images :
 dev-server : SERVICE_NAME = riff-server
 dev-server : _start-dev
 
-dev-rtc : SERVICE_NAME = riff-rtc
-dev-rtc : _start-dev
-
 dev-sm : SERVICE_NAME = signalmaster
 dev-sm : _start-dev
+
+dev-mm : SERVICE_NAME = riff-mm
+dev-mm : _start-dev
 
 .PHONY : _start-dev
 _start-dev :
@@ -189,15 +164,12 @@ _start-dev :
 	-docker-compose rm --force -v
 	-docker-compose stop
 
-# The build-init-image is a node based docker image used by the init-rtc and
+# The build-init-image is a node based docker image used by the init-signalmaster and
 # init-server targets it only needs to be rebuilt if the node image it is based
 # on has been updated.
 # See the _nodeapp-init target for its use. It will run 'make init' in the directory
 # bound at /app and then exit.
 build-init-image : $(IMAGE_DIR)/nodeapp-init.latest
-
-init-rtc : NODEAPP_PATH = $(realpath ../riff-rtc)
-init-rtc : _nodeapp-init
 
 init-server : NODEAPP_PATH = $(realpath ../riff-server)
 init-server : _nodeapp-init
@@ -216,12 +188,15 @@ _nodeapp-init : build-init-image
 image-web-server : SERVICE_NAME = web-server
 image-web-server : build-dev
 
-.PHONY : logs-web logs-rtc logs-server logs-mongo
+.PHONY : logs-web logs-mm logs-server logs-mongo logs-mysql
 logs-web : SERVICE_NAME = web-server
 logs-web : logs
 
-logs-rtc : SERVICE_NAME = riff-rtc
-logs-rtc : logs
+logs-mm : SERVICE_NAME = riff-mm
+logs-mm : logs
+
+logs-mysql : SERVICE_NAME = mm-mysql
+logs-mysql : logs
 
 logs-server : SERVICE_NAME = riff-server
 logs-server : logs
@@ -233,7 +208,9 @@ logs-mongo : logs
 dev-swarm-labels :
 	docker node update --label-add registry=true \
                        --label-add web=true \
-                       --label-add mongo=true \
+                       --label-add riffapi=true \
+                       --label-add mmapp=true \
+                       --label-add mmdb=true \
                        $(shell docker node ls --format="{{.ID}}")
 
 # The support stack includes the registry which is needed to deploy any locally built images
@@ -254,16 +231,8 @@ $(SSL_DIR)/certs/nginx-selfsigned.crt : | $(SSL_DIR)/certs
 $(SSL_DIR)/certs/dhparam.pem : | $(SSL_DIR)/certs
 	openssl dhparam -out $(SSL_DIR)/certs/dhparam.pem 2048
 
-# The rtc-build-image contains the riff-rtc built files. These built files are copied from this
-# image to the rtc-server and web-server images.
-rtc-build-image : $(IMAGE_DIR)/rtc-build.$(notdir $(RTC_BUILD_TAG))
-
 $(IMAGE_DIR) :
 	@mkdir -p $(IMAGE_DIR)
-
-$(IMAGE_DIR)/rtc-build.$(notdir $(RTC_BUILD_TAG)) : | $(IMAGE_DIR)
-	set -o pipefail ; docker build $(OPTS) --rm --force-rm --pull --target build -t rifflearning/rtc-build:$(RTC_BUILD_TAG) $(riff_rtc_context)  2>&1 | tee $(DOCKER_LOG).$(notdir $@)
-	@touch $@
 
 $(IMAGE_DIR)/nodeapp-init.latest : | $(IMAGE_DIR)
 	set -o pipefail ; docker build $(OPTS) --rm --force-rm --pull -t rifflearning/nodeapp-init:latest nodeapp-init 2>&1 | tee $(DOCKER_LOG).$(notdir $@)

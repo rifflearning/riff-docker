@@ -5,14 +5,6 @@
 #  or
 # . nobuild-vars
 
-# Unset all the environment variables exported by build-vars
-# This is useful when you want to make development images
-# again using the default TAGs rather than the ones defined
-# by these variables.
-unset RIFF_RTC_REF
-unset RTC_BUILD_TAG
-unset RIFF_RTC_TAG
-
 # Specify the github rifflearning/riff-server git commit reference for the
 # production riff-server docker image
 unset RIFF_SERVER_REF
