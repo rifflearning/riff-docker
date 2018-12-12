@@ -16,7 +16,7 @@ export RIFF_RTC_TAG=$RTC_BUILD_TAG
 
 # Specify the github rifflearning/riff-server git commit reference for the
 # production riff-server docker image
-export RIFF_SERVER_REF=0.4.0-dev.7
+export RIFF_SERVER_REF=0.4.0-dev.8
 export RIFF_SERVER_TAG=$RIFF_SERVER_REF
 
 # Specify the github rifflearning/signalmaster git commit reference for the
