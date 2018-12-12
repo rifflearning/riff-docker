@@ -2,8 +2,27 @@
 # override/additions to docker-compose.yml for deploying to a docker swarm
 # $ docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml -c docker-stack.yml STACK_NAME
 # better to use make deploy-stack
+# labels used by constraints:
+# - mmapp
+# - mmdb
+# - riffapi
+# - web
+# Labeling suggestion w/ 2 nodes in swarm:
+#   node 1: mmapp web
+#   node 2: mmdb riffapi web
 version: '3.6'
 services:
+  riff-mm:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.labels.mmapp == true]
+
   riff-server:
     deploy:
       replicas: 1
@@ -13,21 +32,7 @@ services:
       restart_policy:
         condition: on-failure
       placement:
-        constraints: [node.labels.mongo == true]
-
-  riff-rtc:
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-      placement:
-        constraints: [node.labels.web == true]
-    configs:
-      - source: riff-rtc.local-production.yml.8.debug
-        target: /app/config/local-production.yml
+        constraints: [node.labels.riffapi == true]
 
   mongo-server:
     deploy:
@@ -38,9 +43,9 @@ services:
       restart_policy:
         condition: on-failure
       placement:
-        constraints: [node.labels.mongo == true]
+        constraints: [node.labels.riffapi == true]
 
-  redis-server:
+  mm-mysql:
     deploy:
       replicas: 1
       update_config:
@@ -49,7 +54,7 @@ services:
       restart_policy:
         condition: on-failure
       placement:
-        constraints: [node.labels.web == true]
+        constraints: [node.labels.mmdb == true]
 
   signalmaster:
     deploy:
@@ -78,7 +83,7 @@ volumes:
   registry-data:
 
 configs:
-  riff-rtc.local-production.yml.8.debug:
+  riff-rtc.local-production.yml.7.debug:
     external: true
   signalmaster.local-production.yml.1:
     external: true
