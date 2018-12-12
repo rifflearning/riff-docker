@@ -7,9 +7,9 @@ MM_USER="${MM_USER:-mmuser}"
 MM_UID=${MM_UID:-1000}
 
 # packages needed to install
-INSTALL_PKGS="curl apt-utils gcc g++ make wget gnupg2"
-MM_PKGS="build-essential libpng-dev git"
-DEV_PKGS="vim-tiny"
+INSTALL_PKGS=( curl apt-utils gcc g++ make wget gnupg2 ca-certificates )
+MM_PKGS=( build-essential libpng-dev git )
+DEV_PKGS=( vim-tiny )
 
 # Setting found in Stack Overflow answer to:
 # https://stackoverflow.com/questions/22466255/is-it-possible-to-answer-dialog-questions-when-installing-under-docker
@@ -19,14 +19,14 @@ export DEBIAN_FRONTEND=noninteractive
 # Update package db and install needed packages
 echo "SETUP: Update apt and install packages ..."
 apt-get update
-apt-get install -y ${INSTALL_PKGS} ${MM_PKGS} ${DEV_PKGS}
+apt-get install -y --no-install-recommends "${INSTALL_PKGS[@]}" "${MM_PKGS[@]}" "${DEV_PKGS[@]}"
 
 # Install node --set up the apt repository to get the latest node ver 10
 # (for production we may want to "lock it down" and use a different way of installing node.
 #  such as: https://nodejs.org/dist/v10.13.0/node-v10.13.0-linux-x64.tar.xz)
 echo "SETUP: Installing node 10.x ..."
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
-apt-get install -y nodejs
+apt-get install -y --no-install-recommends nodejs
 npm install -g npm
 
 # Install golang
