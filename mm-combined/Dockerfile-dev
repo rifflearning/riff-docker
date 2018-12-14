@@ -22,6 +22,9 @@ USER mmuser
 ENV GOPATH /home/mmuser/go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
+# Set the default command to run when the container is started
+CMD ["./run.sh"]
+
 #
 # ---- Development ----
 FROM base AS development
@@ -37,7 +40,6 @@ EXPOSE 8065
 # directory must be bound at /home/mmuser/go/src/github.com/mattermost/mattermost-webapp
 # and all dependent packages installed AND the mattermost-server repository working
 # directory must be bound at /home/mmuser/go/src/github.com/mattermost/mattermost-server
-# for this command to correctly start the mattermost-webapp
+# for the default command (run) to correctly start the mattermost-webapp
 VOLUME ["/home/mmuser/go/src/github.com/mattermost/mattermost-server"]
 VOLUME ["/home/mmuser/go/src/github.com/mattermost/mattermost-webapp"]
-CMD ["./run.sh"]
