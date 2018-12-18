@@ -10,7 +10,7 @@
 # The image tag on the built image will be the same as that ref
 # unless it doesn't work as a tag (contains a / or some other issue)
 # in which case you should change it here.
-export RIFF_RTC_REF=0.4.0-dev.46
+export RIFF_RTC_REF=0.4.0-dev.47
 export RTC_BUILD_TAG=$RIFF_RTC_REF
 export RIFF_RTC_TAG=$RTC_BUILD_TAG
 
