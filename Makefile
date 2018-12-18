@@ -84,39 +84,45 @@ SSL_FILES := \
 
 
 .DELETE_ON_ERROR :
-.PHONY : help up down stop logs dev-server dev-rtc
+.PHONY : help up down stop up-dev up-prod clean dev-server dev-rtc
 .PHONY : logs logs-rtc logs-server logs-web logs-mongo
-.PHONY : build-init-image init-rtc init-server rtc-build-image
+.PHONY : build-init-image init-rtc init-server init-signalmaster rtc-build-image
 .PHONY : show-env build-dev build-prod push-prod
 
 help :
 	@echo ""                                                                           ; \
 	echo "Useful targets in this riff-docker Makefile:"                                ; \
 	echo "- up           : run docker-compose up (w/ dev config)"                      ; \
-	echo "- prod-up      : run docker-compose up (w/ prod config)"                     ; \
+	echo "- up-prod      : run docker-compose up (w/ prod config)"                     ; \
 	echo "- down         : run docker-compose down"                                    ; \
 	echo "- stop         : run docker-compose stop"                                    ; \
 	echo "- logs         : run docker-compose logs"                                    ; \
+	echo "- logs-rtc     : run docker-compose logs for the riff-rtc service"           ; \
+	echo "- logs-web     : run docker-compose logs for the web-server service"         ; \
+	echo "- show-env     : displays the env var values used for building"              ; \
 	echo "- build-dev    : (re)build the dev images pulling the latest base images"    ; \
 	echo "- build-prod   : (re)build the prod images pulling the latest base images"   ; \
 	echo "- push-prod    : push the prod images to the localhost registry"             ; \
 	echo "- deploy-stack : deploy the riff-stack that was last pushed"                 ; \
 	echo "- dev-server   : start a dev container for the riff-server"                  ; \
 	echo "- dev-rtc      : start a dev container for the riff-rtc"                     ; \
-	echo "- build-init-image : build the initialization image used by init-rtc and init-server" ; \
-	echo "- init-rtc     : initialize the riff-rtc repo using the init-image to run 'make init'" ; \
-	echo "- init-server  : initialize the riff-server repo using the init-image to run 'make init'" ; \
-	echo "- rtc-build-image : create the rifflearning/rtc-build image needed as"      ; \
-	echo "                    a base image for building the production riff-rtc"      ; \
-	echo "                    and web-server images"                                  ; \
-	echo "                    uses the RIFF_RTC_REF and RTC_BUILD_TAG vars."          ; \
+	echo "- build-init-image  : build the initialization image used by init-rtc and init-server"          ; \
+	echo "- init-rtc          : initialize the riff-rtc repo using the init-image to run 'make init'"     ; \
+	echo "- init-server       : initialize the riff-server repo using the init-image to run 'make init'"  ; \
+	echo "- init-signalmaster : initialize the signalmaster repo using the init-image to run 'make init'" ; \
+	echo "- rtc-build-image   : create the rifflearning/rtc-build image needed as"     ; \
+	echo "                      a base image for building the production riff-rtc"     ; \
+	echo "                      and web-server images"                                 ; \
+	echo "                      uses the RIFF_RTC_REF and RTC_BUILD_TAG vars."         ; \
 	echo ""
 
-up :
-	docker-compose $(COMPOSE_CONF_DEV) up ${MAKE_UP_OPTS}
+up : up-dev
 
-prod-up :
-	docker-compose $(COMPOSE_CONF_PROD) up --detach
+up-dev :
+	docker-compose $(COMPOSE_CONF_DEV) up ${MAKE_UP_OPTS} ${OPTS}
+
+up-prod :
+	docker-compose $(COMPOSE_CONF_PROD) up --detach ${OPTS}
 
 down :
 	docker-compose down
@@ -137,7 +143,7 @@ show-env :
 	echo ""
 
 build-dev : $(SSL_FILES)
-	docker-compose build --pull $(SERVICE_NAME)
+	docker-compose build --pull $(OPTS) $(SERVICE_NAME)
 
 build-prod : BUILD_ARG_OPTIONS := $(patsubst %,--build-arg %,$(filter-out %=,$(foreach var,$(BUILD_ARGS),$(var)=$($(var)))))
 build-prod : rtc-build-image $(SSL_FILES)
