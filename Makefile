@@ -114,6 +114,8 @@ help :
 	echo "                      a base image for building the production riff-rtc"     ; \
 	echo "                      and web-server images"                                 ; \
 	echo "                      uses the RIFF_RTC_REF and RTC_BUILD_TAG vars."         ; \
+	echo "- dev-swarm-labels  : add all constraint labels to single swarm node"        ; \
+	echo "- deploy-support-stack : deploy the support stack needed for deploying other local images" ; \
 	echo ""
 
 up : up-dev
@@ -212,6 +214,18 @@ logs-server : logs
 
 logs-mongo : SERVICE_NAME = mongo-server
 logs-mongo : logs
+
+# Add all constraint labels to the single docker node running in swarm mode on a development machine
+dev-swarm-labels :
+	docker node update --label-add registry=true \
+                       --label-add web=true \
+                       --label-add mongo=true \
+                       $(shell docker node ls --format="{{.ID}}")
+
+# The support stack includes the registry which is needed to deploy any locally built images
+# and the visualizer to show what's running on the nodes of the swarm
+deploy-support-stack :
+	docker stack deploy -c docker-stack.support.yml support-stack
 
 $(SSL_DIR)/certs :
 $(SSL_DIR)/private :
