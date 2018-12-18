@@ -121,10 +121,10 @@ help :
 up : up-dev
 
 up-dev :
-	docker-compose $(COMPOSE_CONF_DEV) up ${MAKE_UP_OPTS} ${OPTS}
+	docker-compose $(COMPOSE_CONF_DEV) up $(MAKE_UP_OPTS) $(OPTS)
 
 up-prod :
-	docker-compose $(COMPOSE_CONF_PROD) up --detach ${OPTS}
+	docker-compose $(COMPOSE_CONF_PROD) up --detach $(OPTS)
 
 down :
 	docker-compose down
@@ -171,7 +171,7 @@ dev-sm : _start-dev
 .PHONY : _start-dev
 _start-dev :
 	$(call ndef,SERVICE_NAME)
-	-docker-compose $(COMPOSE_CONF_DEV) run --service-ports $(SERVICE_NAME) sh
+	-docker-compose $(COMPOSE_CONF_DEV) run --service-ports $(OPTS) $(SERVICE_NAME) bash
 	-docker-compose rm --force -v
 	-docker-compose stop
 
