@@ -22,6 +22,11 @@ alias ll='ls $LS_OPTIONS -l'
 alias lla='ls $LS_OPTIONS -lA'
 alias l='ls $LS_OPTIONS -CF'
 
+# mattermost dev support aliases
+alias cdmms="cd ${GOPATH}/src/github.com/mattermost/mattermost-server"
+alias mm-start='make run-server-in-container'
+alias mm-stop='make stop-server'
+
 # From Scott McCammon's comment on https://www.eriwen.com/bash/pushd-and-popd
 function mypushd {
 	pushd "${@}" >/dev/null;
