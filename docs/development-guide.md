@@ -38,26 +38,15 @@ git clone https://github.com/rifflearning/riff-server.git
 git clone https://github.com/rifflearning/signalmaster.git
 pushd riff-docker
 make init-server
+make init-signalmaster
 pushd ../mattermost-server/config
 ln -s config-dev.json config.json
 popd
 ```
-for now (we need to set up `make init-signalmaster`)
-you also have to initialize the signalmaster working directory by:
-```
-pushd ../signalmaster
-npm install
-popd ../riff-docker
-```
 
-Lastly you will need to create a local development configuration file
-that contains the _secret_ values such as firebase keys for riff-rtc.
-Ask another developer for it on our slack, it should be named `local-development.yml`
-and will be copied to `riff-rtc/config`. This file should never be
-committed to the repository.
-
-You may also need a `local-development.yml` file w/ the keys for using twilio
-in signalmaster/config. But you may also be fine w/o using twilio for signaling.
+You may need a `local-development.yml` file w/ the keys for using twilio
+in signalmaster/config. If you find you do, ask another developer for it on
+our slack. But you may also be fine w/o using twilio for signaling.
 
 ### Create development docker images
 
@@ -90,15 +79,37 @@ the container.
 
 ## Working on the code
 
-### riff-rtc and riff-server
+### riff-server
 
-These 2 projects use nodejs. You must either have the correct version of nodejs
+This project uses nodejs. You must either have the correct version of nodejs
 installed locally or you may also use a container to run node commands such as
 `npm` to update and install packages.
 
-The Makefile has 2 targets to start an interactive commandline with the correct
-node environment, `dev-rtc` and `dev-server`.
+The riff-docker Makefile has a target to start an interactive commandline
+with the correct node environment, `dev-server`.
 
+### mattermost-webapp
+
+This is the client code (implemented with the react framework).
+
+Using `make up` starts up development containers for the mattermost app, running
+webpack watch, so that changes you make to sources in the mattermost-webapp
+directory should cause a reload.
+
+Keep in mind that it takes a **really** **really** long time for the mattermost
+dev app to be ready when you start it with `make up`.
+
+### mattermost-server
+
+The mattermost-server is implemented using go.
+
+&lt; section still under construction >
+
+You can use the `make dev-mm` target to get a commandline in the `riff-mm`
+container, change to the `~/go/src/github.com/mattermost/mattermost-server`
+directory and use the Makefile targets from there while doing development.
+Keep in mind that the Makefile has targets which spin up docker containers
+AND docker is NOT installed inside of that docker container!
 
 ## Running
 
@@ -116,8 +127,7 @@ Use `make down` to stop (if running) and remove the containers.
 
 ### Configuration
 
-Use a `config/local-development.yml` file for local configuration settings in
-`riff-rtc` (or `config/local.yml` if you want).
+&lt; section still under construction >
 
 
 ## Process ##
