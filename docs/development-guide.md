@@ -37,6 +37,7 @@ git clone https://github.com/rifflearning/mattermost-webapp.git
 git clone https://github.com/rifflearning/riff-server.git
 git clone https://github.com/rifflearning/signalmaster.git
 pushd riff-docker
+git checkout mattermost
 make init-server
 make init-signalmaster
 pushd ../mattermost-server/config
