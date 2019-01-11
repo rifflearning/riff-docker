@@ -25,6 +25,16 @@ COMPOSE_CONF_DEV := $(patsubst %,-f %,$(CONF_DEV))
 COMPOSE_CONF_PROD := $(patsubst %,-f %,$(CONF_PROD))
 STACK_CONF_DEPLOY := $(patsubst %,-c %,$(CONF_DEPLOY))
 
+# The pull-images target is a helper to update the base docker images used
+# by the edu stack services. This is a list of those base images.
+BASE_IMAGES := \
+	node:10 \
+	mhart/alpine-node:10 \
+	redis:latest \
+	mongo:latest \
+	nginx:latest
+
+
 # These environment variables are used as build arguments by the docker-compose
 # and docker-stack configuration files.
 # The BUILD_ARG_OPTIONS build-prod target-specific variable contains a --build-arg
@@ -159,6 +169,10 @@ deploy-stack :
 	$(call ndef,DEPLOY_SWARM)
 	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml riff-stack
 
+pull-images :
+	echo $(BASE_IMAGES) | xargs -n 1 docker pull
+	docker images
+
 dev-server : SERVICE_NAME = riff-server
 dev-server : _start-dev
 
@@ -248,9 +262,9 @@ $(IMAGE_DIR) :
 	@mkdir -p $(IMAGE_DIR)
 
 $(IMAGE_DIR)/rtc-build.$(notdir $(RTC_BUILD_TAG)) : | $(IMAGE_DIR)
-	set -o pipefail ; docker build --rm --force-rm --pull --target build -t rifflearning/rtc-build:$(RTC_BUILD_TAG) $(riff_rtc_context)  2>&1 | tee $(DOCKER_LOG).$(notdir $@)
+	set -o pipefail ; docker build $(OPTS) --rm --force-rm --pull --target build -t rifflearning/rtc-build:$(RTC_BUILD_TAG) $(riff_rtc_context)  2>&1 | tee $(DOCKER_LOG).$(notdir $@)
 	@touch $@
 
 $(IMAGE_DIR)/nodeapp-init.latest : | $(IMAGE_DIR)
-	set -o pipefail ; docker build --rm --force-rm --pull -t rifflearning/nodeapp-init:latest nodeapp-init 2>&1 | tee $(DOCKER_LOG).$(notdir $@)
+	set -o pipefail ; docker build $(OPTS) --rm --force-rm --pull -t rifflearning/nodeapp-init:latest nodeapp-init 2>&1 | tee $(DOCKER_LOG).$(notdir $@)
 	@touch $@
