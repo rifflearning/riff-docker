@@ -224,3 +224,52 @@ initial implementation but an enhancement. These should be treated as new featur
 engineer and a card in Trello created and put in the _Backlog_ for prioritization by the product
 manager.
 -->
+
+## Appendix
+
+### Installing Ubuntu dependencies
+
+- docker (see [Get Docker CE for Ubuntu][])
+- docker-compose (see [Install Docker Compose][])
+- make
+- git
+
+#### docker
+These instructions are from the Get Docker page linked above and may have changed, double check the linked page.
+
+```sh
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce
+```
+
+#### docker-compose
+These instructions are from the Install docker-compose page linked above and likely will have changed
+(as there may have been a new version released since this page was last updated), Check the link for the
+up-to-date command.
+
+```sh
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+#### make and git
+
+**make** and **git** are available in the standard Ubuntu repositories.
+
+```sh
+sudo apt-get make git
+```
+
+[Get Docker CE for Ubuntu]: <https://docs.docker.com/install/linux/docker-ce/ubuntu/> "Get Docker CE for Ubuntu"
+[Install Docker Compose]: <https://docs.docker.com/compose/install/> "Install docker-compose"
