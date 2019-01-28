@@ -1,0 +1,49 @@
+#! /usr/bin/env bash
+# This script must be sourced
+
+# All stack parameters are defined in this file so the values used are saved when this
+# file is committed to the source repository.
+
+# Test this is being run from the root of the riff-docker repo working dir
+if [[ -e Makefile && -e bin/cloudformation.py && bin/build-vars ]]; then
+
+    source activate
+
+    export DEPLOY_SWARM=dev
+    DOCKER_STACK_NAME=${DEPLOY_SWARM}swarm
+    MGR_NODE_INSTANCE_TYPE=t3.small
+    MGR_NODE_INSTANCE_CNT=1
+    WKR_NODE_INSTANCE_TYPE=t3.micro
+    WKR_NODE_INSTANCE_CNT=1
+    AWS_KEYPAIR=riffdev_1_useast2_key
+
+    echo Creating the $DEPLOY_SWARM swarm in AWS:
+    echo "  with $MGR_NODE_INSTANCE_CNT $MGR_NODE_INSTANCE_TYPE Manager "'node(s)'" and $WKR_NODE_INSTANCE_CNT $WKR_NODE_INSTANCE_TYPE Worker "'node(s)'
+    echo "  using the $AWS_KEYPAIR key pair for ssh access"
+    echo
+    echo bin/cloudformation.py create-docker-stack -s $WKR_NODE_INSTANCE_CNT -i $WKR_NODE_INSTANCE_TYPE -m $MGR_NODE_INSTANCE_CNT -I $MGR_NODE_INSTANCE_TYPE $DOCKER_STACK_NAME $AWS_KEYPAIR
+    bin/cloudformation.py create-docker-stack -s $WKR_NODE_INSTANCE_CNT -i $WKR_NODE_INSTANCE_TYPE -m $MGR_NODE_INSTANCE_CNT -I $MGR_NODE_INSTANCE_TYPE $DOCKER_STACK_NAME $AWS_KEYPAIR
+
+    echo
+    echo You can monitor the creation status of your swarm using:
+    echo "  bin/cloudformation.py stack-status $DOCKER_STACK_NAME"
+    echo
+    echo It will output CREATE_IN_PROGRESS while the stack is being created, and CREATE_COMPLETE
+    echo once it is done '(approx. 10-15 min)', at which point you can continue setting up the swarm
+    echo '  - add labels to the nodes'
+    echo '  - deploy the support services (registry and visualizer)'
+    echo '  - create configs and secrets'
+    echo '  - build, push and deploy the riffplatform services'
+    echo '  - restore the riff-server mongo DB so it has some data to start'
+    echo
+    echo bin/cloudformation.py stack-status $DOCKER_STACK_NAME
+    bin/cloudformation.py stack-status $DOCKER_STACK_NAME
+
+    echo
+
+else
+    echo "You do not seem to have sourced this script from the root of the riff-docker working directory."
+    echo "Change to the riff-docker working directory and run:"
+    echo "  . bin/create_aws_dev_stack"
+    echo
+fi
