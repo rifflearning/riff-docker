@@ -9,11 +9,12 @@ if [[ -e Makefile && -e bin/cloudformation.py && bin/build-vars ]]; then
 
     source activate
 
+    # Sadly t3 instances are not supported by the docker for aws cloudformation template at this time (2019-01-28)
     export DEPLOY_SWARM=dev
     DOCKER_STACK_NAME=${DEPLOY_SWARM}swarm
-    MGR_NODE_INSTANCE_TYPE=t3.small
+    MGR_NODE_INSTANCE_TYPE=t2.small
     MGR_NODE_INSTANCE_CNT=1
-    WKR_NODE_INSTANCE_TYPE=t3.micro
+    WKR_NODE_INSTANCE_TYPE=t2.micro
     WKR_NODE_INSTANCE_CNT=1
     AWS_KEYPAIR=riffdev_1_useast2_key
 
