@@ -42,13 +42,13 @@ default) managers that are t2.small instances, name it betaAswarm, and use the
 ssh key pair named "riffswarm_useast2_key", run:
 
 ```sh
-bin/cloudformation.py create_docker_stack -s 4 -i t2.micro -m 3 -I t2.small betaAswarm riffswarm_useast2_key
+bin/cloudformation.py create-docker-stack -s 4 -i t2.micro -m 3 -I t2.small betaAswarm riffswarm_useast2_key
 ```
 
 You can monitor the creation status of your swarm using:
 
 ```console
-$ ./cloudformation.py stack_status betaAswarm
+$ bin/cloudformation.py stack-status betaAswarm
 CREATE_IN_PROGRESS
 ```
 
@@ -77,7 +77,11 @@ Host 13.59.116.65 18.219.140.58
 ```
 
 get the IP address(es) by looking at the details of the AWS EC2 instances for the
-swarm managers you just created.
+swarm managers you just created, or by using:
+
+```sh
+bin/cloudformation.py get-stack-manager-ip betaAswarm
+```
 
 Now we tunnel into one of the docker swarm's manager nodes so that we can use
 the `docker` command locally to manipulate the swarm via that manager node.
