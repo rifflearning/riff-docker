@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the AWS dev swarm
+version: '3.6'
+services:
+  web-server:
+    secrets:
+      - source: dev.riffplatform.com.key.2
+        target: site.key
+      - source: dev.riffplatform.com.crt.2
+        target: site.crt
+
+# Your cert will expire on 2019-02-14 (staging key.2 & crt.2)
+secrets:
+  dev.riffplatform.com.key.2:
+    external: true
+  dev.riffplatform.com.crt.2:
+    external: true
