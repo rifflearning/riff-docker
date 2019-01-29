@@ -4,14 +4,14 @@ version: '3.6'
 services:
   web-server:
     secrets:
-      - source: beta.riffplatform.com.key.2
+      - source: beta.riffplatform.com.key.3
         target: site.key
-      - source: beta.riffplatform.com.crt.2
+      - source: beta.riffplatform.com.crt.3
         target: site.crt
 
-# Your cert will expire on 2019-02-14 (beta key.2 & crt.2)
+# Your cert will expire on 2019-04-28 (beta key.3 & crt.3)
 secrets:
-  beta.riffplatform.com.key.2:
+  beta.riffplatform.com.key.3:
     external: true
-  beta.riffplatform.com.crt.2:
+  beta.riffplatform.com.crt.3:
     external: true
