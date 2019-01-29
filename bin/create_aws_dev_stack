@@ -41,6 +41,57 @@ if [[ -e Makefile && -e bin/cloudformation.py && bin/build-vars ]]; then
     bin/cloudformation.py stack-status $DOCKER_STACK_NAME
 
     echo
+    # Next steps for initializing the docker swarm (rough draft)
+    #
+    # # Make sure that AWS Route 53 riffplatform.com Hosted Zone has an
+    # # A record alias pointing at the $DOCKER_STACK_NAME just created above.
+    #
+    # # find a manager ip and add a section to ~/.ssh/config
+    # bin/cloudformation.py get-stack-manager-ip $DOCKER_STACK_NAME
+    #
+    # # tunnel to the docker swarm we just created
+    # source bin/tunnel $DEPLOY_SWARM
+    #
+    # # find the NODE IDs to assign to the vars below (values given are examples)
+    # docker node ls
+    # MGR_NODE_1_ID=w0v1av2hdap4tymky5lgzw4ak
+    # WKR_NODE_1_ID=je49aaf4baix5euhvaf4pkb7p
+    #
+    # # add labels to the docker nodes
+    # docker node update --label-add mongo=true $MGR_NODE_1_ID
+    # docker node update --label-add registry=true $WKR_NODE_1_ID
+    # docker node update --label-add web=true $WKR_NODE_1_ID
+    #
+    # # deploy the support stack
+    # make deploy-support-stack
+    #
+    # # create the configs (after decrypting them in the config directory)
+    # pushd config
+    # gpg2 --decrypt --output signalmaster.local-production.yml.1 signalmaster.local-production.yml.1.gpg
+    # gpg2 --decrypt --output riff-rtc.local-production.yml.8 riff-rtc.local-production.yml.8.gpg
+    # gpg2 --decrypt --output riff-rtc.local-production.yml.8.debug riff-rtc.local-production.yml.8.debug.gpg
+    # docker config create signalmaster.local-production.yml.1 signalmaster.local-production.yml.1
+    # docker config create riff-rtc.local-production.yml.8 riff-rtc.local-production.yml.8
+    # docker config create riff-rtc.local-production.yml.8.debug riff-rtc.local-production.yml.8.debug
+    #
+    # # create the secrets (after decrypting and expanding the letsencrypt tar file)
+    # cd secret
+    # gpg2 --decrypt --output letsencrypt-riffsites-20190128.tar.gz letsencrypt-riffsites-20190128.tar.gz.gpg
+    # tar -xvzf letsencrypt-riffsites-20190128.tar.gz
+    # docker secret create dev.riffplatform.com.key.1 dev.riffplatform.com.key.1
+    # docker secret create dev.riffplatform.com.crt.1 dev.riffplatform.com.crt.1
+    # popd
+    #
+    # # Standard build, push and deploy
+    # make clean build-prod
+    # make push-prod
+    # make deploy-stack
+    #
+    # # Optionally restore a mongo backup to give the dev site some initial data for testing
+    # # purposes
+    # docker cp /home/mjl/tmp/mongodb_riff-test.staging.backup-20190125185253.gz riff-stack_mongo-server.1.0q8064g1l5e2s5ay6eo7uskge:/data/
+    # docker exec -t riff-stack_mongo-server.1.0q8064g1l5e2s5ay6eo7uskge mongorestore --db=riff-test --gzip --archive=/data/mongodb_riff-test.staging.backup-20190125185253.gz
+    # docker exec -t riff-stack_mongo-server.1.0q8064g1l5e2s5ay6eo7uskge rm /data/mongodb_riff-test.staging.backup-20190125185253.gz
 
 else
     echo "You do not seem to have sourced this script from the root of the riff-docker working directory."
