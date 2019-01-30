@@ -5,7 +5,7 @@ ARG UBUNTU_VER=latest
 # ---- Base Node image ----
 FROM ubuntu:${UBUNTU_VER} AS base
 ARG NODE_VER=10
-ARG GOLANG_VER=1.11.2
+ARG GOLANG_VER=1.11.5
 
 # Copy setup files to the image
 COPY bashrc run.sh riffmm-setup.sh /setupfiles/
