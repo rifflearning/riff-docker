@@ -5,7 +5,7 @@
 # file is committed to the source repository.
 
 # Test this is being run from the root of the riff-docker repo working dir
-if [[ -e Makefile && -e bin/cloudformation.py && bin/build-vars ]]; then
+if [[ -e Makefile && -e bin/cloudformation.py && -e bin/build-vars ]]; then
 
     source activate
 
