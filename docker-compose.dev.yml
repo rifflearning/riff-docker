@@ -27,6 +27,7 @@ services:
       SIGNALMASTER_PATH: /api/signalmaster
       RIFF_SERVER_URL: /
       RIFF_SERVER_PATH: /api/videodata
+      RIFF_LOGLEVEL: debug
 
   riff-server:
     volumes:
