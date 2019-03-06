@@ -2,7 +2,6 @@
 version: '3'
 services:
   certbot:
-    image: nginx:latest
     image: '127.0.0.1:5000/rifflearning/certbot:latest'
     build: .
     ports:
