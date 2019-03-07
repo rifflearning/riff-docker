@@ -2,7 +2,7 @@
 # override/additions to docker-stack.yml for deploying to the AWS dev swarm
 version: '3.6'
 services:
-  web-server:
+  pltfrm-web:
     secrets:
       - source: dev.riffplatform.com.key.1
         target: site.key

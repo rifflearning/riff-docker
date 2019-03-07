@@ -2,7 +2,7 @@
 # override/additions to docker-stack.yml for deploying to the beta swarm
 version: '3.6'
 services:
-  web-server:
+  pltfrm-web:
     secrets:
       - source: beta.riffplatform.com.key.3
         target: site.key

@@ -14,8 +14,8 @@
 #     - RIFF_RTC_TAG
 version: '3.6'
 services:
-  riff-server:
-    image: '127.0.0.1:5000/rifflearning/riff-server:${RIFF_SERVER_TAG-dev}'
+  pltfrm-riffdata:
+    image: '127.0.0.1:5000/rifflearning/pltfrm-riffdata:${RIFF_SERVER_TAG-dev}'
     build:
       context: ${RIFF_SERVER_PATH-../riff-server}/docker
       dockerfile: Dockerfile-dev
@@ -28,7 +28,7 @@ services:
         CRYPTO_KEY: "'your-key-here'"
         DEFAULT_USER_EMAIL: default-user-email
         DEFAULT_USER_PASSWORD: default-user-password
-        MONGODB_URI: mongodb://mongo-server/riff-test
+        MONGODB_URI: mongodb://pltfrm-riffdata-db/riff-test
         MONGO_CERT: some-fake-cert
         REPORT_EMAIL_FROM: "'MM Reports' <email@address.com>"
         REPORT_EMAIL_HOST: "smtp server here"
@@ -39,10 +39,10 @@ services:
         SEND_REPORT: 'false'
         END_MEETING_AFTER_MINUTES: 10
     depends_on:
-      - mongo-server
+      - pltfrm-riffdata-db
 
-  riff-rtc:
-    image: '127.0.0.1:5000/rifflearning/riff-rtc:${RIFF_RTC_TAG-dev}'
+  pltfrm-riffrtc:
+    image: '127.0.0.1:5000/rifflearning/pltfrm-riffrtc:${RIFF_RTC_TAG-dev}'
     build:
       context: ${RIFF_RTC_PATH-../riff-rtc}/docker
       dockerfile: Dockerfile-dev
@@ -50,12 +50,12 @@ services:
         NODE_VER: 10
         PORT: 3001
     depends_on:
-      - redis-server
+      - pltfrm-redis
 
-  web-server:
-    image: '127.0.0.1:5000/rifflearning/web-server:${RIFF_RTC_TAG-dev}'
+  pltfrm-web:
+    image: '127.0.0.1:5000/rifflearning/pltfrm-web:${RIFF_RTC_TAG-dev}'
     build:
-      context:  web-server
+      context:  pltfrm-web
       dockerfile: Dockerfile-dev
       args:
         - NGINX_VER=latest
@@ -63,28 +63,28 @@ services:
       - '80:80'
       - '443:443'
     depends_on:
-      - riff-rtc
-      - riff-server
-      - signalmaster
+      - pltfrm-riffrtc
+      - pltfrm-riffdata
+      - pltfrm-signalmaster
 
-  signalmaster:
-    image: '127.0.0.1:5000/rifflearning/signalmaster:${SIGNALMASTER_TAG-dev}'
+  pltfrm-signalmaster:
+    image: '127.0.0.1:5000/rifflearning/pltfrm-signalmaster:${SIGNALMASTER_TAG-dev}'
     build:
       context: ${SIGNALMASTER_PATH-../signalmaster}/docker
       dockerfile: Dockerfile-dev
 
-  mongo-server:
+  pltfrm-riffdata-db:
     image: mongo:${MONGO_VER-latest}
     volumes:
-      - mongo-data:/data/db
-      - mongo-configdb:/data/configdb
+      - pltfrm-riffdata-db-data:/data/db
+      - pltfrm-riffdata-db-configdb:/data/configdb
 
-  redis-server:
+  pltfrm-redis:
     image: redis:${REDIS_VER-latest}
     volumes:
-      - redis-data:/data
+      - pltfrm-redis-data:/data
 
 volumes:
-  mongo-data:
-  mongo-configdb:
-  redis-data:
+  pltfrm-riffdata-db-data:
+  pltfrm-riffdata-db-configdb:
+  pltfrm-redis-data:

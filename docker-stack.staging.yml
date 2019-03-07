@@ -2,7 +2,7 @@
 # override/additions to docker-stack.yml for deploying to the staging swarm
 version: '3.6'
 services:
-  web-server:
+  pltfrm-web:
     secrets:
       - source: staging.riffplatform.com.key.3
         target: site.key
