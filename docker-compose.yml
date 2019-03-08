@@ -14,8 +14,8 @@
 #     - RIFF_RTC_TAG
 version: '3.6'
 services:
-  pltfrm-riffdata:
-    image: '127.0.0.1:5000/rifflearning/pltfrm-riffdata:${RIFF_SERVER_TAG-dev}'
+  pfm-riffdata:
+    image: '127.0.0.1:5000/rifflearning/pfm-riffdata:${RIFF_SERVER_TAG-dev}'
     build:
       context: ${RIFF_SERVER_PATH-../riff-server}/docker
       dockerfile: Dockerfile-dev
@@ -28,7 +28,7 @@ services:
         CRYPTO_KEY: "'your-key-here'"
         DEFAULT_USER_EMAIL: default-user-email
         DEFAULT_USER_PASSWORD: default-user-password
-        MONGODB_URI: mongodb://pltfrm-riffdata-db/riff-test
+        MONGODB_URI: mongodb://pfm-riffdata-db/riff-test
         MONGO_CERT: some-fake-cert
         REPORT_EMAIL_FROM: "'MM Reports' <email@address.com>"
         REPORT_EMAIL_HOST: "smtp server here"
@@ -39,10 +39,10 @@ services:
         SEND_REPORT: 'false'
         END_MEETING_AFTER_MINUTES: 10
     depends_on:
-      - pltfrm-riffdata-db
+      - pfm-riffdata-db
 
-  pltfrm-riffrtc:
-    image: '127.0.0.1:5000/rifflearning/pltfrm-riffrtc:${RIFF_RTC_TAG-dev}'
+  pfm-riffrtc:
+    image: '127.0.0.1:5000/rifflearning/pfm-riffrtc:${RIFF_RTC_TAG-dev}'
     build:
       context: ${RIFF_RTC_PATH-../riff-rtc}/docker
       dockerfile: Dockerfile-dev
@@ -50,12 +50,12 @@ services:
         NODE_VER: 10
         PORT: 3001
     depends_on:
-      - pltfrm-redis
+      - pfm-redis
 
-  pltfrm-web:
-    image: '127.0.0.1:5000/rifflearning/pltfrm-web:${RIFF_RTC_TAG-dev}'
+  pfm-web:
+    image: '127.0.0.1:5000/rifflearning/pfm-web:${RIFF_RTC_TAG-dev}'
     build:
-      context:  pltfrm-web
+      context:  pfm-web
       dockerfile: Dockerfile-dev
       args:
         - NGINX_VER=latest
@@ -63,28 +63,28 @@ services:
       - '80:80'
       - '443:443'
     depends_on:
-      - pltfrm-riffrtc
-      - pltfrm-riffdata
-      - pltfrm-signalmaster
+      - pfm-riffrtc
+      - pfm-riffdata
+      - pfm-signalmaster
 
-  pltfrm-signalmaster:
-    image: '127.0.0.1:5000/rifflearning/pltfrm-signalmaster:${SIGNALMASTER_TAG-dev}'
+  pfm-signalmaster:
+    image: '127.0.0.1:5000/rifflearning/pfm-signalmaster:${SIGNALMASTER_TAG-dev}'
     build:
       context: ${SIGNALMASTER_PATH-../signalmaster}/docker
       dockerfile: Dockerfile-dev
 
-  pltfrm-riffdata-db:
+  pfm-riffdata-db:
     image: mongo:${MONGO_VER-latest}
     volumes:
-      - pltfrm-riffdata-db-data:/data/db
-      - pltfrm-riffdata-db-configdb:/data/configdb
+      - pfm-riffdata-db-data:/data/db
+      - pfm-riffdata-db-configdb:/data/configdb
 
-  pltfrm-redis:
+  pfm-redis:
     image: redis:${REDIS_VER-latest}
     volumes:
-      - pltfrm-redis-data:/data
+      - pfm-redis-data:/data
 
 volumes:
-  pltfrm-riffdata-db-data:
-  pltfrm-riffdata-db-configdb:
-  pltfrm-redis-data:
+  pfm-riffdata-db-data:
+  pfm-riffdata-db-configdb:
+  pfm-redis-data:

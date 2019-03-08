@@ -11,7 +11,7 @@ IMAGE_DIR := images
 DOCKER_LOG := $(IMAGE_DIR)/docker.log
 
 # Directory where the ssl keys should be created/found
-SSL_DIR := pltfrm-web/ssl
+SSL_DIR := pfm-web/ssl
 
 # The order to combine the compose/stack config files for spinning up
 # the riff services using either docker-compose or docker stack
@@ -173,19 +173,19 @@ push-prod :
 deploy-stack :
 # require that the DEPLOY_SWARM be explicitly defined.
 	$(call ndef,DEPLOY_SWARM)
-	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml pltfrm-stack
+	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml pfm-stk
 
 pull-images :
 	echo $(BASE_IMAGES) | xargs -n 1 docker pull
 	docker images
 
-dev-server : SERVICE_NAME = pltfrm-riffdata
+dev-server : SERVICE_NAME = pfm-riffdata
 dev-server : _start-dev
 
-dev-rtc : SERVICE_NAME = pltfrm-riffrtc
+dev-rtc : SERVICE_NAME = pfm-riffrtc
 dev-rtc : _start-dev
 
-dev-sm : SERVICE_NAME = pltfrm-signalmaster
+dev-sm : SERVICE_NAME = pfm-signalmaster
 dev-sm : _start-dev
 
 .PHONY : _start-dev
@@ -217,16 +217,16 @@ _nodeapp-init : build-init-image
 	docker run --rm --tty --mount type=bind,src=$(NODEAPP_PATH),dst=/app rifflearning/nodeapp-init
 
 .PHONY : logs-web logs-rtc logs-server logs-mongo
-logs-web : SERVICE_NAME = pltfrm-web
+logs-web : SERVICE_NAME = pfm-web
 logs-web : logs
 
-logs-rtc : SERVICE_NAME = pltfrm-riffrtc
+logs-rtc : SERVICE_NAME = pfm-riffrtc
 logs-rtc : logs
 
-logs-server : SERVICE_NAME = pltfrm-riffdata
+logs-server : SERVICE_NAME = pfm-riffdata
 logs-server : logs
 
-logs-mongo : SERVICE_NAME = pltfrm-riffdata-db
+logs-mongo : SERVICE_NAME = pfm-riffdata-db
 logs-mongo : logs
 
 # Add all constraint labels to the single docker node running in swarm mode on a development machine

@@ -2,7 +2,7 @@
 # override/additions to docker-stack.yml for deploying to the grantthornton swarm
 version: '3.6'
 services:
-  pltfrm-web:
+  pfm-web:
     secrets:
       - source: grantthornton.riffplatform.com.key.1
         target: site.key
