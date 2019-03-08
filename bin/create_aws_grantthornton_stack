@@ -7,7 +7,7 @@
 if [[ ! -e bin/internal/create_aws_stack_w_args ]]; then
     echo "You do not seem to have sourced this script from the root of the edu-docker working directory."
     echo "Change to the edu-docker working directory and run:"
-    echo "  . bin/create_aws_staging_stack"
+    echo "  . bin/create_aws_grantthornton_stack"
     echo
     return
 fi
@@ -63,8 +63,8 @@ echo "Use the following commands after setting the latest tar file:"
 echo "  LETSENCRYPT_TAR=letsencrypt-riffsites-20190201.tar.gz"
 echo '  gpg2 --decrypt --output ${LETSENCRYPT_TAR} ${LETSENCRYPT_TAR}.gpg'
 echo '  tar -xvzf ${LETSENCRYPT_TAR}'
-echo "  docker secret create staging.riffplatform.com.key.1 ./etc/letsencrypt/archive/staging.riffplatform.com/privkey1.pem"
-echo "  docker secret create staging.riffplatform.com.crt.1 ./etc/letsencrypt/archive/staging.riffplatform.com/fullchain1.pem"
+echo "  docker secret create grantthornton.riffplatform.com.key.1 ./etc/letsencrypt/archive/grantthornton.riffplatform.com/privkey1.pem"
+echo "  docker secret create grantthornton.riffplatform.com.crt.1 ./etc/letsencrypt/archive/grantthornton.riffplatform.com/fullchain1.pem"
 echo "  popd"
 echo
 echo "------------------------------ "
