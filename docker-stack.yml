@@ -4,7 +4,7 @@
 # better to use make deploy-stack
 version: '3.6'
 services:
-  riff-server:
+  pfm-riffdata:
     deploy:
       replicas: 1
       update_config:
@@ -15,7 +15,7 @@ services:
       placement:
         constraints: [node.labels.mongo == true]
 
-  riff-rtc:
+  pfm-riffrtc:
     deploy:
       replicas: 1
       update_config:
@@ -29,7 +29,7 @@ services:
       - source: riff-rtc.local-production.yml.8.debug
         target: /app/config/local-production.yml
 
-  mongo-server:
+  pfm-riffdata-db:
     deploy:
       replicas: 1
       update_config:
@@ -40,7 +40,7 @@ services:
       placement:
         constraints: [node.labels.mongo == true]
 
-  redis-server:
+  pfm-redis:
     deploy:
       replicas: 1
       update_config:
@@ -51,7 +51,7 @@ services:
       placement:
         constraints: [node.labels.web == true]
 
-  signalmaster:
+  pfm-signalmaster:
     deploy:
       replicas: 1
       update_config:
@@ -63,7 +63,7 @@ services:
       - source: signalmaster.local-production.yml.1
         target: /app/config/local-production.yml
 
-  web-server:
+  pfm-web:
     deploy:
       replicas: 1
       update_config:

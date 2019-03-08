@@ -7,19 +7,19 @@
 if [[ ! -e bin/internal/create_aws_stack_w_args ]]; then
     echo "You do not seem to have sourced this script from the root of the edu-docker working directory."
     echo "Change to the edu-docker working directory and run:"
-    echo "  . bin/create_aws_dev_stack"
+    echo "  . bin/create_aws_betaA_stack"
     echo
     return
 fi
 
 # Set the AWS stack variables (the stack suffix and the region, keypair maps) and the
-# derived variables for 'dev' (DEPLOY_SWARM, AWS_CF_STACK_NAME, AWS_STACK_REGION, AWS_STACK_KEYPAIR)
-source bin/aws_stack_vars dev
+# derived variables for 'betaA' (DEPLOY_SWARM, AWS_CF_STACK_NAME, AWS_STACK_REGION, AWS_STACK_KEYPAIR)
+source bin/aws_stack_vars betaA
 
 # Sadly t3 instances are not supported by the docker for aws cloudformation template at this time (2019-01-28)
 MGR_NODE_INSTANCE_TYPE=t2.small
 MGR_NODE_INSTANCE_CNT=1
-WKR_NODE_INSTANCE_TYPE=t2.micro
+WKR_NODE_INSTANCE_TYPE=t2.small
 WKR_NODE_INSTANCE_CNT=1
 
 # internal script uses the above bash parameters
@@ -63,8 +63,8 @@ echo "Use the following commands after setting the latest tar file:"
 echo "  LETSENCRYPT_TAR=letsencrypt-riffsites-20190201.tar.gz"
 echo '  gpg2 --decrypt --output ${LETSENCRYPT_TAR} ${LETSENCRYPT_TAR}.gpg'
 echo '  tar -xvzf ${LETSENCRYPT_TAR}'
-echo "  docker secret create dev.riffplatform.com.key.1 ./etc/letsencrypt/archive/dev.riffplatform.com/privkey1.pem"
-echo "  docker secret create dev.riffplatform.com.crt.1 ./etc/letsencrypt/archive/dev.riffplatform.com/fullchain1.pem"
+echo "  docker secret create beta.riffplatform.com.key.1 ./etc/letsencrypt/archive/beta.riffplatform.com/privkey1.pem"
+echo "  docker secret create beta.riffplatform.com.crt.1 ./etc/letsencrypt/archive/beta.riffplatform.com/fullchain1.pem"
 echo "  popd"
 echo
 echo "------------------------------ "

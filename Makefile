@@ -11,7 +11,7 @@ IMAGE_DIR := images
 DOCKER_LOG := $(IMAGE_DIR)/docker.log
 
 # Directory where the ssl keys should be created/found
-SSL_DIR := web-server/ssl
+SSL_DIR := pfm-web/ssl
 
 # The order to combine the compose/stack config files for spinning up
 # the riff services using either docker-compose or docker stack
@@ -33,6 +33,12 @@ BASE_IMAGES := \
 	redis:latest \
 	mongo:latest \
 	nginx:latest
+
+# The pull-support-images target is a helper to update the support docker images used
+# by the support stack services. This is a list of those images.
+SUPPORT_IMAGES := \
+	registry:2 \
+	dockersamples/visualizer:stable
 
 
 # These environment variables are used as build arguments by the docker-compose
@@ -167,19 +173,19 @@ push-prod :
 deploy-stack :
 # require that the DEPLOY_SWARM be explicitly defined.
 	$(call ndef,DEPLOY_SWARM)
-	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml riff-stack
+	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml pfm-stk
 
 pull-images :
 	echo $(BASE_IMAGES) | xargs -n 1 docker pull
 	docker images
 
-dev-server : SERVICE_NAME = riff-server
+dev-server : SERVICE_NAME = pfm-riffdata
 dev-server : _start-dev
 
-dev-rtc : SERVICE_NAME = riff-rtc
+dev-rtc : SERVICE_NAME = pfm-riffrtc
 dev-rtc : _start-dev
 
-dev-sm : SERVICE_NAME = signalmaster
+dev-sm : SERVICE_NAME = pfm-signalmaster
 dev-sm : _start-dev
 
 .PHONY : _start-dev
@@ -210,23 +216,17 @@ _nodeapp-init : build-init-image
 	$(call ndef,NODEAPP_PATH)
 	docker run --rm --tty --mount type=bind,src=$(NODEAPP_PATH),dst=/app rifflearning/nodeapp-init
 
-# I'm leaving this target although I've removed it from the help because
-# it's not as generally needed anymore.
-.PHONY : image-web-server
-image-web-server : SERVICE_NAME = web-server
-image-web-server : build-dev
-
 .PHONY : logs-web logs-rtc logs-server logs-mongo
-logs-web : SERVICE_NAME = web-server
+logs-web : SERVICE_NAME = pfm-web
 logs-web : logs
 
-logs-rtc : SERVICE_NAME = riff-rtc
+logs-rtc : SERVICE_NAME = pfm-riffrtc
 logs-rtc : logs
 
-logs-server : SERVICE_NAME = riff-server
+logs-server : SERVICE_NAME = pfm-riffdata
 logs-server : logs
 
-logs-mongo : SERVICE_NAME = mongo-server
+logs-mongo : SERVICE_NAME = pfm-riffdata-db
 logs-mongo : logs
 
 # Add all constraint labels to the single docker node running in swarm mode on a development machine
@@ -238,8 +238,12 @@ dev-swarm-labels :
 
 # The support stack includes the registry which is needed to deploy any locally built images
 # and the visualizer to show what's running on the nodes of the swarm
-deploy-support-stack :
+deploy-support-stack : pull-support-images
+
 	docker stack deploy -c docker-stack.support.yml support-stack
+
+pull-support-images :
+	echo $(SUPPORT_IMAGES) | xargs -n 1 docker pull
 
 $(SSL_DIR)/certs :
 $(SSL_DIR)/private :
