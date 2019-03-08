@@ -5,7 +5,7 @@
 ########################################################
 .env
 config/local*
-web-server/ssl/
+pfm-web/ssl/
 
 # created distribution files (e.g. compiled typescript) #
 #########################################################

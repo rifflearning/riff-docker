@@ -18,18 +18,18 @@
 #     - RIFF_RTC_TAG
 version: '3.6'
 services:
-  riff-server:
+  pfm-riffdata:
     volumes:
       - ${RIFF_SERVER_PATH-../riff-server}:/app
 
-  riff-rtc:
+  pfm-riffrtc:
     volumes:
       - ${RIFF_RTC_PATH-../riff-rtc}:/app
 
-  web-server:
+  pfm-web:
     volumes:
         - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
 
-  signalmaster:
+  pfm-signalmaster:
     volumes:
         - ${SIGNALMASTER_PATH-../signalmaster}:/app

@@ -16,30 +16,30 @@
 #     - RIFF_RTC_TAG
 version: '3.6'
 services:
-  riff-server:
-    image: '127.0.0.1:5000/rifflearning/riff-server:${RIFF_SERVER_TAG-latest}'
+  pfm-riffdata:
+    image: '127.0.0.1:5000/rifflearning/pfm-riffdata:${RIFF_SERVER_TAG-latest}'
     build:
       context: https://github.com/rifflearning/riff-server.git#${RIFF_SERVER_REF-master}
       dockerfile: Dockerfile
 
-  riff-rtc:
-    image: '127.0.0.1:5000/rifflearning/riff-rtc:${RIFF_RTC_TAG-latest}'
+  pfm-riffrtc:
+    image: '127.0.0.1:5000/rifflearning/pfm-riffrtc:${RIFF_RTC_TAG-latest}'
     build:
       context: https://github.com/rifflearning/riff-rtc.git#${RIFF_RTC_REF-master}
       dockerfile: docker/Dockerfile-prod-server
       args:
         - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
 
-  web-server:
-    image: '127.0.0.1:5000/rifflearning/web-server:${RIFF_RTC_TAG-latest}'
+  pfm-web:
+    image: '127.0.0.1:5000/rifflearning/pfm-web:${RIFF_RTC_TAG-latest}'
     build:
-      context:  web-server
+      context:  pfm-web
       dockerfile: Dockerfile-prod
       args:
         - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
 
-  signalmaster:
-    image: '127.0.0.1:5000/rifflearning/signalmaster:${SIGNALMASTER_TAG-latest}'
+  pfm-signalmaster:
+    image: '127.0.0.1:5000/rifflearning/pfm-signalmaster:${SIGNALMASTER_TAG-latest}'
     build:
       context: https://github.com/rifflearning/signalmaster.git#${SIGNALMASTER_REF-master}
       dockerfile: Dockerfile
