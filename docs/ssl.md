@@ -23,19 +23,20 @@ renewed. Use `docker cp` to get the saved tar file back into the container
 and untar it if necessary.
 
 ```sh
+CB_CNTR=$(docker ps --filter="volume=ssl-stack_letsencrypt-data" --filter="status=running" --format={{.Names}})
 CB_CNTR=ssl-stack_certbot.1.joc5p7an6ews92l6yx4bl5onj
-docker cp ~/Downloads/letsencrypt-riffplatform-20181116.tar.gz $CB_CNTR:/
+docker cp ../config/secret/letsencrypt-riffsites-20181116.tar.gz $CB_CNTR:/
 docker exec -it $CB_CNTR bash
-tar -xvzf letsencrypt-riffplatform-20181116.tar.gz
-rm letsencrypt-riffplatform-20181116.tar.gz
+tar -xvzf letsencrypt-riffsites-20181116.tar.gz
+rm letsencrypt-riffsites-20181116.tar.gz
 certbot certonly --domain beta.riffplatform.com --webroot --webroot-path /usr/share/nginx/html
 # It doesn't matter but I've been picking the 1st account: ea745093e479@2018-09-04T21:04:31Z (8450)
 # Update the Route 53 alias and do it again for another domain if you want
 #certbot certonly --domain staging.riffplatform.com --webroot --webroot-path /usr/share/nginx/html
 # create the tar file w/ the renewed certs and any other updated letsencrypt info
-tar -cvzf letsencrypt-riffplatform-NEWDATE.tar.gz /etc/letsencrypt/
+tar -cvzf letsencrypt-riffsites-NEWDATE.tar.gz /etc/letsencrypt/
 exit
-docker cp $CB_CNTR:/letsencrypt-riffplatform-NEWDATE.tar.gz letsencrypt-riffplatform-NEWDATE.tar.gz
+docker cp $CB_CNTR:/letsencrypt-riffsites-NEWDATE.tar.gz ./
 docker stack rm ssl-stack
 ```
 
