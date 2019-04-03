@@ -5,22 +5,26 @@
 #  or
 # . build-vars
 
+# The image tag on the built images will be the same as the git commit ref
+# with all characters up to the last '/' removed.
+# ie fix/john/failing-tests -> failing-tests
+# if it doesn't work as a tag (perhaps the ref contains some other
+# characters that don't work in tags or some other issue) you should
+# replace the expansion of the REF with a reasonable constant value.
+
 # Specify the github rifflearning/riff-rtc git commit reference for the
 # production riff-rtc and web-server docker images
-# The image tag on the built image will be the same as that ref
-# unless it doesn't work as a tag (contains a / or some other issue)
-# in which case you should change it here.
-export RIFF_RTC_REF=1.1.0
-export RTC_BUILD_TAG=$RIFF_RTC_REF
+export RIFF_RTC_REF=0.4.0-dev.61
+export RTC_BUILD_TAG=${RIFF_RTC_REF##*/}
 export RIFF_RTC_TAG=$RTC_BUILD_TAG
 
 # Specify the github rifflearning/riff-server git commit reference for the
 # production riff-server docker image
-export RIFF_SERVER_REF=0.4.0-dev.10
-export RIFF_SERVER_TAG=$RIFF_SERVER_REF
+export RIFF_SERVER_REF=0.4.0-dev.9
+export RIFF_SERVER_TAG=${RIFF_SERVER_REF##*/}
 
 # Specify the github rifflearning/signalmaster git commit reference for the
 # production signalmaster docker image
 export SIGNALMASTER_REF=2.0.0
-export SIGNALMASTER_TAG=$SIGNALMASTER_REF
+export SIGNALMASTER_TAG=${SIGNALMASTER_REF##*/}
 
