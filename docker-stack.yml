@@ -63,7 +63,7 @@ services:
       restart_policy:
         condition: on-failure
     configs:
-      - source: signalmaster.local-production.yml.1
+      - source: signalmaster.local-production.yml.2
         target: /app/config/local-production.yml
 
   pfm-web:
@@ -85,5 +85,5 @@ configs:
     external: true
   riffdata.local-production.yml.1:
     external: true
-  signalmaster.local-production.yml.1:
+  signalmaster.local-production.yml.2:
     external: true
