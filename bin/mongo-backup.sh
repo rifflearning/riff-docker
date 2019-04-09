@@ -1,14 +1,15 @@
-#! /usr/bin/env sh
+#! /usr/bin/env bash
 #
 # Create a backup of the riffdata mongo database running in a docker
 # container putting the backup file in ~/tmp.
 #
 # This should work if sourced on the docker node actually running the riffdata db mongo container
 #  Note: It seems that the ancestor image must be local for it to be recognized ???
+#        so instead of --filter="ancestor=mongo"
 #        so also try --filter="volume=pfm-stk_pfm-riffdata-db-data"
 
 DEPLOY_SWARM=beta
-MONGO_CONTAINER=$(docker ps --filter="ancestor=mongo" --filter="status=running" --format={{.Names}})
+MONGO_CONTAINER=$(docker ps --filter="volume=pfm-stk_pfm-riffdata-db-data" --filter="status=running" --format={{.Names}})
 DATABASE_NAME="riff-test"
 TIMESTAMP=$(date +'%Y%m%d%H%M%S')
 ARCHIVE_NAME=mongodb_${DATABASE_NAME}.${DEPLOY_SWARM}.backup-${TIMESTAMP}.gz
