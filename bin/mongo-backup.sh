@@ -8,7 +8,7 @@
 #        so instead of --filter="ancestor=mongo"
 #        so also try --filter="volume=pfm-stk_pfm-riffdata-db-data"
 
-DEPLOY_SWARM=beta
+DEPLOY_SWARM=${DEPLOY_SWARM:-beta}
 MONGO_CONTAINER=$(docker ps --filter="volume=pfm-stk_pfm-riffdata-db-data" --filter="status=running" --format={{.Names}})
 DATABASE_NAME="riff-test"
 TIMESTAMP=$(date +'%Y%m%d%H%M%S')
