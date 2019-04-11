@@ -4,14 +4,14 @@ version: '3.6'
 services:
   pfm-web:
     secrets:
-      - source: dev.riffplatform.com.key.1
+      - source: dev.riffplatform.com.key.2
         target: site.key
-      - source: dev.riffplatform.com.crt.1
+      - source: dev.riffplatform.com.crt.2
         target: site.crt
 
-# Your cert will expire on 2019-04-28 (staging key.1 & crt.1)
+# Your cert will expire on 2019-07-08 (staging key.2 & crt.2)
 secrets:
-  dev.riffplatform.com.key.1:
+  dev.riffplatform.com.key.2:
     external: true
-  dev.riffplatform.com.crt.1:
+  dev.riffplatform.com.crt.2:
     external: true
