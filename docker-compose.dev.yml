@@ -33,3 +33,7 @@ services:
   pfm-signalmaster:
     volumes:
         - ${SIGNALMASTER_PATH-../signalmaster}:/app
+
+  pfm-riffdata-db:
+    ports:
+      - '27017:27017'
