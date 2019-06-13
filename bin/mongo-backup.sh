@@ -12,7 +12,7 @@ DEPLOY_SWARM=${DEPLOY_SWARM:-beta}
 MONGO_CONTAINER=$(docker ps --filter="volume=pfm-stk_pfm-riffdata-db-data" --filter="status=running" --format={{.Names}})
 DATABASE_NAME="riff-test"
 TIMESTAMP=$(date +'%Y%m%d%H%M%S')
-ARCHIVE_NAME=mongodb_${DATABASE_NAME}.${DEPLOY_SWARM}.backup-${TIMESTAMP}.gz
+ARCHIVE_NAME=mongodb_${DATABASE_NAME}.pfm.${DEPLOY_SWARM}.backup-${TIMESTAMP}.gz
 
 echo "Backup will be created using the following:"
 echo "  Mongo container name: $MONGO_CONTAINER"
