@@ -4,14 +4,14 @@ version: '3.6'
 services:
   pfm-web:
     secrets:
-      - source: beta.riffplatform.com.key.4
+      - source: beta.riffplatform.com.key.5
         target: site.key
-      - source: beta.riffplatform.com.crt.4
+      - source: beta.riffplatform.com.crt.5
         target: site.crt
 
-# Your cert will expire on 2019-07-08 (beta key.4 & crt.4)
+# Your cert will expire on 2019-09-29 (beta key.5 & crt.5)
 secrets:
-  beta.riffplatform.com.key.4:
+  beta.riffplatform.com.key.5:
     external: true
-  beta.riffplatform.com.crt.4:
+  beta.riffplatform.com.crt.5:
     external: true
