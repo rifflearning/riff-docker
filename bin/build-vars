@@ -14,14 +14,14 @@
 
 # Specify the github rifflearning/riff-rtc git commit reference for the
 # production riff-rtc and web-server docker images
-export RIFF_RTC_REF=refactor/chat-pt2
+export RIFF_RTC_REF=feature/WIP-bandwidth-experiment
 
 export RTC_BUILD_TAG=${RIFF_RTC_REF##*/}
 export RIFF_RTC_TAG=$RTC_BUILD_TAG
 
 # Specify the github rifflearning/riff-server git commit reference for the
 # production riff-server docker image
-export RIFF_SERVER_REF=feature/add-indices
+export RIFF_SERVER_REF=develop
 export RIFF_SERVER_TAG=${RIFF_SERVER_REF##*/}
 
 # Specify the github rifflearning/signalmaster git commit reference for the
