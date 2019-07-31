@@ -14,7 +14,7 @@
 
 # Specify the github rifflearning/riff-rtc git commit reference for the
 # production riff-rtc and web-server docker images
-export RIFF_RTC_REF=1.2.0-dev.13
+export RIFF_RTC_REF=1.2.0-dev.14
 export RTC_BUILD_TAG=${RIFF_RTC_REF##*/}
 export RIFF_RTC_TAG=$RTC_BUILD_TAG
 
