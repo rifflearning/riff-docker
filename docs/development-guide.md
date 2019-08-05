@@ -24,6 +24,8 @@ this relative directory layout.
 - docker
 - make
 - Python 3 (only for needed for deploying)
+- docker-compose 18.02.0+ (https://docs.docker.com/compose/install/)
+- node 10 or greater  is reccomended (https://nodejs.org/en/download/)
 
 ### Clone and initialize working directories
 
@@ -37,14 +39,9 @@ git clone https://github.com/rifflearning/signalmaster.git
 cd riff-docker
 make init-rtc
 make init-server
+make init-signalmaster
 ```
-for now (we need to set up `make init-signalmaster`)
-you also have to initialize the signalmaster working directory by:
-```
-cd ../signalmaster
-npm install
-cd ../riff-docker
-```
+
 
 Lastly you will need to create a local development configuration file
 that contains the _secret_ values such as firebase keys for riff-rtc.

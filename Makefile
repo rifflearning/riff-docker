@@ -99,6 +99,7 @@ SSL_FILES := \
 	$(SSL_DIR)/certs/dhparam.pem \
 
 
+.DEFAULT_GOAL := show-help
 .DELETE_ON_ERROR :
 .PHONY : help up down stop up-dev up-prod clean dev-server dev-rtc
 .PHONY : logs logs-rtc logs-server logs-web logs-mongo
@@ -134,43 +135,47 @@ help :
 	echo "- deploy-support-stack : deploy the support stack needed for deploying other local images" ; \
 	echo ""
 
-up : up-dev
+up : up-dev ## run docker-compose up (w/ dev config)
 
 up-dev :
 	docker-compose $(COMPOSE_CONF_DEV) up $(MAKE_UP_OPTS) $(OPTS)
 
-up-prod :
+up-prod : ## run docker-compose up (w/ prod config)
 	docker-compose $(COMPOSE_CONF_PROD) up --detach $(OPTS)
 
-down :
+down : ## run docker-compose down
 	docker-compose down
 
-stop :
+stop : ## run docker-compose stop
 	docker-compose stop
 
-logs :
+logs : ## run docker-compose logs
 	docker-compose logs $(OPTS) $(SERVICE_NAME)
 
-clean :
+clean : ## remove all build artifacts (including the tracking files for created images)
 	-rm $(IMAGE_DIR)/*
 
-show-env :
+show-env : ## displays the env var values used for building
 	@echo ""                                          ; \
 	echo "Here are the current environment settings:" ; \
 	$(SHOW_ENV)                                         \
 	echo ""
 
-build-dev : $(SSL_FILES)
+show-ps : ## Show all docker containers w/ limited fields
+	docker ps -a --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}'
+
+build-dev : $(SSL_FILES) ## (re)build the dev images pulling the latest base images
 	docker-compose build --pull $(OPTS) $(SERVICE_NAME)
 
+build-prod : ## (re)build the prod images pulling the latest base images
 build-prod : BUILD_ARG_OPTIONS := $(patsubst %,--build-arg %,$(filter-out %=,$(foreach var,$(BUILD_ARGS),$(var)=$($(var)))))
 build-prod : rtc-build-image $(SSL_FILES)
 	docker-compose $(COMPOSE_CONF_PROD) build $(BUILD_ARG_OPTIONS) $(SERVICE_NAME)
 
-push-prod :
+push-prod : ## push the prod images to the localhost registry
 	docker-compose $(COMPOSE_CONF_PROD) push $(SERVICE_NAME)
 
-deploy-stack :
+deploy-stack : ## deploy the riff-stack that was last pushed
 # require that the DEPLOY_SWARM be explicitly defined.
 	$(call ndef,DEPLOY_SWARM)
 	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml pfm-stk
@@ -179,13 +184,13 @@ pull-images :
 	echo $(BASE_IMAGES) | xargs -n 1 docker pull
 	docker images
 
-dev-server : SERVICE_NAME = pfm-riffdata
+dev-server : SERVICE_NAME = pfm-riffdata ## start a dev container for the riff-server
 dev-server : _start-dev
 
-dev-rtc : SERVICE_NAME = pfm-riffrtc
+dev-rtc : SERVICE_NAME = pfm-riffrtc ## start a dev container for the riff-rtc
 dev-rtc : _start-dev
 
-dev-sm : SERVICE_NAME = pfm-signalmaster
+dev-sm : SERVICE_NAME = pfm-signalmaster ## start a dev container for the signalmaster
 dev-sm : _start-dev
 
 .PHONY : _start-dev
@@ -200,14 +205,17 @@ _start-dev :
 # on has been updated.
 # See the _nodeapp-init target for its use. It will run 'make init' in the directory
 # bound at /app and then exit.
-build-init-image : $(IMAGE_DIR)/nodeapp-init.latest
+build-init-image : $(IMAGE_DIR)/nodeapp-init.latest ## build the initialization image used by init-rtc and init-server
 
+init-rtc : ## initialize the riff-rtc repo using the init-image to run 'make init'
 init-rtc : NODEAPP_PATH = $(realpath ../riff-rtc)
 init-rtc : _nodeapp-init
 
+init-server : ## initialize the riff-server repo using the init-image to run 'make init'
 init-server : NODEAPP_PATH = $(realpath ../riff-server)
 init-server : _nodeapp-init
 
+init-signalmaster : ## initialize the signalmaster repo using the init-image to run 'make init'
 init-signalmaster : NODEAPP_PATH = $(realpath ../signalmaster)
 init-signalmaster : _nodeapp-init
 
@@ -217,20 +225,20 @@ _nodeapp-init : build-init-image
 	docker run --rm --tty --mount type=bind,src=$(NODEAPP_PATH),dst=/app rifflearning/nodeapp-init
 
 .PHONY : logs-web logs-rtc logs-server logs-mongo
-logs-web : SERVICE_NAME = pfm-web
+logs-web : SERVICE_NAME = pfm-web ## run docker-compose logs for the pfm-web service
 logs-web : logs
 
-logs-rtc : SERVICE_NAME = pfm-riffrtc
+logs-rtc : SERVICE_NAME = pfm-riffrtc ## run docker-compose logs for the pfm-riffrtc service
 logs-rtc : logs
 
-logs-server : SERVICE_NAME = pfm-riffdata
+logs-server : SERVICE_NAME = pfm-riffdata ## run docker-compose logs for the pfm-riffdata service
 logs-server : logs
 
-logs-mongo : SERVICE_NAME = pfm-riffdata-db
+logs-mongo : SERVICE_NAME = pfm-riffdata-db ## run docker-compose logs for the pfm-riffdata-db service
 logs-mongo : logs
 
 # Add all constraint labels to the single docker node running in swarm mode on a development machine
-dev-swarm-labels :
+dev-swarm-labels : ## add all constraint labels to single swarm node
 	docker node update --label-add registry=true \
                        --label-add web=true \
                        --label-add mongo=true \
@@ -238,8 +246,7 @@ dev-swarm-labels :
 
 # The support stack includes the registry which is needed to deploy any locally built images
 # and the visualizer to show what's running on the nodes of the swarm
-deploy-support-stack : pull-support-images
-
+deploy-support-stack : pull-support-images ## deploy the support stack needed for deploying other local images
 	docker stack deploy -c docker-stack.support.yml support-stack
 
 pull-support-images :
@@ -272,3 +279,11 @@ $(IMAGE_DIR)/rtc-build.$(notdir $(RTC_BUILD_TAG)) : | $(IMAGE_DIR)
 $(IMAGE_DIR)/nodeapp-init.latest : | $(IMAGE_DIR)
 	set -o pipefail ; docker build $(OPTS) --rm --force-rm --pull -t rifflearning/nodeapp-init:latest nodeapp-init 2>&1 | tee $(DOCKER_LOG).$(notdir $@)
 	@touch $@
+
+## Help documentation à la https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+## if you want the help sorted rather than in the order of occurrence, pipe the grep to sort and pipe that to awk
+show-help :
+	@echo ""                                            ; \
+	echo "Useful targets in this riff-docker Makefile:" ; \
+	(grep -E '^[a-zA-Z_-]+ ?:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = " ?:.*?## "}; {printf "\033[36m%-20s\033[0m : %s\n", $$1, $$2}') ; \
+	echo ""
