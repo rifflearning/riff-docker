@@ -4,14 +4,14 @@ version: '3.6'
 services:
   pfm-web:
     secrets:
-      - source: grantthornton.riffplatform.com.key.2
+      - source: grantthornton.riffplatform.com.key.3
         target: site.key
-      - source: grantthornton.riffplatform.com.crt.2
+      - source: grantthornton.riffplatform.com.crt.3
         target: site.crt
 
-# Your cert will expire on 2019-08-15 (grantthornton key.2 & crt.2)
+# Your cert will expire on 2019-10-30 (grantthornton key.3 & crt.3)
 secrets:
-  grantthornton.riffplatform.com.key.2:
+  grantthornton.riffplatform.com.key.3:
     external: true
-  grantthornton.riffplatform.com.crt.2:
+  grantthornton.riffplatform.com.crt.3:
     external: true
