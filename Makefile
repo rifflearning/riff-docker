@@ -161,6 +161,9 @@ show-env : ## displays the env var values used for building
 	$(SHOW_ENV)                                         \
 	echo ""
 
+show-ps : ## Show all docker containers w/ limited fields
+	docker ps -a --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}'
+
 build-dev : $(SSL_FILES) ## (re)build the dev images pulling the latest base images
 	docker-compose build --pull $(OPTS) $(SERVICE_NAME)
 
