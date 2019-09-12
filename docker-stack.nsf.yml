@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the AWS nsf swarm
+version: '3.6'
+services:
+  pfm-web:
+    secrets:
+      - source: nsf.riffplatform.com.key.1
+        target: site.key
+      - source: nsf.riffplatform.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2019-09-29 (staging key.1 & crt.1)
+secrets:
+  nsf.riffplatform.com.key.1:
+    external: true
+  nsf.riffplatform.com.crt.1:
+    external: true

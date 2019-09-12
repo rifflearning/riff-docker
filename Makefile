@@ -99,41 +99,12 @@ SSL_FILES := \
 	$(SSL_DIR)/certs/dhparam.pem \
 
 
-.DEFAULT_GOAL := show-help
+.DEFAULT_GOAL := help
 .DELETE_ON_ERROR :
 .PHONY : help up down stop up-dev up-prod clean dev-server dev-rtc
 .PHONY : logs logs-rtc logs-server logs-web logs-mongo
 .PHONY : build-init-image init-rtc init-server init-signalmaster rtc-build-image
 .PHONY : show-env build-dev build-prod push-prod
-
-help :
-	@echo ""                                                                           ; \
-	echo "Useful targets in this riff-docker Makefile:"                                ; \
-	echo "- up           : run docker-compose up (w/ dev config)"                      ; \
-	echo "- up-prod      : run docker-compose up (w/ prod config)"                     ; \
-	echo "- down         : run docker-compose down"                                    ; \
-	echo "- stop         : run docker-compose stop"                                    ; \
-	echo "- logs         : run docker-compose logs"                                    ; \
-	echo "- logs-rtc     : run docker-compose logs for the riff-rtc service"           ; \
-	echo "- logs-web     : run docker-compose logs for the web-server service"         ; \
-	echo "- show-env     : displays the env var values used for building"              ; \
-	echo "- build-dev    : (re)build the dev images pulling the latest base images"    ; \
-	echo "- build-prod   : (re)build the prod images pulling the latest base images"   ; \
-	echo "- push-prod    : push the prod images to the localhost registry"             ; \
-	echo "- deploy-stack : deploy the riff-stack that was last pushed"                 ; \
-	echo "- dev-server   : start a dev container for the riff-server"                  ; \
-	echo "- dev-rtc      : start a dev container for the riff-rtc"                     ; \
-	echo "- build-init-image  : build the initialization image used by init-rtc and init-server"          ; \
-	echo "- init-rtc          : initialize the riff-rtc repo using the init-image to run 'make init'"     ; \
-	echo "- init-server       : initialize the riff-server repo using the init-image to run 'make init'"  ; \
-	echo "- init-signalmaster : initialize the signalmaster repo using the init-image to run 'make init'" ; \
-	echo "- rtc-build-image   : create the rifflearning/rtc-build image needed as"     ; \
-	echo "                      a base image for building the production riff-rtc"     ; \
-	echo "                      and web-server images"                                 ; \
-	echo "                      uses the RIFF_RTC_REF and RTC_BUILD_TAG vars."         ; \
-	echo "- dev-swarm-labels  : add all constraint labels to single swarm node"        ; \
-	echo "- deploy-support-stack : deploy the support stack needed for deploying other local images" ; \
-	echo ""
 
 up : up-dev ## run docker-compose up (w/ dev config)
 
@@ -155,11 +126,17 @@ logs : ## run docker-compose logs
 clean : ## remove all build artifacts (including the tracking files for created images)
 	-rm $(IMAGE_DIR)/*
 
+clean-dev-images : down ## remove dev docker images
+	docker rmi 127.0.0.1:5000/rifflearning/{pfm-riffrtc:dev,pfm-riffdata:dev,pfm-signalmaster:dev,pfm-web:dev}
+
 show-env : ## displays the env var values used for building
 	@echo ""                                          ; \
 	echo "Here are the current environment settings:" ; \
 	$(SHOW_ENV)                                         \
 	echo ""
+
+show-ps : ## Show all docker containers w/ limited fields
+	docker ps -a --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}'
 
 build-dev : $(SSL_FILES) ## (re)build the dev images pulling the latest base images
 	docker-compose build --pull $(OPTS) $(SERVICE_NAME)
@@ -177,7 +154,7 @@ deploy-stack : ## deploy the riff-stack that was last pushed
 	$(call ndef,DEPLOY_SWARM)
 	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml pfm-stk
 
-pull-images :
+pull-images : ## Update base docker images
 	echo $(BASE_IMAGES) | xargs -n 1 docker pull
 	docker images
 
@@ -277,9 +254,9 @@ $(IMAGE_DIR)/nodeapp-init.latest : | $(IMAGE_DIR)
 	set -o pipefail ; docker build $(OPTS) --rm --force-rm --pull -t rifflearning/nodeapp-init:latest nodeapp-init 2>&1 | tee $(DOCKER_LOG).$(notdir $@)
 	@touch $@
 
-## Help documentation à la https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
-## if you want the help sorted rather than in the order of occurrence, pipe the grep to sort and pipe that to awk
-show-help :
+# Help documentation à la https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+# if you want the help sorted rather than in the order of occurrence, pipe the grep to sort and pipe that to awk
+help : ## this help documentation (extracted from comments on the targets)
 	@echo ""                                            ; \
 	echo "Useful targets in this riff-docker Makefile:" ; \
 	(grep -E '^[a-zA-Z_-]+ ?:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = " ?:.*?## "}; {printf "\033[36m%-20s\033[0m : %s\n", $$1, $$2}') ; \
