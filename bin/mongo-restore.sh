@@ -9,7 +9,9 @@
 #        so I've replaced the ancestor filter: --filter="ancestor=mongo"
 #        with the volume filter: --filter="volume=pfm-stk_pfm-riffdata-db-data"
 
-MONGO_CONTAINER=$(docker ps --filter="volume=pfm-stk_pfm-riffdata-db-data" --filter="status=running" --format={{.Names}})
+VOLUME_FILTER_PROD="volume=pfm-stk_pfm-riffdata-db-data"
+VOLUME_FILTER_DEV="volume=riff-docker_pfm-riffdata-db-data"
+MONGO_CONTAINER=$(docker ps --filter=$VOLUME_FILTER_PROD --filter="status=running" --format={{.Names}})
 DATABASE_NAME="riff-test"
 ARCHIVE_PATH=~/tmp
 ARCHIVE_NAME=$1
