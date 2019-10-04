@@ -6,12 +6,13 @@
 CF_STACK_SUFFIX=-Pswarm
 
 # Valid swarm names (should have an entry for each of these in AWS_REGION and AWS_KEYPAIR below
-SWARM_NAMES=( dev staging betaA betaB emeritus grantthornton nsf )
+SWARM_NAMES=( dev staging demo betaA betaB emeritus grantthornton nsf )
 
 # AWS_REGION is an associative array of valid swarm names to the AWS region where the swarm is/should be created
 declare -A AWS_REGION
 AWS_REGION=( [dev]=us-east-2
              [staging]=us-east-2
+             [demo]=us-east-2
              [betaA]=us-east-2
              [betaB]=us-east-2
              [emeritus]=us-east-1
@@ -23,6 +24,7 @@ AWS_REGION=( [dev]=us-east-2
 declare -A AWS_KEYPAIR
 AWS_KEYPAIR=( [dev]=riffdev_1_useast2_key
               [staging]=riffswarm_useast2_key
+              [demo]=riffprod_1_useast2_key
               [betaA]=riffswarm_useast2_key
               [betaB]=riffswarm_useast2_key
               [emeritus]=riffswarm_1_useast1_key
