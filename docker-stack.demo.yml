@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the AWS demo swarm
+version: '3.6'
+services:
+  pfm-web:
+    secrets:
+      - source: demo.riffplatform.com.key.1
+        target: site.key
+      - source: demo.riffplatform.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-01-02 (staging key.1 & crt.1)
+secrets:
+  demo.riffplatform.com.key.1:
+    external: true
+  demo.riffplatform.com.crt.1:
+    external: true
