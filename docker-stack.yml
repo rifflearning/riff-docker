@@ -15,7 +15,7 @@ services:
       placement:
         constraints: [node.labels.mongo == true]
     configs:
-      - source: riffdata.local-production.yml.2
+      - source: riffdata.local-production.yml.1
         target: /app/config/local-production.yml
 
   pfm-riffrtc:
@@ -83,7 +83,7 @@ volumes:
 configs:
   riff-rtc.local-production.yml.8.debug:
     external: true
-  riffdata.local-production.yml.2:
+  riffdata.local-production.yml.1:
     external: true
   signalmaster.local-production.yml.2:
     external: true
