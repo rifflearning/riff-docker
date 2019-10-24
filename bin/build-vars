@@ -14,17 +14,17 @@
 
 # Specify the github rifflearning/riff-rtc git commit reference for the
 # production riff-rtc and web-server docker images
-export RIFF_RTC_REF=1.2.0-dev.1
+export RIFF_RTC_REF=1.2.0-dev.19
 export RTC_BUILD_TAG=${RIFF_RTC_REF##*/}
 export RIFF_RTC_TAG=$RTC_BUILD_TAG
 
 # Specify the github rifflearning/riff-server git commit reference for the
 # production riff-server docker image
-export RIFF_SERVER_REF=0.4.0-dev.11
+export RIFF_SERVER_REF=0.4.0-dev.16
 export RIFF_SERVER_TAG=${RIFF_SERVER_REF##*/}
 
 # Specify the github rifflearning/signalmaster git commit reference for the
 # production signalmaster docker image
-export SIGNALMASTER_REF=2.0.0
+export SIGNALMASTER_REF=2.1.0
 export SIGNALMASTER_TAG=${SIGNALMASTER_REF##*/}
 
