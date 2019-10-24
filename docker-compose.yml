@@ -21,7 +21,7 @@ services:
       context: ${RIFF_SERVER_PATH-../riff-server}/docker
       dockerfile: Dockerfile-dev
       args:
-        NODE_VER: 10
+        NODE_VER: 12
         PORT: 3000
     depends_on:
       - pfm-riffdata-db
@@ -32,7 +32,7 @@ services:
       context: ${RIFF_RTC_PATH-../riff-rtc}/docker
       dockerfile: Dockerfile-dev
       args:
-        NODE_VER: 10
+        NODE_VER: 12
         PORT: 3001
     depends_on:
       - pfm-redis
