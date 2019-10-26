@@ -5,8 +5,8 @@
 # file is committed to the source repository.
 
 if [[ ! -e bin/internal/create_aws_stack_w_args ]]; then
-    echo "You do not seem to have sourced this script from the root of the edu-docker working directory."
-    echo "Change to the edu-docker working directory and run:"
+    echo "You do not seem to have sourced this script from the root of the riff-docker working directory."
+    echo "Change to the riff-docker working directory and run:"
     echo "  . bin/create_aws_demo_stack"
     echo
     return
