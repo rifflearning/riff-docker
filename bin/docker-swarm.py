@@ -258,6 +258,7 @@ def delete(stack_name, region):
                 cloudformation.delete_stack(StackName=stack['StackId'])
     except ClientError as e:
         _highlight('{code}: {msg}'.format(code=e.response['Error']['Code'], msg=e.response['Error']['Message']), fg='red')
+        sys.exit(1)
 
 
 @click.command()
@@ -271,7 +272,7 @@ def status(stack_name, region):
         _highlight(status)
     except ClientError as e:
         _highlight('{code}: {msg}'.format(code=e.response['Error']['Code'], msg=e.response['Error']['Message']), fg='red')
-        return
+        sys.exit(1)
 
 
 @click.command()
