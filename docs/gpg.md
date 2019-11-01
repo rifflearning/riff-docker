@@ -1,8 +1,95 @@
 # Working with GPG keys #
 
+## Overview of setting up a new Riff GPG key
+
+1. Create a new key for your rifflearning.com email
+1. Add a subkey for signing
+1. Export your public key to a keyserver
+1. Import your coworkers keys from the keyserver
+1. Use a secure channel to verify your coworker's key fingerprints and **ONLY** after verification,
+   sign them and export them back to the keyserver
+1. Have your coworkers verify your key's fingerprint and then sign and export your key back to the keyserver
+1. Backup your key (private/public) in a safe place (or 2)
+
+The following document should help you to accomplish these steps.
+
+
 ## Create a GPG key ##
 
-&lt; this section has not been written yet! >
+Use the gpg2 command:
+```sh
+gpg2 --full-gen-key
+```
+or the gpg command:
+```
+gpg --gen-key
+```
+
+Select:
+
+- **1** : RSA and RSA (default)
+- **4096** : keysize
+- **3y** : key should expire in 3 years (it is easy to reset even after it expires, you may want a shorter expiration, I wouldn't use a longer one)
+- _Your full name_ : people may search key servers for this
+- _Your email address_
+- leave comment **blank**
+- Use a strong passphrase : when I did this from the terminal prompt in linux a separate window opened for me to enter the passphrase
+
+Here's an example console log of running the gpg2 command:
+```console
+$ gpg2 --full-gen-key
+gpg (GnuPG) 2.1.11; Copyright (C) 2016 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 3y
+Key expires at Thu 27 Oct 2022 05:37:35 PM EDT
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Beth Porter
+Email address: beth@rifflearning.com
+Comment: 
+You selected this USER-ID:
+    "Beth Porter <beth@rifflearning.com>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+```
+
+### Add a new subkey for signing to the key you just created
+
+(These instructions are copied from [Using OpenPGP subkeys in Debian development][debian subkeys])
+
+- Find your key ID: `gpg --list-keys yourname`
+- `gpg --edit-key YOURMASTERKEYID`
+- At the `gpg>` prompt: `addkey`
+    - This asks for your passphrase, type it in.
+    - Choose the "RSA (sign only)" key type.
+    - It would be wise to choose 4096 (or 2048) bit key size.
+    - Choose an expiry date (you can rotate your subkeys more frequently than the master keys, or keep them for the life of the master key, with no expiry).
+    - GnuPG will (eventually) create a key, but you may have to wait for it to get enough entropy to do so.
+- Save the key: `save`
+
 
 ## Find and import a GPG key ##
 
@@ -86,6 +173,8 @@ Note I'm finding that frequently `gpg` is getting data from the keyserver more s
 - [Check encrypted file recipients][check-file-recipients]
   `gpg2 --batch --list-packets somefile.gpg | grep '^gpg:'`
 - [gpg2 man page][gpg2-man]
+- [Creating gpg key guide][] - Blog post on Create GnuPG key with sub-keys to sign, encrypt, authenticate
+- [debian subkeys][] - Using subkeys makes key management easier, also explains how to keep your master key separate
 
 ### Keyservers
 - [Ubuntu PGP Key Server][] - Has been a good one to use so far.
@@ -99,6 +188,9 @@ Note I'm finding that frequently `gpg` is getting data from the keyserver more s
 [pgp-key-signing]: <https://www.phildev.net/pgp/gpgsigning.html>
 [check-file-recipients]: <https://security.stackexchange.com/questions/85157/can-i-check-who-can-decrypt-my-gpg-message-after-i-encrypt-it>
 [gpg2-man]: <https://www.linux.org/docs/man1/gpg2.html>
+[Creating gpg key guide]: <https://blog.tinned-software.net/create-gnupg-key-with-sub-keys-to-sign-encrypt-authenticate/>
+[debian subkeys]: <https://wiki.debian.org/Subkeys>
+
 
 [OpenPGPkeyserver]: <http://keys.gnupg.net/>
 [MIT PGP Public Key Server]: <https://pgp.mit.edu/>
