@@ -14,13 +14,13 @@
 
 # Specify the github rifflearning/riff-rtc git commit reference for the
 # production riff-rtc and web-server docker images
-export RIFF_RTC_REF=feature/add-interruptions-plot
+export RIFF_RTC_REF=feature/authenticate-from-displayname
 export RTC_BUILD_TAG=${RIFF_RTC_REF##*/}
 export RIFF_RTC_TAG=$RTC_BUILD_TAG
 
 # Specify the github rifflearning/riff-server git commit reference for the
 # production riff-server docker image
-export RIFF_SERVER_REF=0.4.0-dev.17
+export RIFF_SERVER_REF=feature/google-docs
 export RIFF_SERVER_TAG=${RIFF_SERVER_REF##*/}
 
 # Specify the github rifflearning/signalmaster git commit reference for the
