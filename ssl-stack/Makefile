@@ -23,6 +23,9 @@ help :
 	echo "  ./renew.sh <letsencrypt archive file name> <fq domain to renew>"           ; \
 	echo "  make down"                                                                 ; \
 	echo ""	                                                                           ; \
+	echo "To extract the tar archive locally:"	                                       ; \
+	echo "  tar -xvzf <gz_tar_file>"                                                   ; \
+	echo ""	                                                                           ; \
 	echo "Useful targets in this ssl-stack Makefile:"                                  ; \
 	echo "- build        : build the certbot image"                                    ; \
 	echo "- push         : push the certbot image to a registry so it can be deployed" ; \
