@@ -25,6 +25,6 @@ export RIFF_SERVER_TAG=${RIFF_SERVER_REF##*/}
 
 # Specify the github rifflearning/signalmaster git commit reference for the
 # production signalmaster docker image
-export SIGNALMASTER_REF=2.0.0
+export SIGNALMASTER_REF=2.1.0
 export SIGNALMASTER_TAG=${SIGNALMASTER_REF##*/}
 

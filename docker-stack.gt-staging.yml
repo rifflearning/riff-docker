@@ -1,0 +1,30 @@
+---
+# override/additions to docker-stack.yml for deploying to the gt-staging swarm
+version: '3.6'
+services:
+  pfm-web:
+    secrets:
+      - source: gt-staging.riffplatform.com.key.1
+        target: site.key
+      - source: gt-staging.riffplatform.com.crt.1
+        target: site.crt
+
+  pfm-riffdata:
+    configs:
+      # override the normal config defined in docker-stack.yml so that it can be replaced
+      - source: riffdata.local-production.yml.1
+        target: /app/config/unused1
+      # grant-thornton riffdata specific config replaces the above default config
+      - source: riffdata.gt-local-production.yml.1
+        target: /app/config/local-production.yml
+
+# Your cert will expire on 2020-02-05 (gt-staging key.1 & crt.1)
+secrets:
+  gt-staging.riffplatform.com.key.1:
+    external: true
+  gt-staging.riffplatform.com.crt.1:
+    external: true
+
+configs:
+  riffdata.gt-local-production.yml.1:
+    external: true
