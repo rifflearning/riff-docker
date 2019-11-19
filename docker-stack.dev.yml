@@ -9,9 +9,23 @@ services:
       - source: dev.riffplatform.com.crt.4
         target: site.crt
 
+# Comment out this section if you need to use the standard riffdata config defined in docker-stack.yml
+  pfm-riffdata:
+    configs:
+      # override the normal config defined in docker-stack.yml so that it can be replaced
+      - source: riffdata.local-production.yml.1
+        target: /app/config/unused1
+      # grant-thornton riffdata specific config replaces the above default config
+      - source: riffdata.gt-local-production.yml.1
+        target: /app/config/local-production.yml
+
 # Your cert will expire on 2019-12-11 (staging key.4 & crt.4)
 secrets:
   dev.riffplatform.com.key.4:
     external: true
   dev.riffplatform.com.crt.4:
+    external: true
+
+configs:
+  riffdata.gt-local-production.yml.1:
     external: true
