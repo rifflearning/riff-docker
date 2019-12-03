@@ -15,7 +15,7 @@ services:
       - source: riffdata.local-production.yml.1
         target: /app/config/unused1
       # grant-thornton riffdata specific config replaces the above default config
-      - source: riffdata.gt-local-production.yml.1
+      - source: riffdata.gt-local-production.yml.2
         target: /app/config/local-production.yml
 
 # Your cert will expire on 2020-02-05 (gt-staging key.1 & crt.1)
@@ -26,5 +26,5 @@ secrets:
     external: true
 
 configs:
-  riffdata.gt-local-production.yml.1:
+  riffdata.gt-local-production.yml.2:
     external: true
