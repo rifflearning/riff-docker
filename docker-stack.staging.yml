@@ -1,17 +1,17 @@
 ---
 # override/additions to docker-stack.yml for deploying to the staging swarm
-version: '3.6'
+version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: staging.riffplatform.com.key.6
+      - source: staging.riffplatform.com.key.7
         target: site.key
-      - source: staging.riffplatform.com.crt.6
+      - source: staging.riffplatform.com.crt.7
         target: site.crt
 
-# Your cert will expire on 2019-12-11 (staging key.6 & crt.6)
+# Your cert will expire on 2020-03-09 (staging key.7 & crt.7)
 secrets:
-  staging.riffplatform.com.key.6:
+  staging.riffplatform.com.key.7:
     external: true
-  staging.riffplatform.com.crt.6:
+  staging.riffplatform.com.crt.7:
     external: true
