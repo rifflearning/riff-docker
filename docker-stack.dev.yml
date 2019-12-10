@@ -4,9 +4,9 @@ version: '3.6'
 services:
   pfm-web:
     secrets:
-      - source: dev.riffplatform.com.key.4
+      - source: dev.riffplatform.com.key.5
         target: site.key
-      - source: dev.riffplatform.com.crt.4
+      - source: dev.riffplatform.com.crt.5
         target: site.crt
 
 # Comment out this section if you need to use the standard riffdata config defined in docker-stack.yml
@@ -19,11 +19,11 @@ services:
       - source: riffdata.gt-local-production.yml.1
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2019-12-11 (staging key.4 & crt.4)
+# Your cert will expire on 2020-03-09 (staging key.5 & crt.5)
 secrets:
-  dev.riffplatform.com.key.4:
+  dev.riffplatform.com.key.5:
     external: true
-  dev.riffplatform.com.crt.4:
+  dev.riffplatform.com.crt.5:
     external: true
 
 configs:
