@@ -4,14 +4,27 @@ version: '3.6'
 services:
   pfm-web:
     secrets:
-      - source: grantthornton.riffplatform.com.key.4
+      - source: grantthornton.riffplatform.com.key.5
         target: site.key
-      - source: grantthornton.riffplatform.com.crt.4
+      - source: grantthornton.riffplatform.com.crt.5
         target: site.crt
 
-# Your cert will expire on 2020-01-23 (grantthornton key.4 & crt.4)
+  pfm-riffdata:
+    configs:
+      # override the normal config defined in docker-stack.yml so that it can be replaced
+      - source: riffdata.local-production.yml.1
+        target: /app/config/unused1
+      # grant-thornton riffdata specific config replaces the above default config
+      - source: riffdata.gt-local-production.yml.2
+        target: /app/config/local-production.yml
+
+# Your cert will expire on 2020-02-05 (gt-staging key.1 & crt.1)
 secrets:
-  grantthornton.riffplatform.com.key.4:
+  grantthornton.riffplatform.com.key.5:
     external: true
-  grantthornton.riffplatform.com.crt.4:
+  grantthornton.riffplatform.com.crt.5:
+    external: true
+
+configs:
+  riffdata.gt-local-production.yml.2:
     external: true
