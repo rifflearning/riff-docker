@@ -26,7 +26,7 @@ AWS_KEYPAIR=( [dev]=riffdev_1_useast2_key
               [gt-staging]=riffdev_1_useast2_key
               [demo]=riffprod_1_useast2_key
               [emeritus]=riffswarm_1_useast1_key
-              [grantthornton]=riffswarm_1_useast1_key
+              [grantthornton]=riffprod_1_useast1_key
               [nsf]=riffdev_1_uswest2_key
             )
 
