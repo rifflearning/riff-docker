@@ -4,17 +4,26 @@
 # All stack parameters are defined in this file so the values used are saved when this
 # file is committed to the source repository.
 
+# Quick test to see if this script is being sourced
+# https://stackoverflow.com/a/28776166/2184226
+(return 0 2>/dev/null) && sourced=1 || sourced=0
+if [[ $sourced -ne 1 ]]
+then
+    echo "Source this script!"
+    return 100
+fi
+
 if [[ ! -e bin/internal/create_aws_stack_w_args ]]; then
     echo "You do not seem to have sourced this script from the root of the edu-docker working directory."
-    echo "Change to the edu-docker working directory and run:"
-    echo "  . bin/create_aws_grantthornton_stack"
+    echo "Change to the riff-docker working directory and run:"
+    echo "  . bin/create_aws_gt-staging_stack"
     echo
     return
 fi
 
 # Set the AWS stack variables (the stack suffix and the region, keypair maps) and the
-# derived variables for 'grantthornton' (DEPLOY_SWARM, AWS_CF_STACK_NAME, AWS_STACK_REGION, AWS_STACK_KEYPAIR)
-source bin/aws_stack_vars grantthornton
+# derived variables for 'gt-staging' (DEPLOY_SWARM, AWS_CF_STACK_NAME, AWS_STACK_REGION, AWS_STACK_KEYPAIR)
+source bin/aws_stack_vars gt-staging
 
 # Sadly t3 instances are not supported by the docker for aws cloudformation template at this time (2019-01-28)
 MGR_NODE_INSTANCE_TYPE=t2.small
@@ -49,10 +58,14 @@ echo
 echo "Create the configs (after decrypting them in the config directory)"
 pushd config
 SWARM_CONFIGS=( signalmaster.local-production.yml.2
-                riffdata.local-production.yml.1
-                riffdata.gt-local-production.yml.2
+                riffdata.gt-local-production.yml.1
                 riff-rtc.local-production.yml.8
                 riff-rtc.local-production.yml.8.debug )
+
+# sound the terminal bell (your terminal may need to be configured to make noise)
+# because you may not have noticed we got to this point and will need input
+# to decrypt the config files (and the pswd request can time out)
+echo -n $'\a'
 
 for config in "${SWARM_CONFIGS[@]}"
 do
@@ -69,8 +82,8 @@ echo "Use the following commands after setting the latest tar file:"
 echo "  LETSENCRYPT_TAR=letsencrypt-riffsites-20190201.tar.gz"
 echo '  gpg2 --decrypt --output ${LETSENCRYPT_TAR} ${LETSENCRYPT_TAR}.gpg'
 echo '  tar -xvzf ${LETSENCRYPT_TAR}'
-echo "  docker secret create grantthornton.riffplatform.com.key.1 ./etc/letsencrypt/archive/grantthornton.riffplatform.com/privkey1.pem"
-echo "  docker secret create grantthornton.riffplatform.com.crt.1 ./etc/letsencrypt/archive/grantthornton.riffplatform.com/fullchain1.pem"
+echo "  docker secret create gt-staging.riffplatform.com.key.1 ./etc/letsencrypt/archive/gt-staging.riffplatform.com/privkey1.pem"
+echo "  docker secret create gt-staging.riffplatform.com.crt.1 ./etc/letsencrypt/archive/gt-staging.riffplatform.com/fullchain1.pem"
 echo "  popd"
 echo
 echo "------------------------------ "
