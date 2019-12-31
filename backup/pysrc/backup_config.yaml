@@ -1,0 +1,7 @@
+backup:
+    product: pfm
+    deployment: demo
+    category: riffdata
+
+s3:
+    bucket: backups-us-east-2-593547106275
