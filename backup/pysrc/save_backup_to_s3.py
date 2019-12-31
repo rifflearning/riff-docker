@@ -26,6 +26,8 @@ Copyright       (c) 2019 Michael Jay Lippert,
 
 # Standard library imports
 import logging
+import subprocess
+from datetime import datetime
 
 # Third party imports
 import boto3
@@ -99,6 +101,40 @@ def upload_file(file_name, bucket, object_name=None):
         logging.error(e)
         return False
     return True
+
+
+@click.command()
+def backup_mongodb():
+    """
+    [Description of backup_mongodb]
+    """
+    db_name = 'riff-test'
+    product = cfg['product']
+    deployment = cfg['deployment']
+    mongo_uri = 'localhost:27017'
+
+    timestamp = datetime.now()
+    archive_name = f'mongodb_{db_name}.{product}.{deployment}.backup-${timestamp:%Y%m%d%H%M%S}.gz'
+
+    backup_cmd = ['mongodump', '--uri={mongo_uri}',
+                               f'--db={db_name}',
+                               '--gzip',
+                               f'--archive=/backups/{archive_name}',
+                 ]
+
+    # TODO: maybe we want to capture stdout and stderr output?
+    click.echo('Backing up the mongo database at {uri} using cmd:\n  {cmd}'.format(cmd=click.style(' '.join(backup_cmd), fg='green'), uri=mongo_uri))
+    ps = subprocess.Popen(backup_cmd, start_new_session=True,
+                          stdin=subprocess.DEVNULL,
+                          stdout=subprocess.DEVNULL,
+                          stderr=subprocess.DEVNULL)
+
+    # wait for it to exit so we can check the returncode
+    ssh_retcode = ps.wait()
+
+    # if retcode is 0 all is good, otherwise (likely 255) creating the tunnel failed
+    if ssh_retcode != 0:
+        sys.exit(f'backing up the database failed (mongodump cmd returned {ssh_retcode})')
 
 
 if __name__ == "__main__":
