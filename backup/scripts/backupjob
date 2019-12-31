@@ -1,0 +1,12 @@
+#! /usr/bin/env sh
+#
+# A test cronjob script (remember the filename cannot have any dots '.' in it)
+# This one expects to be put in /etc/periodic/15min/ and run by the standard
+# run-parts cronjob
+
+logger -t backup "Start backup of of riffdata"
+
+logger -t "test" "Hi there, I'm going"
+logger -t "test" " to say this every 15 minutes, I hope"
+
+logger -t backup "Finished backup of of riffdata"
