@@ -2,7 +2,7 @@
 # override/additions to docker-compose.yml for deploying to a docker swarm
 # $ docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml -c docker-stack.yml STACK_NAME
 # better to use make deploy-stack
-version: '3.6'
+version: '3.7'
 services:
   pfm-riffdata:
     deploy:

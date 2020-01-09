@@ -12,7 +12,7 @@
 #     use these env vars to override:
 #     - RIFF_SERVER_TAG
 #     - RIFF_RTC_TAG
-version: '3.6'
+version: '3.7'
 services:
   pfm-riffdata:
     hostname: pfm-riffdata
