@@ -18,6 +18,8 @@ RUN mkdir -p /run/secrets && \
 COPY conf/ /etc/nginx/
 # Copy the favicon for the riffplatform
 COPY favicon.ico /usr/share/nginx/html/favicon.ico
+# Copy the static simulation files to be served
+ADD sim.tgz /usr/share/nginx/html/sim/
 # Expose both the standard http and standard https ports
 EXPOSE 80 443
 
