@@ -31,6 +31,10 @@ services:
         - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
 
   pfm-signalmaster:
+    image: 'rifflearning/signalmaster:${SIGNALMASTER_TAG-dev}'
+    build:
+      context: ${SIGNALMASTER_PATH-../signalmaster}/docker
+      dockerfile: Dockerfile-dev
     volumes:
         - ${SIGNALMASTER_PATH-../signalmaster}:/app
 

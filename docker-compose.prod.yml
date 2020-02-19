@@ -17,13 +17,13 @@
 version: '3.7'
 services:
   pfm-riffdata:
-    image: '127.0.0.1:5000/rifflearning/pfm-riffdata:${RIFF_SERVER_TAG-latest}'
+    image: 'docker.pkg.github.com/rifflearning/riff-server/riffdata:${RIFF_SERVER_TAG-latest}'
     build:
       context: https://github.com/rifflearning/riff-server.git#${RIFF_SERVER_REF-master}
       dockerfile: Dockerfile
 
   pfm-riffrtc:
-    image: '127.0.0.1:5000/rifflearning/pfm-riffrtc:${RIFF_RTC_TAG-latest}'
+    image: 'docker.pkg.github.com/rifflearning/riff-docker/riffrtc:${RIFF_RTC_TAG-latest}'
     build:
       context: https://github.com/rifflearning/riff-rtc.git#${RIFF_RTC_REF-master}
       dockerfile: docker/Dockerfile-prod-server
@@ -31,15 +31,17 @@ services:
         - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
 
   pfm-web:
-    image: '127.0.0.1:5000/rifflearning/pfm-web:${RIFF_RTC_TAG-latest}'
+    image: 'docker.pkg.github.com/rifflearning/riff-docker/pfm-web:${RIFF_RTC_TAG-latest}'
     build:
       context:  pfm-web
       dockerfile: Dockerfile-prod
       args:
         - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
 
-  pfm-signalmaster:
-    image: '127.0.0.1:5000/rifflearning/pfm-signalmaster:${SIGNALMASTER_TAG-latest}'
-    build:
-      context: https://github.com/rifflearning/signalmaster.git#${SIGNALMASTER_REF-master}
-      dockerfile: Dockerfile
+# Here's the signalmaster service w/ the build key if needed to build production signalmaster,
+# but in general, it should just be pulled
+# pfm-signalmaster:
+#   image: 'docker.pkg.github.com/rifflearning/signalmaster/signalmaster:${SIGNALMASTER_TAG-latest}'
+#   build:
+#     context: https://github.com/rifflearning/signalmaster.git#${SIGNALMASTER_REF-master}
+#     dockerfile: Dockerfile
