@@ -152,7 +152,7 @@ push-prod : ## push the prod images to the localhost registry
 deploy-stack : ## deploy the riff-stack that was last pushed
 # require that the DEPLOY_SWARM be explicitly defined.
 	$(call ndef,DEPLOY_SWARM)
-	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml pfm-stk
+	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml --with-registry-auth pfm-stk
 
 pull-images : ## Update base docker images
 	echo $(BASE_IMAGES) | xargs -n 1 docker pull
