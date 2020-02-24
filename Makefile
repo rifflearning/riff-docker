@@ -139,7 +139,7 @@ show-ps : ## Show all docker containers w/ limited fields
 	docker ps -a --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}'
 
 build-dev : $(SSL_FILES) ## (re)build the dev images pulling the latest base images
-	docker-compose build --pull $(OPTS) $(SERVICE_NAME)
+	docker-compose $(COMPOSE_CONF_DEV) build --pull $(OPTS) $(SERVICE_NAME)
 
 build-prod : ## (re)build the prod images pulling the latest base images
 build-prod : BUILD_ARG_OPTIONS := $(patsubst %,--build-arg %,$(filter-out %=,$(foreach var,$(BUILD_ARGS),$(var)=$($(var)))))

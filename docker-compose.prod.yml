@@ -1,47 +1,48 @@
 ---
 # override/additions to docker-compose.yml for production
-# - the image names are set for deploying to a registry service running
-#   on a local swarm (or tunneled into a swarm manager in the cloud)
-# - the defaults in this file are set for doing development
-#   - uses prod Dockerfile for riff-server & riff-rtc from a ref in the github repo
-#     use these env vars to override the git ref (ie use a specific version
-#     instead of master):
-#     - RIFF_SERVER_REF
-#     - RIFF_RTC_REF
-#   - riff-server & riff-rtc have all files needed copied to the image
-#   - mongodb data is stored on a named volume
-#   - tags riff-server, riff-rtc & web-server images w/ "latest"
-#     use these env vars to override:
-#     - RIFF_SERVER_TAG
-#     - RIFF_RTC_TAG
+#
+# Build key for each service is set for building the production image
+# as specified in the base docker-compose.yml.
+# The env vars for the git ref should match the vars in the base specifying the
+# image tag that will be built.
+# - RIFF_SERVER_REF <=> RIFF_SERVER_TAG
+# - RIFF_RTC_REF <=> RIFF_RTC_TAG <=> RTC_BUILD_TAG
+#
+# The rtc-build-image tagged by RTC_BUILD_TAG needs to be created BEFORE the
+# riffrtc and web images can be built. `make rtc-build-image`
+#
+# It's rare that the signalmaster needs to be built so the build key for it
+# is commented out.
 version: '3.7'
 services:
   pfm-riffdata:
-    image: 'docker.pkg.github.com/rifflearning/riff-server/riffdata:${RIFF_SERVER_TAG-latest}'
     build:
       context: https://github.com/rifflearning/riff-server.git#${RIFF_SERVER_REF-master}
       dockerfile: Dockerfile
+      args:
+        NODE_VER: 12
+        PORT: 3000
 
   pfm-riffrtc:
-    image: 'docker.pkg.github.com/rifflearning/riff-docker/riffrtc:${RIFF_RTC_TAG-latest}'
     build:
       context: https://github.com/rifflearning/riff-rtc.git#${RIFF_RTC_REF-master}
       dockerfile: docker/Dockerfile-prod-server
       args:
-        - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
+        RTC_BUILD_TAG: ${RTC_BUILD_TAG-latest}
+        NODE_VER: 12
+        PORT: 3001
 
   pfm-web:
-    image: 'docker.pkg.github.com/rifflearning/riff-docker/pfm-web:${RIFF_RTC_TAG-latest}'
     build:
       context:  pfm-web
       dockerfile: Dockerfile-prod
       args:
-        - RTC_BUILD_TAG=${RTC_BUILD_TAG-latest}
+        RTC_BUILD_TAG: ${RTC_BUILD_TAG-latest}
+        NGINX_VER: latest
 
 # Here's the signalmaster service w/ the build key if needed to build production signalmaster,
 # but in general, it should just be pulled
 # pfm-signalmaster:
-#   image: 'docker.pkg.github.com/rifflearning/signalmaster/signalmaster:${SIGNALMASTER_TAG-latest}'
 #   build:
 #     context: https://github.com/rifflearning/signalmaster.git#${SIGNALMASTER_REF-master}
 #     dockerfile: Dockerfile
