@@ -13,11 +13,17 @@
 #
 # It's rare that the signalmaster needs to be built so the build key for it
 # is commented out.
+#
+# DevNote: In order to build from a private github repo see https://github.com/docker/compose/issues/3038
+#     which states that you can use https://username:password@github.com/username/repo.git
+#     and that if you use a github personal access token, you can just use it as the
+#     username and leave the password blank. (you can also still put in the username
+#     and use the token as the password if you wish)
 version: '3.7'
 services:
   pfm-riffdata:
     build:
-      context: https://github.com/rifflearning/riff-server.git#${RIFF_SERVER_REF-master}
+      context: https://${GITHUB_TOKEN:?You must export GITHUB_TOKEN}:@github.com/rifflearning/riff-server.git#${RIFF_SERVER_REF-master}
       dockerfile: Dockerfile
       args:
         NODE_VER: 12
@@ -25,7 +31,7 @@ services:
 
   pfm-riffrtc:
     build:
-      context: https://github.com/rifflearning/riff-rtc.git#${RIFF_RTC_REF-master}
+      context: https://${GITHUB_TOKEN:?You must export GITHUB_TOKEN}:@github.com/rifflearning/riff-rtc.git#${RIFF_RTC_REF-master}
       dockerfile: docker/Dockerfile-prod-server
       args:
         RTC_BUILD_TAG: ${RTC_BUILD_TAG-latest}

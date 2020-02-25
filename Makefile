@@ -75,7 +75,7 @@ SHOW_ENV = $(patsubst %,echo '%';,$(foreach var,$(BUILD_ARGS) $(OTHER_ENV_ARGS),
 # docker image.
 # (see rtc-build-image target)
 RIFF_RTC_REF ?= master
-riff_rtc_context = https://github.com/rifflearning/riff-rtc.git\#$(RIFF_RTC_REF)
+riff_rtc_context = https://$(GITHUB_TOKEN):@github.com/rifflearning/riff-rtc.git\#$(RIFF_RTC_REF)
 # The build tag that will be used for the created rtc-build docker images
 # (see rtc-build-image target)
 RTC_BUILD_TAG ?= latest
