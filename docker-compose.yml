@@ -5,13 +5,12 @@
 #   image tag values.
 #   - RIFF_SERVER_TAG
 #   - RIFF_RTC_TAG
-#   - SIGNALMASTER_TAG
 #
 #   Note that the image names are overridden when building/running on a dev machine
 #   see docker-compose.dev.yml
 #
 # - this file has no build key for any service so it can also be used as the docker
-#   swarm stack deployment base configuration.
+#   swarm stack deployment base configuration w/o getting a warning.
 version: '3.7'
 services:
   pfm-riffdata:
@@ -36,7 +35,7 @@ services:
       - pfm-signalmaster
 
   pfm-signalmaster:
-    image: 'docker.pkg.github.com/rifflearning/signalmaster/signalmaster:${SIGNALMASTER_TAG-latest}'
+    image: 'docker.pkg.github.com/rifflearning/signalmaster/signalmaster:2.1.0'
 
   pfm-riffdata-db:
     image: mongo:${MONGO_VER-latest}
