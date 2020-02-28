@@ -2,6 +2,9 @@
 # override/additions to docker-compose.yml for deploying to a docker swarm
 # $ docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml -c docker-stack.yml STACK_NAME
 # better to use make deploy-stack
+#
+# The web service specifies a volume bound to the location for the letsencrypt
+# certbot webroot to allow auto updating of the ssl certificate.
 version: '3.7'
 services:
   pfm-riffdata:
@@ -76,9 +79,11 @@ services:
         condition: on-failure
       placement:
         constraints: [node.labels.web == true]
+    volumes:
+      - pfm-web-html-certbot:/usr/share/nginx/html/certbot
 
 volumes:
-  registry-data:
+  pfm-web-html-certbot:
 
 configs:
   riff-rtc.local-production.yml.8.debug:
