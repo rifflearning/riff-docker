@@ -94,11 +94,8 @@ echo
 # popd
 #
 # # Standard build, push and deploy
-# . bin/build-vars
-# make pull-images
+# . bin/deploy-vars
 # make show-env
-# make clean build-prod
-# make push-prod
 # make deploy-stack
 #
 ##### TODO: Work in progress, just wanted to note these pieces now, but this
