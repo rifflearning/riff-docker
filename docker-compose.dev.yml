@@ -1,36 +1,60 @@
 ---
 # override/additions to docker-compose.yml for development
+#
+# Override the image name since it is local only, not intended to be pushed to github.
+# Specify dev specific build and run settings
+# The builds use local contexts and special Dockerfiles
+# Running maps some ports for dev access, binds local repo directories
+# so changes are seen by the running containers.
 # because these setting need to not exist for production they
 # have to be defined here and not in the base docker-compose.yml.
 #
-# Base configuration for the services that are required to run the riff platform
-# - the image names are set for deploying to a registry service running on a local swarm
-# - the defaults in this file are set for doing development
-#   - uses dev Dockerfile for riff-server & riff-rtc from local working directories
-#     use these env vars to override local directory locations:
-#     - RIFF_SERVER_PATH
-#     - RIFF_RTC_PATH
-#   - binds local working directories of riff-server & riff-rtc
-#   - binds mongodb data to local ./mongodata directory
-#   - tags riff-server, riff-rtc & web-server images w/ "dev"
-#     use these env vars to override:
-#     - RIFF_SERVER_TAG
-#     - RIFF_RTC_TAG
+# The local/context bound volumes can be overridden if the defaults aren't
+# appropriate using these env vars:
+#   - RIFF_SERVER_PATH
+#   - RIFF_RTC_PATH
+#   - SIGNALMASTER_PATH
 version: '3.7'
 services:
   pfm-riffdata:
+    image: 'rifflearning/pfm-riffdata:dev'
+    build:
+      context: ${RIFF_SERVER_PATH-../riff-server}/docker
+      dockerfile: Dockerfile-dev
+      args:
+        NODE_VER: 12
+        PORT: 3000
+    ports:
+      - '3000:3000'
     volumes:
       - ${RIFF_SERVER_PATH-../riff-server}:/app
 
   pfm-riffrtc:
+    image: 'rifflearning/pfm-riffrtc:dev'
+    build:
+      context: ${RIFF_RTC_PATH-../riff-rtc}/docker
+      dockerfile: Dockerfile-dev
+      args:
+        NODE_VER: 12
+        PORT: 3001
     volumes:
       - ${RIFF_RTC_PATH-../riff-rtc}:/app
 
   pfm-web:
+    image: 'rifflearning/pfm-web:dev'
+    build:
+      context:  pfm-web
+      dockerfile: Dockerfile-dev
+      args:
+        NGINX_VER: latest
     volumes:
         - ${RIFF_RTC_PATH-../riff-rtc}/build:/usr/share/nginx/html/rtc:ro
 
   pfm-signalmaster:
+    image: 'rifflearning/signalmaster:dev'
+    build:
+      context: ${SIGNALMASTER_PATH-../signalmaster}/docker
+      dockerfile: Dockerfile-dev
     volumes:
         - ${SIGNALMASTER_PATH-../signalmaster}:/app
 

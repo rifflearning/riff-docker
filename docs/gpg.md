@@ -90,6 +90,9 @@ generator a better chance to gain enough entropy.
     - GnuPG will (eventually) create a key, but you may have to wait for it to get enough entropy to do so.
 - Save the key: `save`
 
+Note the key IDs were not be displayed by ver 2.2.4 of gpg2 output for the various `--list*` options,
+adding the option `--keyid-format long` shows the ID again.
+
 
 ## Find and import a GPG key ##
 
@@ -164,6 +167,32 @@ gpg --keyserver keyserver.ubuntu.com --recv-keys 85F55F59
 Note I'm finding that frequently `gpg` is getting data from the keyserver more successfully than
 `gpg2`?! _(from trying it on 2019-09-26)_
 
+## Safety
+
+Even if you don't remove your master key from your primary computer system, if you want to
+sign/encrypt/decrypt on other machines, it would be wise to _only_ put your subkeys on that
+machine and NOT your master key.
+
+Also you should create a revocation certificate for your master key. See [this page][rh-revocation] for more
+on the topic.
+
+Creating useful backup files (**make sure you keep the secret ones somewhere secure!**):
+```
+gpg2 --output=GPG_namehereMaster_RevocationCertificate.asc --gen-revoke name@somewhere.org
+gpg2 --armor --output=GPG_namehereMaster_PrivateKey.asc --export-secret-keys name@somewhere.org
+gpg2 --armor --output=GPG_namehereSecretSubkeys.asc --export-secret-subkeys name@somewhere.org
+gpg2 --armor --output=GPG_nameherePublicKey.asc --export name@somewhere.org
+```
+
+Copy the SecretSubkeys file to the other system where you want to be able to sign/encrypt/decrypt
+and import it.
+```
+gpg2 --import GPG_namehereSecretSubkeys.asc
+```
+
+When you list the secret keys on that machine (`gpg2 --list-secret-keys`) you should see your
+master key identified with `sec#`. The `#` suffix means that the secret master key is not present.
+
 ## Resources
 
 - [The GNU Privacy Handbook: Key Management][gpg_keymgmt]
@@ -185,6 +214,7 @@ Note I'm finding that frequently `gpg` is getting data from the keyserver more s
 [gpg_keymgmt]: <https://www.gnupg.org/gph/en/manual/c235.html>
 [GPG Tutorial]: <https://futureboy.us/pgp.html>
 [redhat-gpg-doc]: <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/4/html/Step_by_Step_Guide/ch-gnupg.html>
+[rh-revocation]: <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/4/html/Step_by_Step_Guide/s1-gnupg-revocation.html>
 [pgp-key-signing]: <https://www.phildev.net/pgp/gpgsigning.html>
 [check-file-recipients]: <https://security.stackexchange.com/questions/85157/can-i-check-who-can-decrypt-my-gpg-message-after-i-encrypt-it>
 [gpg2-man]: <https://www.linux.org/docs/man1/gpg2.html>
