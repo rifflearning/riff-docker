@@ -35,7 +35,7 @@ services:
       context: ${RIFF_RTC_PATH-../riff-rtc}/docker
       dockerfile: Dockerfile-dev
       args:
-        NODE_VER: 12
+        NODE_VER: 10
         PORT: 3001
     volumes:
       - ${RIFF_RTC_PATH-../riff-rtc}:/app
