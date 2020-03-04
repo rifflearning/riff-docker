@@ -1,0 +1,10 @@
+#!/bin/bash
+# This file exports variables to the environment and therefore must be
+# run in the current shell process:
+# source deploy-vars
+#  or
+# . deploy-vars
+
+# The docker-compose.yml file uses these values to determine which image to deploy to the swarm
+export RIFF_RTC_TAG=1.0.1
+export RIFF_SERVER_TAG=0.4.0-dev.14

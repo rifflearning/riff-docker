@@ -7,19 +7,19 @@
 if [[ ! -e bin/internal/create_aws_stack_w_args ]]; then
     echo "You do not seem to have sourced this script from the root of the edu-docker working directory."
     echo "Change to the edu-docker working directory and run:"
-    echo "  . bin/create_aws_betaB_stack"
+    echo "  . bin/create_aws_diagnostic_stack"
     echo
     return
 fi
 
 # Set the AWS stack variables (the stack suffix and the region, keypair maps) and the
-# derived variables for 'betaB' (DEPLOY_SWARM, AWS_CF_STACK_NAME, AWS_STACK_REGION, AWS_STACK_KEYPAIR)
-source bin/aws_stack_vars betaB
+# derived variables for 'diagnostic' (DEPLOY_SWARM, AWS_CF_STACK_NAME, AWS_STACK_REGION, AWS_STACK_KEYPAIR)
+source bin/aws_stack_vars diagnostic
 
 # Sadly t3 instances are not supported by the docker for aws cloudformation template at this time (2019-01-28)
 MGR_NODE_INSTANCE_TYPE=t2.small
 MGR_NODE_INSTANCE_CNT=1
-WKR_NODE_INSTANCE_TYPE=t2.small
+WKR_NODE_INSTANCE_TYPE=t2.micro
 WKR_NODE_INSTANCE_CNT=1
 
 # internal script uses the above bash parameters
@@ -50,8 +50,10 @@ echo "Create the configs (after decrypting them in the config directory)"
 pushd config
 SWARM_CONFIGS=( signalmaster.local-production.yml.2
                 riffdata.local-production.yml.1
+                riffdata.diag-local-production.yml.1
                 riff-rtc.local-production.yml.8
-                riff-rtc.local-production.yml.8.debug )
+                riff-rtc.local-production.yml.8.debug
+                riff-rtc.diag-local-production.yml.1 )
 
 for config in "${SWARM_CONFIGS[@]}"
 do
@@ -68,8 +70,8 @@ echo "Use the following commands after setting the latest tar file:"
 echo "  LETSENCRYPT_TAR=letsencrypt-riffsites-20190201.tar.gz"
 echo '  gpg2 --decrypt --output ${LETSENCRYPT_TAR} ${LETSENCRYPT_TAR}.gpg'
 echo '  tar -xvzf ${LETSENCRYPT_TAR}'
-echo "  docker secret create beta.riffplatform.com.key.1 ./etc/letsencrypt/archive/beta.riffplatform.com/privkey1.pem"
-echo "  docker secret create beta.riffplatform.com.crt.1 ./etc/letsencrypt/archive/beta.riffplatform.com/fullchain1.pem"
+echo "  docker secret create diagnostic.riffplatform.com.key.1 ./etc/letsencrypt/archive/diagnostic.riffplatform.com/privkey1.pem"
+echo "  docker secret create diagnostic.riffplatform.com.crt.1 ./etc/letsencrypt/archive/diagnostic.riffplatform.com/fullchain1.pem"
 echo "  popd"
 echo
 echo "------------------------------ "
@@ -92,11 +94,8 @@ echo
 # popd
 #
 # # Standard build, push and deploy
-# . bin/build-vars
-# make pull-images
+# . bin/deploy-vars
 # make show-env
-# make clean build-prod
-# make push-prod
 # make deploy-stack
 #
 ##### TODO: Work in progress, just wanted to note these pieces now, but this

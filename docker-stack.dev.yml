@@ -1,17 +1,17 @@
 ---
 # override/additions to docker-stack.yml for deploying to the AWS dev swarm
-version: '3.6'
+version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: dev.riffplatform.com.key.3
+      - source: dev.riffplatform.com.key.4
         target: site.key
-      - source: dev.riffplatform.com.crt.3
+      - source: dev.riffplatform.com.crt.4
         target: site.crt
 
-# Your cert will expire on 2019-09-29 (staging key.3 & crt.3)
+# Your cert will expire on 2019-12-11 (staging key.4 & crt.4)
 secrets:
-  dev.riffplatform.com.key.3:
+  dev.riffplatform.com.key.4:
     external: true
-  dev.riffplatform.com.crt.3:
+  dev.riffplatform.com.crt.4:
     external: true

@@ -19,7 +19,7 @@ source bin/aws_stack_vars grantthornton
 # Sadly t3 instances are not supported by the docker for aws cloudformation template at this time (2019-01-28)
 MGR_NODE_INSTANCE_TYPE=t2.small
 MGR_NODE_INSTANCE_CNT=1
-WKR_NODE_INSTANCE_TYPE=t2.small
+WKR_NODE_INSTANCE_TYPE=t2.micro
 WKR_NODE_INSTANCE_CNT=1
 
 # internal script uses the above bash parameters
@@ -50,6 +50,7 @@ echo "Create the configs (after decrypting them in the config directory)"
 pushd config
 SWARM_CONFIGS=( signalmaster.local-production.yml.2
                 riffdata.local-production.yml.1
+                riffdata.gt-local-production.yml.2
                 riff-rtc.local-production.yml.8
                 riff-rtc.local-production.yml.8.debug )
 
@@ -92,11 +93,8 @@ echo
 # popd
 #
 # # Standard build, push and deploy
-# . bin/build-vars
-# make pull-images
+# . bin/deploy-vars
 # make show-env
-# make clean build-prod
-# make push-prod
 # make deploy-stack
 #
 ##### TODO: Work in progress, just wanted to note these pieces now, but this

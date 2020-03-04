@@ -13,7 +13,7 @@
 # AWS_STACK_REGION=us-east-1
 
 # Test this is likely being run from the root of the edu-docker repo working dir
-if [[ ! ( -e Makefile && -e bin/docker-swarm.py && -e bin/build-vars ) ]]; then
+if [[ ! ( -e Makefile && -e bin/docker-swarm.py && -e bin/deploy-vars ) ]]; then
     echo "You do not seem to have sourced this script from the root of the edu-docker working directory."
     echo "Change to the edu-docker working directory and run:"
     echo "  . bin/create_aws_${DEPLOY_SWARM}_stack"
