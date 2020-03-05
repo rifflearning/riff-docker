@@ -63,9 +63,9 @@ WHITE=`tput -Txterm setaf 7`
 # boolean values (0,1) should be tested using (( ))
 FETCH=0
 EDU_STATUS=0
-PFM_STATUS=0
+PFM_STATUS=1
 STACK_STATUS=1
-CONTAINER_STATUS=0
+CONTAINER_STATUS=1
 ASSUME_YES=0
 
 ################################################################################
