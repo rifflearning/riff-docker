@@ -18,7 +18,7 @@ SSL_DIR := pfm-web/ssl
 # for development, production or deployment in a docker swarm
 # production used to have additional config but now it's just base.
 CONF_BASE   := docker-compose.yml
-CONF_DEV    := $(CONF_BASE) docker-compose.dev.yml
+CONF_DEV    := $(CONF_BASE) docker-compose.dev.yml docker-compose.dev-ssl.yml
 CONF_PROD   := $(CONF_BASE)
 CONF_DEPLOY := $(CONF_PROD) docker-stack.yml
 
