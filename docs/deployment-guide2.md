@@ -150,6 +150,164 @@ running in the swarm)
 
 
 
+## Lightweight AWS deployment in a single instance
+
+### AMI
+
+Creating a private AMI will make deploying additional instances easier.
+
+- Use the stable Ubuntu server AMI as a base **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type 64-bit (x86)**
+- Keep the root volume size the minimum required by the Ubuntu AMI, 8GB
+- Install the following:
+    - [docker][install-docker]
+    - [docker-compose][install-compose]
+    - [nodejs v12][install-node]
+    - make
+    - jq
+    - vim (installed in base image)
+    - git (installed in base image)
+    - tmux (installed in base image)
+    - riff-docker repository
+- exit, save a snapshot and use that snapshot to create an AMI
+
+I've named the AMI(s) I created _riff-base-&lt;yr>-&lt;mth>_, this naming convention could use work.
+
+[install-docker]: <https://docs.docker.com/install/linux/docker-ce/ubuntu/>
+[install-compose]: <https://docs.docker.com/compose/install/>
+[install-node]: <https://github.com/nodesource/distributions/blob/master/README.md#debinstall>
+
+#### Package installation
+
+ssh to the instance you have just started for creating the AMI. This means that you must have setup
+the Security Groups to allow you ssh access AND that you have the private key used to create the instance.
+
+1st upgrade any packages that need upgrading:
+
+```sh
+sudo apt update
+apt list --upgradable
+sudo apt upgrade
+```
+
+It's not a bad idea to reboot after upgrading.
+
+install useful tools (json parser, build tool needed to process a repo's Makefile)
+```sh
+sudo apt install make jq
+```
+
+install nodejs (ver 12)
+```sh
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+install docker
+```sh
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
+
+install docker-compose (see link above for command for latest version)
+```sh
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+add the `ubuntu` user to the `docker` group for permission to run docker commands
+```sh
+sudo usermod -a -G docker ubuntu
+```
+
+install riff-docker repository
+```sh
+mkdir ~/riff
+cd ~/riff
+git clone https://github.com/rifflearning/riff-docker.git
+```
+
+#### AMI creation from instance volume
+
+- exit from the ssh session
+- stop the instance
+- select the root device volume
+- create snapshot (I gave it a description of _18.04+docker+node12+make+riff-docker repo_) and named it _riff-base_
+- select the snapshot and select _Create Image_ action
+    give it a name and description (the same description as the snapshot and see AMI naming above)
+
+
+### Setting up a new riff platform instance
+
+#### Creating the instance
+- Select the AWS region
+- Launch a new instance
+    - Select the private _riff-base-2020-02_ AMI created as defined above
+    - Select a `t3a.small` instance type
+    - Change the size of the root volume to 12MB and use a standard volume type (magnetic) as it is 1/2 the cost of the gp2 type
+    - Select the Security Groups to give ssh access to those who need it, and for webserver access (HTTP and HTTPS)
+- You may want to allocate and associate an elastic IP address to the new instance
+    Add the associated elastic IP to your `known_hosts` file `ssh-keyscan <Elastic_IP> >> ~/.ssh/known_hosts`
+- ssh to the new instance (using the key specified when the instance was created, the public IP assigned to the instance and the user `ubuntu`.
+```sh
+ssh -i ~/.ssh/riffdev_1_useast2_key.pem ubuntu@18.220.76.141
+```
+
+#### Initialize the new instance
+We want to run docker in swarm mode to take advantage of the docker configs and secrets, but also to
+allow adding additional instances to the swarm at some time in the future. Currently the swarm will
+consist of this single docker instance. As such **ALL** labels used to determine which docker node may run which container must be specified on this docker node.
+Get the latest updates from GitHub for the riff-docker repository, before using the utilities it contains to initialize this instance.
+Checkout the branch specific to this deployment.
+Copy the configs and secrets for this deployment to the instance and then create them in the docker swarm. The configs and secrets will have to be decrypted locally before copying them to the instance.
+Start the support services (such as the local docker image registry).
+
+
+```sh
+docker swarm init
+MGR_NODE_ID=( $(docker node ls --filter="role=manager" --format="{{.ID}}") )
+docker node update '--label-add='{mongo=true,web=true,registry=true} ${MGR_NODE_ID[0]}
+cd ~/riff/riff-docker
+git pull
+git checkout --track origin/riffplatform/demo
+# copy config & secrets (example commands) to instance named demo-Pfm in .ssh/config
+# scp signalmaster.local-production.yml.2 riff-rtc.local-production.yml.8.debug riffdata.local-production.yml.1 demo-Pfm:riff/riff-docker/config/
+# scp demo.riffplatform.com.crt.2 demo.riffplatform.com.key.2 demo-Pfm:riff/riff-docker/config/secret/
+pushd config
+docker config create signalmaster.local-production.yml.2 signalmaster.local-production.yml.2
+docker config create riff-rtc.local-production.yml.8.debug riff-rtc.local-production.yml.8.debug
+docker config create riffdata.local-production.yml.1 riffdata.local-production.yml.1
+cd secret
+docker secret create demo.riffplatform.com.crt.2 demo.riffplatform.com.crt.2
+docker secret create demo.riffplatform.com.key.2 demo.riffplatform.com.key.2
+popd
+make deploy-support-stack
+```
+
+Standard new build/deploy commands
+```sh
+export DEPLOY_SWARM=demo
+git pull
+make pull-images
+. bin/build-vars
+make show-env
+make clean build-prod
+make push-prod
+make deploy-stack
+```
+
+
 
 
 ## Appendix
