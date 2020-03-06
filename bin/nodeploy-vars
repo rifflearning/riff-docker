@@ -1,0 +1,10 @@
+#!/bin/bash
+# This file unsets variables in the environment and therefore must be
+# run in the current shell process:
+# source nodeploy-vars
+#  or
+# . nodeploy-vars
+
+# Unset all the environment variables exported by deploy-vars
+unset RIFF_RTC_TAG
+unset RIFF_SERVER_TAG

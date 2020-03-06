@@ -1,17 +1,17 @@
 ---
 # override/additions to docker-stack.yml for deploying to the emeritus swarm
-version: '3.6'
+version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: emeritus.riffplatform.com.key.2
+      - source: emeritus.riffplatform.com.key.5
         target: site.key
-      - source: emeritus.riffplatform.com.crt.2
+      - source: emeritus.riffplatform.com.crt.5
         target: site.crt
 
-# Your cert will expire on 2019-09-11 (emeritus key.2 & crt.2)
+# Your cert will expire on 2020-05-11 (emeritus key.5 & crt.5)
 secrets:
-  emeritus.riffplatform.com.key.2:
+  emeritus.riffplatform.com.key.5:
     external: true
-  emeritus.riffplatform.com.crt.2:
+  emeritus.riffplatform.com.crt.5:
     external: true
