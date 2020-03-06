@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: staging.riffplatform.com.key.7
+      - source: staging.riffplatform.com.key.8
         target: site.key
-      - source: staging.riffplatform.com.crt.7
+      - source: staging.riffplatform.com.crt.8
         target: site.crt
 
-# Your cert will expire on 2020-03-09 (staging key.7 & crt.7)
+# Your cert will expire on 2020-06-04 (staging key.8 & crt.8)
 secrets:
-  staging.riffplatform.com.key.7:
+  staging.riffplatform.com.key.8:
     external: true
-  staging.riffplatform.com.crt.7:
+  staging.riffplatform.com.crt.8:
     external: true
