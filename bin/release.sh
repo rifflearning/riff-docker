@@ -223,7 +223,7 @@ if [ -z "${TOKEN}" ] && [ -n "${GITHUB_TOKEN}" ]; then
     TOKEN="${GITHUB_TOKEN}"
 fi
 
-if [ ${ACTION} != "push" ] && bin/docker-login-check ${IMAGE_REGISTRY}; then
+if [ ${ACTION} == "push" ] && ! bin/docker-login-check.sh -q ${IMAGE_REGISTRY}; then
     echo "!!! You do not have valid docker credentials to push to ${IMAGE_REGISTRY}."
     echo "!!! Do a docker login and try again."
     echo
