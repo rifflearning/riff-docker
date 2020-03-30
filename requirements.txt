@@ -1,5 +1,5 @@
-awscli>=1.16.309
-boto3>=1.10.45
-click>=7.0
+awscli>=1.18.31
+boto3>=1.12.31
+click>=7.1.1
 click-completion>=0.5.2
-psutil>=5.6.7
+psutil>=5.7.0
