@@ -14,6 +14,7 @@ declare -a RECIPIENTS=(
         beth@rifflearning.com\
         mike@rifflearning.com\
         jordan@rifflearning.com\
+        david@davidfluck.com\
     )
 
 # Turn the recipient array into a recipient options string
