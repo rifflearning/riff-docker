@@ -1,0 +1,63 @@
+#! /usr/bin/env bash
+# Deployment variables for riffremote AWS instances
+
+# Valid swarm names (used to index into OWNERS and IMAGE_VERS)
+# keep alphabetical after 'riffai'
+DEPLOY_NAMES=( riffai
+                mg
+                mikecardus
+                sew
+                strategyteam
+              )
+
+# OWNERS is an associative array of the DEPLOY_NAMES site owner names and email addresses
+declare -A OWNERS
+OWNERS=( [riffai.name]="Beth Porter"
+         [riffai.email]="beth@riffanalytics.ai"
+         [mg.name]="Julia Um"
+         [mg.email]="julia.um@mcchrystalgroup.com"
+         [mikecardus.name]="Mike Cardus"
+         [mikecardus.email]="Mike@MikeCardus.com"
+         [sew.name]="Gabriela Masfarre Pinto"
+         [sew.email]="gabriela@smalleconomyworks.com"
+         [strategyteam.name]="Maxwell Stanley"
+         [strategyteam.email]="maxwell@symend.com"
+       )
+
+# IMAGE_VERS is an associative array of the DEPLOY_NAMES image versions deployed on that instance
+declare -A IMAGE_VERS
+IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
+             [riffai.riffdata]="2.0.0-dev.5"
+             [mg.riffrtc]="3.0.0-dev.11"
+             [mg.riffdata]="2.0.0-dev.5"
+             [mikecardus.riffrtc]="3.0.0-dev.11"
+             [mikecardus.riffdata]="2.0.0-dev.5"
+             [sew.riffrtc]="3.0.0-dev.11"
+             [sew.riffdata]="2.0.0-dev.5"
+             [strategyteam.riffrtc]="3.0.0-dev.11"
+             [strategyteam.riffdata]="2.0.0-dev.5"
+           )
+
+# If we were given a swarm name as an argument, make sure that all the derived parameters are
+# unset in case it is invalid, but leave them alone if no argument was given.
+if [[ -n "$1" ]]
+then
+    unset DEPLOY_SWARM
+    unset RIFF_RTC_TAG
+    unset RIFF_SERVER_TAG
+fi
+
+if [ "$1" == "--clear" ]
+then
+    unset REQ_DEPLOY
+    return
+fi
+
+# If we were given a valid swarm name as an argument, use it to populate the deployment environment vars
+if [[ -v DEPLOY_NAMES[$1] ]]
+then
+    export DEPLOY_SWARM=$1
+    # The docker-compose.yml file uses these values to determine which image to deploy to the swarm
+    export RIFF_RTC_TAG=${IMAGE_VERS[$DEPLOY_SWARM.riffrtc]}
+    export RIFF_SERVER_TAG=${IMAGE_VERS[$DEPLOY_SWARM.riffdata]}
+fi
