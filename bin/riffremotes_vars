@@ -4,16 +4,22 @@
 # Valid swarm names (used to index into OWNERS and IMAGE_VERS)
 # keep alphabetical after 'riffai'
 DEPLOY_NAMES=( riffai
-                mg
-                mikecardus
-                sew
-                strategyteam
-              )
+               kevin-riff
+               meet
+               mg
+               mikecardus
+               sew
+               strategyteam
+             )
 
 # OWNERS is an associative array of the DEPLOY_NAMES site owner names and email addresses
 declare -A OWNERS
 OWNERS=( [riffai.name]="Beth Porter"
          [riffai.email]="beth@riffanalytics.ai"
+         [kevin-riff.name]="Kevin Turney"
+         [kevin-riff.email]="kturney@amgen.com"
+         [meet.name]="Patti Phillips"
+         [meet.email]="patti@roiinstitute.net"
          [mg.name]="Julia Um"
          [mg.email]="julia.um@mcchrystalgroup.com"
          [mikecardus.name]="Mike Cardus"
@@ -28,6 +34,10 @@ OWNERS=( [riffai.name]="Beth Porter"
 declare -A IMAGE_VERS
 IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [riffai.riffdata]="2.0.0-dev.5"
+             [kevin-riff.riffrtc]="3.0.0-dev.11"
+             [kevin-riff.riffdata]="2.0.0-dev.5"
+             [meet.riffrtc]="3.0.0-dev.11"
+             [meet.riffdata]="2.0.0-dev.5"
              [mg.riffrtc]="3.0.0-dev.11"
              [mg.riffdata]="2.0.0-dev.5"
              [mikecardus.riffrtc]="3.0.0-dev.11"
