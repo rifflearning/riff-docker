@@ -4,7 +4,9 @@
 # Valid swarm names (used to index into OWNERS and IMAGE_VERS)
 # keep alphabetical after 'riffai'
 DEPLOY_NAMES=( riffai
+               esme
                kevin-riff
+               learnlaunch
                meet
                mg
                mikecardus
@@ -13,29 +15,38 @@ DEPLOY_NAMES=( riffai
              )
 
 # OWNERS is an associative array of the DEPLOY_NAMES site owner names and email addresses
+# Email is rot13. in vim use 'g?'
 declare -A OWNERS
 OWNERS=( [riffai.name]="Beth Porter"
-         [riffai.email]="beth@riffanalytics.ai"
+         [riffai.email]="orgu@evssnanylgvpf.nv"
+         [esme.name]="Julia Henderson"
+         [esme.email]="whyvn@rfzryrneavat.pbz"
          [kevin-riff.name]="Kevin Turney"
-         [kevin-riff.email]="kturney@amgen.com"
+         [kevin-riff.email]="xghearl@nztra.pbz"
+         [learnlaunch.name]=""
+         [learnlaunch.email]=""
          [meet.name]="Patti Phillips"
-         [meet.email]="patti@roiinstitute.net"
+         [meet.email]="cnggv@ebvvafgvghgr.arg"
          [mg.name]="Julia Um"
-         [mg.email]="julia.um@mcchrystalgroup.com"
+         [mg.email]="whyvn.hz@zppuelfgnytebhc.pbz"
          [mikecardus.name]="Mike Cardus"
-         [mikecardus.email]="Mike@MikeCardus.com"
+         [mikecardus.email]="Zvxr@ZvxrPneqhf.pbz"
          [sew.name]="Gabriela Masfarre Pinto"
-         [sew.email]="gabriela@smalleconomyworks.com"
+         [sew.email]="tnoevryn@fznyyrpbabzljbexf.pbz"
          [strategyteam.name]="Maxwell Stanley"
-         [strategyteam.email]="maxwell@symend.com"
+         [strategyteam.email]="znkjryy@flzraq.pbz"
        )
 
 # IMAGE_VERS is an associative array of the DEPLOY_NAMES image versions deployed on that instance
 declare -A IMAGE_VERS
 IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [riffai.riffdata]="2.0.0-dev.5"
+             [esme.riffrtc]="3.0.0-dev.11"
+             [esme.riffdata]="2.0.0-dev.5"
              [kevin-riff.riffrtc]="3.0.0-dev.11"
              [kevin-riff.riffdata]="2.0.0-dev.5"
+             [learnlaunch.riffrtc]="3.0.0-dev.11"
+             [learnlaunch.riffdata]="2.0.0-dev.5"
              [meet.riffrtc]="3.0.0-dev.11"
              [meet.riffdata]="2.0.0-dev.5"
              [mg.riffrtc]="3.0.0-dev.11"

@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the learnlaunch (riffremote 1) swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: learnlaunch.riffremote.com.key.1
+        target: site.key
+      - source: learnlaunch.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2019-12-11 (learnlaunch key.1 & crt.1)
+secrets:
+  learnlaunch.riffremote.com.key.1:
+    external: true
+  learnlaunch.riffremote.com.crt.1:
+    external: true
