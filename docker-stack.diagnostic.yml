@@ -24,7 +24,7 @@ services:
       - source: riff-rtc.local-production.yml.8.debug
         target: /app/config/unused1
       # diagnostic riff-rtc specific config replaces the above default config
-      - source: riff-rtc.diag-local-production.yml.1
+      - source: riff-rtc.diag-local-production.yml.2
         target: /app/config/local-production.yml
 
 # Your cert will expire on 2020-07-14 (gt-staging key.2 & crt.2)
@@ -37,5 +37,5 @@ secrets:
 configs:
   riffdata.diag-local-production.yml.1:
     external: true
-  riff-rtc.diag-local-production.yml.1:
+  riff-rtc.diag-local-production.yml.2:
     external: true
