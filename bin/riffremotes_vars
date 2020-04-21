@@ -10,6 +10,7 @@ DEPLOY_NAMES=( riffai
                meet
                mg
                mikecardus
+               mcc-cec-team
                sew
                strategyteam
              )
@@ -25,6 +26,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [kevin-riff.email]="xghearl@nztra.pbz"
          [learnlaunch.name]=""
          [learnlaunch.email]=""
+         [mcc-cec-team.name]="Aron Gerics"
+         [mcc-cec-team.email]="neba.trevpf@zpp.rqh"
          [meet.name]="Patti Phillips"
          [meet.email]="cnggv@ebvvafgvghgr.arg"
          [mg.name]="Julia Um"
@@ -47,6 +50,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [kevin-riff.riffdata]="2.0.0-dev.5"
              [learnlaunch.riffrtc]="3.0.0-dev.11"
              [learnlaunch.riffdata]="2.0.0-dev.5"
+             [mcc-cec-team.riffrtc]="3.0.0-dev.11"
+             [mcc-cec-team.riffdata]="2.0.0-dev.5"
              [meet.riffrtc]="3.0.0-dev.11"
              [meet.riffdata]="2.0.0-dev.5"
              [mg.riffrtc]="3.0.0-dev.11"
