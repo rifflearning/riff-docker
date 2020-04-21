@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the mcc-cec-team (riffremote 1) swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: mcc-cec-team.riffremote.com.key.1
+        target: site.key
+      - source: mcc-cec-team.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-07-20 (mcc-cec-team key.1 & crt.1)
+secrets:
+  mcc-cec-team.riffremote.com.key.1:
+    external: true
+  mcc-cec-team.riffremote.com.crt.1:
+    external: true
