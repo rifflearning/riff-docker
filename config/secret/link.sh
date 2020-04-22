@@ -2,7 +2,7 @@
 
 if [ $# -ne 3 ]
   then
-    echo "Syntax: ./link.sh <3rd level domain name> <edu | platform> <cert ver number>"
+    echo "Syntax: ./link.sh <3rd level domain name> <edu | platform | remote> <cert ver number>"
     echo "ex: ./link.sh staging edu 5"
     echo
     exit 1
