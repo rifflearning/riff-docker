@@ -7,10 +7,12 @@ DEPLOY_NAMES=( riffai
                esme
                kevin-riff
                learnlaunch
+               loughtec
+               manpower
+               mcc-cec-team
                meet
                mg
                mikecardus
-               mcc-cec-team
                sew
                strategyteam
              )
@@ -22,12 +24,12 @@ OWNERS=( [riffai.name]="Beth Porter"
          [riffai.email]="orgu@evssnanylgvpf.nv"
          [esme.name]="Julia Henderson"
          [esme.email]="whyvn@rfzryrneavat.pbz"
-         [innovation.name]="Andrei Villarroel"
-         [innovation.email]="gbbyf@qvfehcgvirvaabingvba.pbz"
          [kevin-riff.name]="Kevin Turney"
          [kevin-riff.email]="xghearl@nztra.pbz"
          [learnlaunch.name]="Ben Bungert"
          [learnlaunch.email]="ora@yrneaynhapu.pbz"
+         [loughtec.name]="Sean McDermott"
+         [loughtec.email]="frna@ybhtugrp.pbz"
          [manpower.name]="Marta Cavagnet"
          [manpower.email]="ZNEGN.PNINTARG@znacbjre.vg"
          [mcc-cec-team.name]="Aron Gerics"
@@ -50,12 +52,12 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [riffai.riffdata]="2.0.0-dev.5"
              [esme.riffrtc]="3.0.0-dev.11"
              [esme.riffdata]="2.0.0-dev.5"
-             [innovation.riffrtc]="3.0.0-dev.11"
-             [innovation.riffdata]="2.0.0-dev.5"
              [kevin-riff.riffrtc]="3.0.0-dev.11"
              [kevin-riff.riffdata]="2.0.0-dev.5"
              [learnlaunch.riffrtc]="3.0.0-dev.11"
              [learnlaunch.riffdata]="2.0.0-dev.5"
+             [loughtec.riffrtc]="3.0.0-dev.11"
+             [loughtec.riffdata]="2.0.0-dev.5"
              [manpower.riffrtc]="3.0.0-dev.11"
              [manpower.riffdata]="2.0.0-dev.5"
              [mcc-cec-team.riffrtc]="3.0.0-dev.11"
