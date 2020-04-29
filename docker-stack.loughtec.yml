@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the loughtec (riffremote 1) swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: loughtec.riffremote.com.key.1
+        target: site.key
+      - source: loughtec.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-07-28 (loughtec key.1 & crt.1)
+secrets:
+  loughtec.riffremote.com.key.1:
+    external: true
+  loughtec.riffremote.com.crt.1:
+    external: true
