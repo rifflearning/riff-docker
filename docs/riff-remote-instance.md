@@ -87,7 +87,7 @@ make dev-swarm-labels
 
 The config files needed are specified in `docker-stack.yml` in the `configs` section.
 
-Copy the unencrypted config files from your **local machine** to the instance
+### Copy the unencrypted config files from your **local machine** to the instance
 
 **Note**: I've used `ssh-add` so I don't have to keep specifying the key file.
 ```
@@ -97,7 +97,17 @@ scp riff-rtc.local-production.yml.8.debug \
     ubuntu@18.210.22.47:riff/riff-docker/config/
 ```
 
-From the ssh session to the new instance
+#### OR w/ ssh config file "RR-&lt;deploy>" alias entry
+```
+DEPLOY=<Deployment_name>
+scp riff-rtc.local-production.yml.8.debug \
+    riffdata.local-production.yml.1 \
+    signalmaster.local-production.yml.2 \
+    RR-$DEPLOY:riff/riff-docker/config/
+```
+
+### Then create the docker configs on the remote instance
+(using the ssh session to the instance)
 ```
 cd config
 docker config create riff-rtc.local-production.yml.8.debug riff-rtc.local-production.yml.8.debug
@@ -112,14 +122,21 @@ cd ..
 The secret files needed are specified in `docker-stack.${DEPLOY_SWARM}.yml` in
 the `secrets` section.
 
-Copy the unencrypted secret files from your **local machine** to the instance
+### Copy the unencrypted secret files from your **local machine** to the instance
 
 **Note**: I've used `ssh-add` so I don't have to keep specifying the key file.
 ```
 scp <Deployment_name>.riffremote.*.1 ubuntu@18.210.22.47:riff/riff-docker/config/secret/
 ```
 
-From the ssh session to the new instance
+#### OR w/ ssh config file "RR-&lt;deploy>" alias entry
+```
+DEPLOY=<Deployment_name>
+scp $DEPLOY.riffremote.*.1 RR-$DEPLOY:riff/riff-docker/config/secret/
+```
+
+### Then create the docker secrets on the remote instance
+(using the ssh session to the instance)
 ```
 cd config/secret
 docker secret create $DEPLOY_SWARM.riffremote.com.crt.1{,}
