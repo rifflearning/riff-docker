@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the teamwoco (riffremote 1) swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: teamwoco.riffremote.com.key.1
+        target: site.key
+      - source: teamwoco.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-07-29 (teamwoco key.1 & crt.1)
+secrets:
+  teamwoco.riffremote.com.key.1:
+    external: true
+  teamwoco.riffremote.com.crt.1:
+    external: true
