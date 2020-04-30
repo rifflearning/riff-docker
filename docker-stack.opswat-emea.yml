@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the opswat-emea (riffremote 1) swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: opswat-emea.riffremote.com.key.1
+        target: site.key
+      - source: opswat-emea.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-07-29 (opswat-emea key.1 & crt.1)
+secrets:
+  opswat-emea.riffremote.com.key.1:
+    external: true
+  opswat-emea.riffremote.com.crt.1:
+    external: true

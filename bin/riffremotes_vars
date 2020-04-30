@@ -13,8 +13,10 @@ DEPLOY_NAMES=( riffai
                meet
                mg
                mikecardus
+               opswat-emea
                sew
                strategyteam
+               teamwoco
              )
 
 # OWNERS is an associative array of the DEPLOY_NAMES site owner names and email addresses
@@ -40,10 +42,14 @@ OWNERS=( [riffai.name]="Beth Porter"
          [mg.email]="whyvn.hz@zppuelfgnytebhc.pbz"
          [mikecardus.name]="Mike Cardus"
          [mikecardus.email]="Zvxr@ZvxrPneqhf.pbz"
+         [opswat-emea.name]="Noel Slane"
+         [opswat-emea.email]="abry.fynar@bcfjng.pbz"
          [sew.name]="Gabriela Masfarre Pinto"
          [sew.email]="tnoevryn@fznyyrpbabzljbexf.pbz"
          [strategyteam.name]="Maxwell Stanley"
          [strategyteam.email]="znkjryy@flzraq.pbz"
+         [teamwoco.name]="Dhruv Sharma"
+         [teamwoco.email]="quehifunezn4503@tznvy.pbz"
        )
 
 # IMAGE_VERS is an associative array of the DEPLOY_NAMES image versions deployed on that instance
@@ -68,10 +74,14 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [mg.riffdata]="2.0.0-dev.5"
              [mikecardus.riffrtc]="3.0.0-dev.11"
              [mikecardus.riffdata]="2.0.0-dev.5"
+             [opswat-emea.riffrtc]="3.0.0-dev.11"
+             [opswat-emea.riffdata]="2.0.0-dev.5"
              [sew.riffrtc]="3.0.0-dev.11"
              [sew.riffdata]="2.0.0-dev.5"
              [strategyteam.riffrtc]="3.0.0-dev.11"
              [strategyteam.riffdata]="2.0.0-dev.5"
+             [teamwoco.riffrtc]="3.0.0-dev.11"
+             [teamwoco.riffdata]="2.0.0-dev.5"
            )
 
 # If we were given a swarm name as an argument, make sure that all the derived parameters are
