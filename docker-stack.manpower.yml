@@ -9,9 +9,22 @@ services:
       - source: manpower.riffremote.com.crt.1
         target: site.crt
 
+  pfm-riffrtc:
+    configs:
+      # override the normal config defined in docker-stack.yml so that it can be replaced
+      - source: riff-rtc.local-production.yml.8.debug
+        target: /app/config/unused1
+      # manpower riff-rtc specific config replaces the above default config
+      - source: riff-rtc.manpower-local-production.yml.1
+        target: /app/config/local-production.yml
+
 # Your cert will expire on 2020-07-23 (manpower key.1 & crt.1)
 secrets:
   manpower.riffremote.com.key.1:
     external: true
   manpower.riffremote.com.crt.1:
+    external: true
+
+configs:
+  riff-rtc.manpower-local-production.yml.1:
     external: true
