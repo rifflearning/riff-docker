@@ -42,9 +42,12 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
 # unset in case it is invalid, but leave them alone if no argument was given.
 if [[ -n "$1" ]]
 then
+    REQ_DEPLOY=$1
     unset DEPLOY_SWARM
     unset RIFF_RTC_TAG
     unset RIFF_SERVER_TAG
+else
+    REQ_DEPLOY=$DEPLOY_SWARM
 fi
 
 if [ "$1" == "--clear" ]
@@ -54,9 +57,9 @@ then
 fi
 
 # If we were given a valid swarm name as an argument, use it to populate the deployment environment vars
-if [[ -v DEPLOY_NAMES[$1] ]]
+if [[ -v IMAGE_VERS[$REQ_DEPLOY.riffrtc] ]]
 then
-    export DEPLOY_SWARM=$1
+    export DEPLOY_SWARM=$REQ_DEPLOY
     # The docker-compose.yml file uses these values to determine which image to deploy to the swarm
     export RIFF_RTC_TAG=${IMAGE_VERS[$DEPLOY_SWARM.riffrtc]}
     export RIFF_SERVER_TAG=${IMAGE_VERS[$DEPLOY_SWARM.riffdata]}
