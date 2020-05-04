@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the leadershipteam (riffremote 1) swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: leadershipteam.riffremote.com.key.1
+        target: site.key
+      - source: leadershipteam.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-08-02
+secrets:
+  leadershipteam.riffremote.com.key.1:
+    external: true
+  leadershipteam.riffremote.com.crt.1:
+    external: true
