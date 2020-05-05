@@ -14,6 +14,7 @@ DEPLOY_NAMES=( riffai
                meet
                mg
                mikecardus
+               olin
                opswat-emea
                sew
                strategyteam
@@ -47,6 +48,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [mg.email]="whyvn.hz@zppuelfgnytebhc.pbz"
          [mikecardus.name]="Mike Cardus"
          [mikecardus.email]="Zvxr@ZvxrPneqhf.pbz"
+         [olin.name]="Jason Woodard"
+         [olin.email]="wnfba.jbbqneq@byva.rqh"
          [opswat-emea.name]="Noel Slane"
          [opswat-emea.email]="abry.fynar@bcfjng.pbz"
          [sew.name]="Gabriela Masfarre Pinto"
@@ -83,6 +86,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [mg.riffdata]="2.0.0-dev.5"
              [mikecardus.riffrtc]="3.0.0-dev.11"
              [mikecardus.riffdata]="2.0.0-dev.5"
+             [olin.riffrtc]="3.0.0-dev.11"
+             [olin.riffdata]="2.0.0-dev.5"
              [opswat-emea.riffrtc]="3.0.0-dev.11"
              [opswat-emea.riffdata]="2.0.0-dev.5"
              [sew.riffrtc]="3.0.0-dev.11"
