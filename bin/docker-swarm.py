@@ -111,7 +111,7 @@ def _get_tunnel_info(port):
     # [bind_address:]port:remote_socket
     bind_re = re.compile('(?P<bind_address>.*):(?P<port>.*):(?P<remote_socket>.*)')
     # remote_user@remote_ip
-    user_ip_re = re.compile('(?P<remote_user>.*)@(?P<remote_ip>.*)')
+    user_ip_re = re.compile('(?:(?P<remote_user>.*)@)?(?P<remote_ip>.*)')
 
     # This is an example of what the tunnel process(es) info from psutil look like:
     # {'name': 'ssh',
