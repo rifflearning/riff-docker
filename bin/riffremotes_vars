@@ -4,6 +4,7 @@
 # Valid swarm names (used to index into OWNERS and IMAGE_VERS)
 # keep alphabetical after 'riffai'
 DEPLOY_NAMES=( riffai
+               my
                clarovc
                digital-leaders
                disneyteam
@@ -28,6 +29,8 @@ DEPLOY_NAMES=( riffai
 declare -A OWNERS
 OWNERS=( [riffai.name]="Beth Porter"
          [riffai.email]="orgu@evssnanylgvpf.nv"
+         [my.name]="Beth Porter"
+         [my.email]="orgu@evssnanylgvpf.nv"
          [clarovc.name]="Jennifer Jordan"
          [clarovc.email]="wraavsre@pynebip.pbz"
          [digital-leaders.name]="Dave Drodge"
@@ -70,6 +73,8 @@ OWNERS=( [riffai.name]="Beth Porter"
 declare -A IMAGE_VERS
 IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [riffai.riffdata]="2.0.0-dev.5"
+             [my.riffrtc]="3.0.0-dev.15"
+             [my.riffdata]="2.0.0-dev.5"
              [clarovc.riffrtc]="3.0.0-dev.11"
              [clarovc.riffdata]="2.0.0-dev.5"
              [digital-leaders.riffrtc]="3.0.0-dev.11"
