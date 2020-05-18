@@ -22,6 +22,7 @@ DEPLOY_NAMES=( riffai
                opswat-emea
                sew
                strategyteam
+               swedishdoulas
                teamwoco
              )
 
@@ -66,6 +67,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [sew.email]="tnoevryn@fznyyrpbabzljbexf.pbz"
          [strategyteam.name]="Maxwell Stanley"
          [strategyteam.email]="znkjryy@flzraq.pbz"
+         [swedishdoulas.name]="Jocelyn Alt"
+         [swedishdoulas.email]="wbpryla.nyg@fjrqvfu.bet"
          [teamwoco.name]="Dhruv Sharma"
          [teamwoco.email]="quehifunezn4503@tznvy.pbz"
        )
@@ -110,6 +113,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [sew.riffdata]="2.0.0-dev.5"
              [strategyteam.riffrtc]="3.0.0-dev.11"
              [strategyteam.riffdata]="2.0.0-dev.5"
+             [swedishdoulas.riffrtc]="3.0.0-dev.11"
+             [swedishdoulas.riffdata]="2.0.0-dev.5"
              [teamwoco.riffrtc]="3.0.0-dev.11"
              [teamwoco.riffdata]="2.0.0-dev.5"
            )
