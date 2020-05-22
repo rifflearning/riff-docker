@@ -4,8 +4,8 @@ Creating the base Riff AMI
 
 # Launch a new EC2 instance
 
-1. For the base AMI choose:
-    `Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-07ebfd5b3428b6f4d (64-bit x86)`
+1. For the base AMI choose:  
+    `Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-0e84e211558a022c0 (64-bit x86)`
 
 
 1. Pick an instance type (`t3a.micro` works and is cheap)
@@ -47,25 +47,10 @@ exit, reboot and ssh back in
 
 ### Docker
 
-Instructions copied from: [Docker installation][docker-install]
-Installing using the repository will make it easier to keep docker
-up-to-date by using apt update/upgrade.
+For installing on Ubuntu 20.04 just install from the standard repos (see
+[How to install docker community on Ubuntu 20.04 LTS?](https://askubuntu.com/a/1230462/217789))
 ```
-sudo apt-get update
-sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg-agent \
-    software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo apt install docker.io
 ```
 
 Add the ubuntu user to the docker group
@@ -85,11 +70,11 @@ docker swarm init
 
 Instructions copied from: [docker-compose installation][compose-install].
 
-**Note** The version (currently 1.25.4) is embedded in the install instructions
+**Note** The version (currently 1.25.5) is embedded in the install instructions
 so check for an updated version and modify the command accordingly.
 
 ```
-sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -133,7 +118,7 @@ git clone https://github.com/rifflearning/riff-docker.git
 
 Append a couple of items to the bashrc
 ```
-cat << EOF >> .bashrc
+cat << EOF >> ~/.bashrc
 
 # Riff settings
 export DEPLOY_SWARM="Update_.bashrc"
@@ -164,7 +149,7 @@ exit, and stop the instance.
 - Under Actions select Image > Create Image
 - Set the properties
     - name: `riff-base-20-04-15` (use today's date)`
-    - desciption: `18.04+docker+node12+make+awscli+riff-docker repo`
+    - description: `20.04+docker+node12+make+awscli+riff-docker repo`
 - click _Create Image_ button
 - Go to the AMIs
 - Give the new image the same _Name_ as its _AMI Name_ (above)
