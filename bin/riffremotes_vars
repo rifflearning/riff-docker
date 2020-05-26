@@ -9,6 +9,7 @@ DEPLOY_NAMES=( riffai
                digital-leaders
                disneyteam
                esme
+               guo-ourteam
                kevin-riff
                leadershipteam
                learnlaunch
@@ -20,8 +21,10 @@ DEPLOY_NAMES=( riffai
                mikecardus
                olin
                opswat-emea
+               ptizzza
                sew
                strategyteam
+               surfx
                swedishdoulas
                teamwoco
              )
@@ -33,6 +36,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [riffai.email]="orgu@evssnanylgvpf.nv"
          [my.name]="Beth Porter"
          [my.email]="orgu@evssnanylgvpf.nv"
+         [guo-ourteam.name]="XiaoJing Guo"
+         [guo-ourteam.email]="aryythb@126.pbz"
          [clarovc.name]="Jennifer Jordan"
          [clarovc.email]="wraavsre@pynebip.pbz"
          [digital-leaders.name]="Dave Drodge"
@@ -63,10 +68,14 @@ OWNERS=( [riffai.name]="Beth Porter"
          [olin.email]="wnfba.jbbqneq@byva.rqh"
          [opswat-emea.name]="Noel Slane"
          [opswat-emea.email]="abry.fynar@bcfjng.pbz"
+         [ptizzza.name]="Olga Perepelkina"
+         [ptizzza.email]="arcgvmmmn@tznvy.pbz"
          [sew.name]="Gabriela Masfarre Pinto"
          [sew.email]="tnoevryn@fznyyrpbabzljbexf.pbz"
          [strategyteam.name]="Maxwell Stanley"
          [strategyteam.email]="znkjryy@flzraq.pbz"
+         [surfx.name]="Dmitry Repin"
+         [surfx.email]="qe@fhesk.vb"
          [swedishdoulas.name]="Jocelyn Alt"
          [swedishdoulas.email]="wbpryla.nyg@fjrqvfu.bet"
          [teamwoco.name]="Dhruv Sharma"
@@ -77,6 +86,8 @@ OWNERS=( [riffai.name]="Beth Porter"
 declare -A IMAGE_VERS
 IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [riffai.riffdata]="2.0.0-dev.5"
+             [guo-ourteam.riffrtc]="3.0.0-dev.15"
+             [guo-ourteam.riffdata]="2.0.0-dev.5"
              [my.riffrtc]="3.0.0-dev.16"
              [my.riffdata]="2.0.0-dev.6"
              [clarovc.riffrtc]="3.0.0-dev.11"
@@ -109,10 +120,14 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [olin.riffdata]="2.0.0-dev.5"
              [opswat-emea.riffrtc]="3.0.0-dev.11"
              [opswat-emea.riffdata]="2.0.0-dev.5"
+             [ptizzza.riffrtc]="3.0.0-dev.15"
+             [ptizzza.riffdata]="2.0.0-dev.5"
              [sew.riffrtc]="3.0.0-dev.11"
              [sew.riffdata]="2.0.0-dev.5"
              [strategyteam.riffrtc]="3.0.0-dev.11"
              [strategyteam.riffdata]="2.0.0-dev.5"
+             [surfx.riffrtc]="3.0.0-dev.15"
+             [surfx.riffdata]="2.0.0-dev.5"
              [swedishdoulas.riffrtc]="3.0.0-dev.11"
              [swedishdoulas.riffdata]="2.0.0-dev.5"
              [teamwoco.riffrtc]="3.0.0-dev.11"

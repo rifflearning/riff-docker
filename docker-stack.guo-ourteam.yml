@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the guo-ourteam (riffremote 1) swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: guo-ourteam.riffremote.com.key.1
+        target: site.key
+      - source: guo-ourteam.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-08-24 (guo-ourteam key.1 & crt.1)
+secrets:
+  guo-ourteam.riffremote.com.key.1:
+    external: true
+  guo-ourteam.riffremote.com.crt.1:
+    external: true
