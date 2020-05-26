@@ -26,6 +26,7 @@ DEPLOY_NAMES=( riffai
                strategyteam
                surfx
                swedishdoulas
+               teamstratcap
                teamwoco
              )
 
@@ -78,6 +79,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [surfx.email]="qe@fhesk.vb"
          [swedishdoulas.name]="Jocelyn Alt"
          [swedishdoulas.email]="wbpryla.nyg@fjrqvfu.bet"
+         [teamstratcap.name]="Rachel Saunders"
+         [teamstratcap.email]="efnhaqref@crnx6.pbz"
          [teamwoco.name]="Dhruv Sharma"
          [teamwoco.email]="quehifunezn4503@tznvy.pbz"
        )
@@ -130,6 +133,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.11"
              [surfx.riffdata]="2.0.0-dev.5"
              [swedishdoulas.riffrtc]="3.0.0-dev.11"
              [swedishdoulas.riffdata]="2.0.0-dev.5"
+             [teamstratcap.riffrtc]="3.0.0-dev.11"
+             [teamstratcap.riffdata]="2.0.0-dev.5"
              [teamwoco.riffrtc]="3.0.0-dev.11"
              [teamwoco.riffdata]="2.0.0-dev.5"
            )
