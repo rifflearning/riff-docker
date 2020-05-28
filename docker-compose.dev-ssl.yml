@@ -1,0 +1,16 @@
+---
+# When this compose config is used, it overwrites the self-signed certs
+# that are built into the pfm-web image with the local directory pfm-web/secrets
+# which should have a site.crt and site.key in it.
+#
+# The intention is for this to be used in an AWS instance which is reachable
+# via a DNS entry that SSL certificates have been obtained.
+# The developer will start the containers using 'make up' (ie docker-compose)
+# and not as services in a docker swarm.
+# This allows testing of code which exists only on that AWS instance by people
+# other than the developer.
+version: '3.7'
+services:
+  pfm-web:
+    volumes:
+      - ./pfm-web/secrets:/run/secrets
