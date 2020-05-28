@@ -4,9 +4,9 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: grantthornton.riffplatform.com.key.6
+      - source: grantthornton.riffplatform.com.key.7
         target: site.key
-      - source: grantthornton.riffplatform.com.crt.6
+      - source: grantthornton.riffplatform.com.crt.7
         target: site.crt
 
   pfm-riffdata:
@@ -18,11 +18,11 @@ services:
       - source: riffdata.gt-local-production.yml.2
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2020-06-04 (grantthornton key.6 & crt.6)
+# Your cert will expire on 2020-08-25 (grantthornton key.7 & crt.7)
 secrets:
-  grantthornton.riffplatform.com.key.6:
+  grantthornton.riffplatform.com.key.7:
     external: true
-  grantthornton.riffplatform.com.crt.6:
+  grantthornton.riffplatform.com.crt.7:
     external: true
 
 configs:
