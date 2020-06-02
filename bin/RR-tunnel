@@ -77,7 +77,7 @@ fi
 bin/docker-tunnel.sh "RR-$1"
 export DOCKER_HOST=localhost:2374
 
-export DOCKER_SWARM=$1
+export DEPLOY_SWARM=$1
 source bin/riffremotes_vars
 
 make show-env

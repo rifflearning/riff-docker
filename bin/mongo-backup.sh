@@ -21,7 +21,7 @@ fi
 ################################################################################
 
 # pfm, edu or RR
-RIFF_APP=pfm
+RIFF_APP=RR
 
 # docker filters to identify the container running the mongodb to backup the
 # database from. Using the named volume attached to the container has proved to
