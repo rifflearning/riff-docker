@@ -29,6 +29,7 @@ DEPLOY_NAMES=( riffai
                swedishdoulas
                teamstratcap
                teamwoco
+               ude-vet
              )
 
 # OWNERS is an associative array of the DEPLOY_NAMES site owner names and email addresses
@@ -86,6 +87,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [teamstratcap.email]="efnhaqref@crnx6.pbz"
          [teamwoco.name]="Dhruv Sharma"
          [teamwoco.email]="quehifunezn4503@tznvy.pbz"
+         [ude-vet.name]="Esther Winther"
+         [ude-vet.email]="jessica.paessens@uni-due.de"
        )
 
 # IMAGE_VERS is an associative array of the DEPLOY_NAMES image versions deployed on that instance
@@ -142,6 +145,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.19"
              [teamstratcap.riffdata]="2.0.0-dev.5"
              [teamwoco.riffrtc]="3.0.0-dev.11"
              [teamwoco.riffdata]="2.0.0-dev.5"
+             [ude-vet.riffrtc]="3.0.0-dev.19"
+             [ude-vet.riffdata]="2.0.0-dev.6"
            )
 
 # If we were given a swarm name as an argument, make sure that all the derived parameters are
