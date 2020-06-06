@@ -20,6 +20,7 @@ DEPLOY_NAMES=( riffai
                meet
                mg
                mikecardus
+               movementteam
                olin
                opswat-emea
                ptizzza
@@ -69,6 +70,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [mg.email]="whyvn.hz@zppuelfgnytebhc.pbz"
          [mikecardus.name]="Mike Cardus"
          [mikecardus.email]="Zvxr@ZvxrPneqhf.pbz"
+         [movementteam.name]="Mitchell Gehring"
+         [movementteam.email]="truevatzy94@tznvy.pbz"
          [olin.name]="Jason Woodard"
          [olin.email]="wnfba.jbbqneq@byva.rqh"
          [opswat-emea.name]="Noel Slane"
@@ -127,6 +130,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.19"
              [mg.riffdata]="2.0.0-dev.5"
              [mikecardus.riffrtc]="3.0.0-dev.11"
              [mikecardus.riffdata]="2.0.0-dev.5"
+             [movementteam.riffrtc]="3.0.0-dev.19"
+             [movementteam.riffdata]="2.0.0-dev.6"
              [olin.riffrtc]="3.0.0-dev.11"
              [olin.riffdata]="2.0.0-dev.5"
              [opswat-emea.riffrtc]="3.0.0-dev.11"
