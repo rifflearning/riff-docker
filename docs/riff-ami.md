@@ -102,16 +102,21 @@ aws --version
 rm -r aws*
 ```
 
-### Build tools
+### Build tools / home directories
+Note: I added getting `yaml2json` because I'm considering keeping deployment information in
+a yaml config file and yaml2json and jq will allow extracting information for use in
+bash scripts.
 
 ```
+mkdir bin tmp riff
 sudo apt install make vim jq git tmux curl
+curl -L https://github.com/bronze1man/yaml2json/releases/download/v1.3/yaml2json_linux_amd64 --output bin/yaml2json
+chmod +x bin/yaml2json
 ```
 
 ### Riff deployment repository
 
 ```
-mkdir ~/riff
 cd ~/riff
 git clone https://github.com/rifflearning/riff-docker.git
 ```
