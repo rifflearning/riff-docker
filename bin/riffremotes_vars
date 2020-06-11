@@ -10,6 +10,7 @@ DEPLOY_NAMES=( riffai
                disneyteam
                esme
                guo-ourteam
+               isg-trial
                kevin-riff
                leadershipteam
                learningseeds
@@ -50,9 +51,11 @@ OWNERS=( [riffai.name]="Beth Porter"
          [esme.email]="whyvn@rfzryrneavat.pbz"
          [guo-ourteam.name]="XiaoJing Guo"
          [guo-ourteam.email]="aryythb@126.pbz"
+         [isg-trial.name]="Quentin Jones"
+         [isg-trial.email]="dhragva@vagrecrefbanyfbyhgvbaftebhc.pbz"
          [kevin-riff.name]="Kevin Turney"
          [kevin-riff.email]="xghearl@nztra.pbz"
-         [leadershipteam.name]=" Judith Cardenas"
+         [leadershipteam.name]="Judith Cardenas"
          [leadershipteam.email]="whqvgu@fgengrtvrfolqrfvtatebhc.pbz"
          [learningseeds.name]="Erica Key"
          [learningseeds.email]="revpn@YrneavatFrrqf.pbz"
@@ -110,6 +113,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.19"
              [esme.riffdata]="2.0.0-dev.6"
              [guo-ourteam.riffrtc]="3.0.0-dev.19"
              [guo-ourteam.riffdata]="2.0.0-dev.6"
+             [isg-trial.riffrtc]="3.0.0-dev.19"
+             [isg-trial.riffdata]="2.0.0-dev.6"
              [kevin-riff.riffrtc]="3.0.0-dev.19"
              [kevin-riff.riffdata]="2.0.0-dev.6"
              [leadershipteam.riffrtc]="3.0.0-dev.19"
