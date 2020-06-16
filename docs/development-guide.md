@@ -20,12 +20,13 @@ this relative directory layout.
 
 ### Prerequisites
 
+- bash 4.3+ (not sure of the exact minimum version, 4.3 works for the scripts used)
 - git
 - docker
-- make
-- Python 3 (only for needed for deploying)
-- docker-compose 18.02.0+ (https://docs.docker.com/compose/install/)
-- node 10 or greater  is reccomended (https://nodejs.org/en/download/)
+- make (GNU Make 4.1 is known to work)
+- Python 3.8+ (only for needed for deploying)
+- docker-compose 1.26.0+ (https://docs.docker.com/compose/install/)
+- node 12+ (https://nodejs.org/en/download/)
 
 ### Clone and initialize working directories
 
@@ -37,6 +38,7 @@ git clone https://github.com/rifflearning/riff-rtc.git
 git clone https://github.com/rifflearning/riff-server.git
 git clone https://github.com/rifflearning/signalmaster.git
 cd riff-docker
+make pull-images
 make init-rtc
 make init-server
 make init-signalmaster
@@ -57,7 +59,7 @@ in signalmaster/config. But you may also be fine w/o using twilio for signaling.
 from the riff-docker working directory:
 
 ```sh
-. bin/nobuild-vars
+. bin/nodeploy-vars
 make build-dev
 ```
 
@@ -67,7 +69,7 @@ need to rebuild when you want to refresh the base image (ie update node w/ any n
 patches).
 
 It's best if you tag the development images w/ the `dev` tag, which will be set if
-you don't override it. Running `. bin/nobuild-vars` will unset all of the environment
+you don't override it. Running `. bin/nodeploy-vars` will unset all of the environment
 variables which would set the image tags. Those environment variables are most often
 used when building production or staging images.
 
@@ -107,6 +109,14 @@ Use a `config/local-development.yml` file for local configuration settings in
 
 
 ## Process ##
+
+**The process documented here is currently not in practice as of January 1, 2020** as stories
+are not being created and tracked by a Product Manager.
+
+It is left in the document as a starting point when the development team grows to a size
+that a more formal process is again needed.
+
+---
 
 The development process involves more than just the Riff developers, it also involves
 product management and qa.
