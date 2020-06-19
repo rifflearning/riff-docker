@@ -99,7 +99,7 @@ OWNERS=( [riffai.name]="Beth Porter"
 
 # IMAGE_VERS is an associative array of the DEPLOY_NAMES image versions deployed on that instance
 declare -A IMAGE_VERS
-IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.19"
+IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [riffai.riffdata]="2.0.0-dev.6"
              [my.riffrtc]="3.0.0-dev.19"
              [my.riffdata]="2.0.0-dev.6"
@@ -109,7 +109,7 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.19"
              [digital-leaders.riffdata]="2.0.0-dev.6"
              [disneyteam.riffrtc]="3.0.0-dev.19"
              [disneyteam.riffdata]="2.0.0-dev.6"
-             [esme.riffrtc]="3.0.0-dev.19"
+             [esme.riffrtc]="3.0.0-dev.21"
              [esme.riffdata]="2.0.0-dev.6"
              [guo-ourteam.riffrtc]="3.0.0-dev.19"
              [guo-ourteam.riffdata]="2.0.0-dev.6"
