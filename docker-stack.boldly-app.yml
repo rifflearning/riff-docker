@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the boldly-app (riffremote 1) swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: boldly-app.riffremote.com.key.1
+        target: site.key
+      - source: boldly-app.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-09-23 (boldly-app key.1 & crt.1)
+secrets:
+  boldly-app.riffremote.com.key.1:
+    external: true
+  boldly-app.riffremote.com.crt.1:
+    external: true

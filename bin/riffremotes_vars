@@ -5,6 +5,7 @@
 # keep alphabetical after 'riffai'
 DEPLOY_NAMES=( riffai
                my
+               boldly-app
                clarovc
                digital-leaders
                disneyteam
@@ -41,6 +42,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [riffai.email]="orgu@evssnanylgvpf.nv"
          [my.name]="Beth Porter"
          [my.email]="orgu@evssnanylgvpf.nv"
+         [boldly-app.name]="Rebecca Grover"
+         [boldly-app.email]="erorppn@ynagrearebhtr.bayvar"
          [clarovc.name]="Jennifer Jordan"
          [clarovc.email]="wraavsre@pynebip.pbz"
          [digital-leaders.name]="Dave Drodge"
@@ -101,6 +104,8 @@ OWNERS=( [riffai.name]="Beth Porter"
 declare -A IMAGE_VERS
 IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [riffai.riffdata]="2.0.0-dev.6"
+             [boldly-app.riffrtc]="3.0.0-dev.21"
+             [boldly-app.riffdata]="2.0.0-dev.6"
              [my.riffrtc]="3.0.0-dev.19"
              [my.riffdata]="2.0.0-dev.6"
              [clarovc.riffrtc]="3.0.0-dev.19"
