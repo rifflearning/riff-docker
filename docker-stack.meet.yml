@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: meet.riffremote.com.key.1
+      - source: meet.riffremote.com.key.2
         target: site.key
-      - source: meet.riffremote.com.crt.1
+      - source: meet.riffremote.com.crt.2
         target: site.crt
 
-# Your cert will expire on 2019-12-11 (meet key.1 & crt.1)
+# Your cert will expire on 2020-09-23 (meet key.2 & crt.2)
 secrets:
-  meet.riffremote.com.key.1:
+  meet.riffremote.com.key.2:
     external: true
-  meet.riffremote.com.crt.1:
+  meet.riffremote.com.crt.2:
     external: true

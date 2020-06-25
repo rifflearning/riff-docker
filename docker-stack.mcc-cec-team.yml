@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: mcc-cec-team.riffremote.com.key.1
+      - source: mcc-cec-team.riffremote.com.key.2
         target: site.key
-      - source: mcc-cec-team.riffremote.com.crt.1
+      - source: mcc-cec-team.riffremote.com.crt.2
         target: site.crt
 
-# Your cert will expire on 2020-07-20 (mcc-cec-team key.1 & crt.1)
+# Your cert will expire on 2020-09-23 (mcc-cec-team key.2 & crt.2)
 secrets:
-  mcc-cec-team.riffremote.com.key.1:
+  mcc-cec-team.riffremote.com.key.2:
     external: true
-  mcc-cec-team.riffremote.com.crt.1:
+  mcc-cec-team.riffremote.com.crt.2:
     external: true

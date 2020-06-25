@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: mikecardus.riffremote.com.key.1
+      - source: mikecardus.riffremote.com.key.2
         target: site.key
-      - source: mikecardus.riffremote.com.crt.1
+      - source: mikecardus.riffremote.com.crt.2
         target: site.crt
 
-# Your cert will expire on 2019-12-11 (mikecardus key.1 & crt.1)
+# Your cert will expire on 2020-09-23 (mikecardus key.2 & crt.2)
 secrets:
-  mikecardus.riffremote.com.key.1:
+  mikecardus.riffremote.com.key.2:
     external: true
-  mikecardus.riffremote.com.crt.1:
+  mikecardus.riffremote.com.crt.2:
     external: true
