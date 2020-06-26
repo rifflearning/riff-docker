@@ -1,0 +1,74 @@
+#! /usr/bin/env bash
+# This script must be sourced
+#
+# Tunnel to a riffremote site, redeploy, kill the tunnel
+
+DEPLOY_NAMES2=(
+               kevin-riff
+               learnlaunch
+               manpower
+               mcc-cec-team
+               mg
+               mikecardus
+             )
+
+APP=remote
+WEB_SERVICE_NAME=pfm-stk_pfm-web
+JQ_FILTER_SECRETS='[.[0].Spec.TaskTemplate.ContainerSpec.Secrets[] | {src: .SecretName, tgt: .File.Name}]'
+
+for swarm in ${DEPLOY_NAMES2[@]}
+do
+    echo "Updating ssl cert for '$swarm' by redeploying..."
+
+    bin/docker-tunnel.sh "RR-$swarm"
+    export DOCKER_HOST=localhost:2374
+
+    pushd config/secret
+    DOMAIN=$swarm.riff${APP}.com
+    for f in $DOMAIN.crt.*; do CRT_FILE=$f; done
+    CUR_CERT_VER=${CRT_FILE##*.}
+    if [ "$CRT_FILE" = "$DOMAIN.crt.*" ]; then CUR_CERT_VER=0; fi
+
+    docker secret create $DOMAIN.crt.${CUR_CERT_VER}{,}
+    docker secret create $DOMAIN.key.${CUR_CERT_VER}{,}
+    docker secret ls
+    popd
+
+    echo "ssl cert secrets used by $swarm BEFORE redeploy:"
+    docker service inspect "$WEB_SERVICE_NAME" | jq "$JQ_FILTER_SECRETS"
+
+    export DEPLOY_SWARM=$swarm
+    source bin/riffremotes_vars
+    make show-env
+
+    read -rsp "Press any key to redeploy '$swarm' or Ctrl-C to abort"$'\n' -n1 key
+    make deploy-stack
+
+    echo "ssl cert secrets used by $swarm AFTER redeploy:"
+    docker service inspect "$WEB_SERVICE_NAME" | jq "$JQ_FILTER_SECRETS"
+
+    # Keep using option 1 "show running" until all services are running again, the choose option 2.
+    # Just pressing enter will redisplay the options
+    PS3='Select an option (#) and press Enter: '
+    select opt in "show running" "next"
+    do
+        case $opt in
+            "show running")
+                echo "=== Docker images and services running on ${DOMAIN} ==="
+                docker images --format="table {{.Repository}}\t{{.Tag}}\t{{.CreatedSince}}"
+                docker service ls --format="table {{.Replicas}}\t{{.Name}}\t{{.Image}}"
+                ;;
+
+            "next")
+                break
+                ;;
+
+            *) echo "invalid option";;
+        esac
+    done
+
+    source bin/kill-tunnel
+
+    echo "...Finished updating ssl certs on RiffRemote site '$swarm'"
+    echo
+done
