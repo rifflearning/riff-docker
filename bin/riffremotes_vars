@@ -33,6 +33,7 @@ DEPLOY_NAMES=( riffai
                teamstratcap
                teamwoco
                ude-vet
+               wiwin-homeschooling
              )
 
 # OWNERS is an associative array of the DEPLOY_NAMES site owner names and email addresses
@@ -97,7 +98,9 @@ OWNERS=( [riffai.name]="Beth Porter"
          [teamwoco.name]="Dhruv Sharma"
          [teamwoco.email]="quehifunezn4503@tznvy.pbz"
          [ude-vet.name]="Esther Winther"
-         [ude-vet.email]="jessica.paessens@uni-due.de"
+         [ude-vet.email]="wrffvpn.cnrffraf@hav-qhr.qr"
+         [wiwin-homeschooling.name]="Wiwin UmmuHanif"
+         [wiwin-homeschooling.email]="jvjva.hzzhunavs@tznvy.pbz"
        )
 
 # IMAGE_VERS is an associative array of the DEPLOY_NAMES image versions deployed on that instance
@@ -162,6 +165,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [teamwoco.riffdata]="2.0.0-dev.6"
              [ude-vet.riffrtc]="3.0.0-dev.19"
              [ude-vet.riffdata]="2.0.0-dev.6"
+             [wiwin-homeschooling.riffrtc]="3.0.0-dev.21"
+             [wiwin-homeschooling.riffdata]="2.0.0-dev.6"
            )
 
 # If we were given a swarm name as an argument, make sure that all the derived parameters are
