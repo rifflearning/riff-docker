@@ -13,6 +13,7 @@ DEPLOY_NAMES=( riffai
                guo-ourteam
                isg-trial
                kevin-riff
+               knowfully
                leadershipteam
                learningseeds
                learnlaunch
@@ -59,6 +60,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [isg-trial.email]="dhragva@vagrecrefbanyfbyhgvbaftebhc.pbz"
          [kevin-riff.name]="Kevin Turney"
          [kevin-riff.email]="xghearl@nztra.pbz"
+         [knowfully.name]="Philip Salgado"
+         [knowfully.email]="fnytnqbc@xabjshyyl.pbz"
          [leadershipteam.name]="Judith Cardenas"
          [leadershipteam.email]="whqvgu@fgengrtvrfolqrfvtatebhc.pbz"
          [learningseeds.name]="Erica Key"
@@ -125,6 +128,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [isg-trial.riffdata]="2.0.0-dev.6"
              [kevin-riff.riffrtc]="3.0.0-dev.21"
              [kevin-riff.riffdata]="2.0.0-dev.6"
+             [knowfully.riffrtc]="3.0.0-dev.21"
+             [knowfully.riffdata]="2.0.0-dev.6"
              [leadershipteam.riffrtc]="3.0.0-dev.19"
              [leadershipteam.riffdata]="2.0.0-dev.6"
              [learningseeds.riffrtc]="3.0.0-dev.19"
