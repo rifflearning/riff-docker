@@ -107,7 +107,7 @@ build-dev : $(SSL_FILES) ## (re)build the dev images pulling the latest base ima
 
 deploy-stack : ## deploy the pfm-stk stack defined by compose/stack config and env var tags
 # require that the DEPLOY_SWARM be explicitly defined.
-	$(call ndef,DEPLOY_SWARM)
+	$(foreach var,$(DEPLOY_ARGS),$(call ndef,$(var)))
 	docker stack deploy $(STACK_CONF_DEPLOY) -c docker-stack.$(DEPLOY_SWARM).yml --with-registry-auth pfm-stk
 
 pull-images : ## Update base docker images

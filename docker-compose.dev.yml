@@ -17,7 +17,7 @@
 version: '3.7'
 services:
   pfm-riffdata:
-    image: 'rifflearning/pfm-riffdata:dev'
+    image: 'rifflearning/riffdata:dev'
     build:
       context: ${RIFF_SERVER_PATH-../riff-server}/docker
       dockerfile: Dockerfile-dev
@@ -30,7 +30,7 @@ services:
       - ${RIFF_SERVER_PATH-../riff-server}:/app
 
   pfm-riffrtc:
-    image: 'rifflearning/pfm-riffrtc:dev'
+    image: 'rifflearning/riffrtc:dev'
     build:
       context: ${RIFF_RTC_PATH-../riff-rtc}/docker
       dockerfile: Dockerfile-dev
