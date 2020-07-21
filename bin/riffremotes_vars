@@ -8,31 +8,14 @@ DEPLOY_NAMES=( riffai
                boldly-app
                clarovc
                digital-leaders
-               disneyteam
                esme
-               guo-ourteam
-               isg-trial
-               kevin-riff
                knowfully
-               leadershipteam
                learningseeds
                learnlaunch
-               loughtec
                manpower
-               mcc-cec-team
-               meet
-               mg
                mikecardus
-               movementteam
-               olin
-               opswat-emea
-               ptizzza
-               sew
-               strategyteam
                surfx
                swedishdoulas
-               teamstratcap
-               teamwoco
                ude-vet
                wiwin-homeschooling
              )
@@ -50,56 +33,22 @@ OWNERS=( [riffai.name]="Beth Porter"
          [clarovc.email]="wraavsre@pynebip.pbz"
          [digital-leaders.name]="Dave Drodge"
          [digital-leaders.email]="qnir.qebqtr@tznvy.pbz"
-         [disneyteam.name]="Nigel Simpson"
-         [disneyteam.email]="avtryf@snfgznvy.pbz"
          [esme.name]="Julia Henderson"
          [esme.email]="whyvn@rfzryrneavat.pbz"
-         [guo-ourteam.name]="XiaoJing Guo"
-         [guo-ourteam.email]="aryythb@126.pbz"
-         [isg-trial.name]="Quentin Jones"
-         [isg-trial.email]="dhragva@vagrecrefbanyfbyhgvbaftebhc.pbz"
-         [kevin-riff.name]="Kevin Turney"
-         [kevin-riff.email]="xghearl@nztra.pbz"
          [knowfully.name]="Philip Salgado"
          [knowfully.email]="fnytnqbc@xabjshyyl.pbz"
-         [leadershipteam.name]="Judith Cardenas"
-         [leadershipteam.email]="whqvgu@fgengrtvrfolqrfvtatebhc.pbz"
          [learningseeds.name]="Erica Key"
          [learningseeds.email]="revpn@YrneavatFrrqf.pbz"
          [learnlaunch.name]="Ben Bungert"
          [learnlaunch.email]="ora@yrneaynhapu.pbz"
-         [loughtec.name]="Sean McDermott"
-         [loughtec.email]="frna@ybhtugrp.pbz"
          [manpower.name]="Marta Cavagnet"
          [manpower.email]="ZNEGN.PNINTARG@znacbjre.vg"
-         [mcc-cec-team.name]="Aron Gerics"
-         [mcc-cec-team.email]="neba.trevpf@zpp.rqh"
-         [meet.name]="Patti Phillips"
-         [meet.email]="cnggv@ebvvafgvghgr.arg"
-         [mg.name]="Julia Um"
-         [mg.email]="whyvn.hz@zppuelfgnytebhc.pbz"
          [mikecardus.name]="Mike Cardus"
          [mikecardus.email]="Zvxr@ZvxrPneqhf.pbz"
-         [movementteam.name]="Mitchell Gehring"
-         [movementteam.email]="truevatzy94@tznvy.pbz"
-         [olin.name]="Jason Woodard"
-         [olin.email]="wnfba.jbbqneq@byva.rqh"
-         [opswat-emea.name]="Noel Slane"
-         [opswat-emea.email]="abry.fynar@bcfjng.pbz"
-         [ptizzza.name]="Olga Perepelkina"
-         [ptizzza.email]="arcgvmmmn@tznvy.pbz"
-         [sew.name]="Gabriela Masfarre Pinto"
-         [sew.email]="tnoevryn@fznyyrpbabzljbexf.pbz"
-         [strategyteam.name]="Maxwell Stanley"
-         [strategyteam.email]="znkjryy@flzraq.pbz"
          [surfx.name]="Dmitry Repin"
          [surfx.email]="qe@fhesk.vb"
          [swedishdoulas.name]="Jocelyn Alt"
          [swedishdoulas.email]="wbpryla.nyg@fjrqvfu.bet"
-         [teamstratcap.name]="Rachel Saunders"
-         [teamstratcap.email]="efnhaqref@crnx6.pbz"
-         [teamwoco.name]="Dhruv Sharma"
-         [teamwoco.email]="quehifunezn4503@tznvy.pbz"
          [ude-vet.name]="Esther Winther"
          [ude-vet.email]="wrffvpn.cnrffraf@hav-qhr.qr"
          [wiwin-homeschooling.name]="Wiwin UmmuHanif"
@@ -118,56 +67,22 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [clarovc.riffdata]="2.0.0-dev.6"
              [digital-leaders.riffrtc]="3.0.0-dev.19"
              [digital-leaders.riffdata]="2.0.0-dev.6"
-             [disneyteam.riffrtc]="3.0.0-dev.19"
-             [disneyteam.riffdata]="2.0.0-dev.6"
              [esme.riffrtc]="3.0.0-dev.21"
              [esme.riffdata]="2.0.0-dev.6"
-             [guo-ourteam.riffrtc]="3.0.0-dev.19"
-             [guo-ourteam.riffdata]="2.0.0-dev.6"
-             [isg-trial.riffrtc]="3.0.0-dev.19"
-             [isg-trial.riffdata]="2.0.0-dev.6"
-             [kevin-riff.riffrtc]="3.0.0-dev.21"
-             [kevin-riff.riffdata]="2.0.0-dev.6"
              [knowfully.riffrtc]="3.0.0-dev.21"
              [knowfully.riffdata]="2.0.0-dev.6"
-             [leadershipteam.riffrtc]="3.0.0-dev.19"
-             [leadershipteam.riffdata]="2.0.0-dev.6"
              [learningseeds.riffrtc]="3.0.0-dev.19"
              [learningseeds.riffdata]="2.0.0-dev.6"
              [learnlaunch.riffrtc]="3.0.0-dev.21"
              [learnlaunch.riffdata]="2.0.0-dev.6"
-             [loughtec.riffrtc]="3.0.0-dev.19"
-             [loughtec.riffdata]="2.0.0-dev.6"
              [manpower.riffrtc]="3.0.0-dev.14"
              [manpower.riffdata]="2.0.0-dev.5"
-             [mcc-cec-team.riffrtc]="3.0.0-dev.21"
-             [mcc-cec-team.riffdata]="2.0.0-dev.6"
-             [meet.riffrtc]="3.0.0-dev.21"
-             [meet.riffdata]="2.0.0-dev.6"
-             [mg.riffrtc]="3.0.0-dev.21"
-             [mg.riffdata]="2.0.0-dev.6"
              [mikecardus.riffrtc]="3.0.0-dev.21"
              [mikecardus.riffdata]="2.0.0-dev.6"
-             [movementteam.riffrtc]="3.0.0-dev.19"
-             [movementteam.riffdata]="2.0.0-dev.6"
-             [olin.riffrtc]="3.0.0-dev.19"
-             [olin.riffdata]="2.0.0-dev.6"
-             [opswat-emea.riffrtc]="3.0.0-dev.19"
-             [opswat-emea.riffdata]="2.0.0-dev.6"
-             [ptizzza.riffrtc]="3.0.0-dev.19"
-             [ptizzza.riffdata]="2.0.0-dev.6"
-             [sew.riffrtc]="3.0.0-dev.21"
-             [sew.riffdata]="2.0.0-dev.6"
-             [strategyteam.riffrtc]="3.0.0-dev.21"
-             [strategyteam.riffdata]="2.0.0-dev.6"
              [surfx.riffrtc]="3.0.0-dev.19"
              [surfx.riffdata]="2.0.0-dev.6"
              [swedishdoulas.riffrtc]="3.0.0-dev.19"
              [swedishdoulas.riffdata]="2.0.0-dev.6"
-             [teamstratcap.riffrtc]="3.0.0-dev.19"
-             [teamstratcap.riffdata]="2.0.0-dev.6"
-             [teamwoco.riffrtc]="3.0.0-dev.19"
-             [teamwoco.riffdata]="2.0.0-dev.6"
              [ude-vet.riffrtc]="3.0.0-dev.19"
              [ude-vet.riffdata]="2.0.0-dev.6"
              [wiwin-homeschooling.riffrtc]="3.0.0-dev.21"
