@@ -4,9 +4,9 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: said-oxford.riffplatform.com.key.2
+      - source: said-oxford.riffplatform.com.key.3
         target: site.key
-      - source: said-oxford.riffplatform.com.crt.2
+      - source: said-oxford.riffplatform.com.crt.3
         target: site.crt
 
   pfm-riffrtc:
@@ -18,11 +18,11 @@ services:
       - source: riff-rtc.said-local-production.yml.1
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2020-08-09 (said-oxford key.2 & crt.2)
+# Your cert will expire on 2020-10-19 (said-oxford key.3 & crt.3)
 secrets:
-  said-oxford.riffplatform.com.key.2:
+  said-oxford.riffplatform.com.key.3:
     external: true
-  said-oxford.riffplatform.com.crt.2:
+  said-oxford.riffplatform.com.crt.3:
     external: true
 
 configs:
