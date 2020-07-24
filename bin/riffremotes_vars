@@ -6,6 +6,7 @@
 DEPLOY_NAMES=( riffai
                my
                boldly-app
+               callcoach
                clarovc
                digital-leaders
                esme
@@ -29,6 +30,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [my.email]="orgu@evssnanylgvpf.nv"
          [boldly-app.name]="Rebecca Grover"
          [boldly-app.email]="erorppn@ynagrearebhtr.bayvar"
+         [callcoach.name]="Antony Cockle"
+         [callcoach.email]="ap@nagbalpbpxyr.pbz"
          [clarovc.name]="Jennifer Jordan"
          [clarovc.email]="wraavsre@pynebip.pbz"
          [digital-leaders.name]="Dave Drodge"
@@ -59,10 +62,12 @@ OWNERS=( [riffai.name]="Beth Porter"
 declare -A IMAGE_VERS
 IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [riffai.riffdata]="2.0.0-dev.6"
-             [boldly-app.riffrtc]="3.0.0-dev.21"
-             [boldly-app.riffdata]="2.0.0-dev.6"
              [my.riffrtc]="3.0.0-dev.21"
              [my.riffdata]="2.0.0-dev.6"
+             [boldly-app.riffrtc]="3.0.0-dev.21"
+             [boldly-app.riffdata]="2.0.0-dev.6"
+             [callcoach.riffrtc]="3.0.0-dev.21"
+             [callcoach.riffdata]="2.0.0-dev.6"
              [clarovc.riffrtc]="3.0.0-dev.21"
              [clarovc.riffdata]="2.0.0-dev.6"
              [digital-leaders.riffrtc]="3.0.0-dev.21"
