@@ -18,6 +18,7 @@ DEPLOY_NAMES=( riffai
                surfx
                swedishdoulas
                ude-vet
+               ventureuniversity
                wiwin-homeschooling
              )
 
@@ -54,6 +55,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [swedishdoulas.email]="wbpryla.nyg@fjrqvfu.bet"
          [ude-vet.name]="Esther Winther"
          [ude-vet.email]="wrffvpn.cnrffraf@hav-qhr.qr"
+         [ventureuniversity.name]="Avery Ramin"
+         [ventureuniversity.email]="nirel@ihshaq.ip"
          [wiwin-homeschooling.name]="Wiwin UmmuHanif"
          [wiwin-homeschooling.email]="jvjva.hzzhunavs@tznvy.pbz"
        )
@@ -90,6 +93,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [swedishdoulas.riffdata]="2.0.0-dev.6"
              [ude-vet.riffrtc]="3.0.0-dev.19"
              [ude-vet.riffdata]="2.0.0-dev.6"
+             [ventureuniversity.riffrtc]="3.0.0-dev.21"
+             [ventureuniversity.riffdata]="2.0.0-dev.6"
              [wiwin-homeschooling.riffrtc]="3.0.0-dev.21"
              [wiwin-homeschooling.riffdata]="2.0.0-dev.6"
            )
