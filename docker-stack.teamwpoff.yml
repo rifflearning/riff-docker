@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the teamwpoff swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: teamwpoff.riffremote.com.key.1
+        target: site.key
+      - source: teamwpoff.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-10-29 (teamwpoff key.1 & crt.1)
+secrets:
+  teamwpoff.riffremote.com.key.1:
+    external: true
+  teamwpoff.riffremote.com.crt.1:
+    external: true
