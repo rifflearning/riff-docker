@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the meet swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: meet.riffremote.com.key.1
+        target: site.key
+      - source: meet.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-11-08 (meet key.1 & crt.1)
+secrets:
+  meet.riffremote.com.key.1:
+    external: true
+  meet.riffremote.com.crt.1:
+    external: true
