@@ -14,6 +14,7 @@ DEPLOY_NAMES=( riffai
                learningseeds
                learnlaunch
                manpower
+               meet
                mikecardus
                surfx
                swedishdoulas
@@ -48,6 +49,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [learnlaunch.email]="ora@yrneaynhapu.pbz"
          [manpower.name]="Marta Cavagnet"
          [manpower.email]="ZNEGN.PNINTARG@znacbjre.vg"
+         [meet.name]="Patti Phillips"
+         [meet.email]="cnggv@ebvvafgvghgr.arg"
          [mikecardus.name]="Mike Cardus"
          [mikecardus.email]="Zvxr@ZvxrPneqhf.pbz"
          [surfx.name]="Dmitry Repin"
@@ -88,6 +91,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [learnlaunch.riffdata]="2.0.0-dev.6"
              [manpower.riffrtc]="3.0.0-dev.14"
              [manpower.riffdata]="2.0.0-dev.5"
+             [meet.riffrtc]="3.0.0-dev.21"
+             [meet.riffdata]="2.0.0-dev.6"
              [mikecardus.riffrtc]="3.0.0-dev.21"
              [mikecardus.riffdata]="2.0.0-dev.6"
              [surfx.riffrtc]="3.0.0-dev.19"
