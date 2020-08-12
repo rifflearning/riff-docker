@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the roiinstitute swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: roiinstitute.riffremote.com.key.1
+        target: site.key
+      - source: roiinstitute.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-11-10 (roiinstitute key.1 & crt.1)
+secrets:
+  roiinstitute.riffremote.com.key.1:
+    external: true
+  roiinstitute.riffremote.com.crt.1:
+    external: true

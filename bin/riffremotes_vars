@@ -15,9 +15,9 @@ DEPLOY_NAMES=( riffai
                learningseeds
                learnlaunch
                manpower
-               meet
                mfs
                mikecardus
+               roiinstitute
                surfx
                swedishdoulas
                teamwpoff
@@ -53,12 +53,12 @@ OWNERS=( [riffai.name]="Beth Porter"
          [learnlaunch.email]="ora@yrneaynhapu.pbz"
          [manpower.name]="Marta Cavagnet"
          [manpower.email]="ZNEGN.PNINTARG@znacbjre.vg"
-         [meet.name]="Patti Phillips"
-         [meet.email]="cnggv@ebvvafgvghgr.arg"
          [mfs.name]="Lee Kaltman"
          [mfs.email]="yrr@fpubby.zr"
          [mikecardus.name]="Mike Cardus"
          [mikecardus.email]="Zvxr@ZvxrPneqhf.pbz"
+         [roiinstitute.name]="Patti Phillips"
+         [roiinstitute.email]="cnggv@ebvvafgvghgr.arg"
          [surfx.name]="Dmitry Repin"
          [surfx.email]="qe@fhesk.vb"
          [swedishdoulas.name]="Jocelyn Alt"
@@ -99,12 +99,12 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [learnlaunch.riffdata]="2.0.0-dev.6"
              [manpower.riffrtc]="3.0.0-dev.14"
              [manpower.riffdata]="2.0.0-dev.5"
-             [meet.riffrtc]="3.0.0-dev.21"
-             [meet.riffdata]="2.0.0-dev.6"
              [mfs.riffrtc]="3.0.0-dev.21"
              [mfs.riffdata]="2.0.0-dev.6"
              [mikecardus.riffrtc]="3.0.0-dev.21"
              [mikecardus.riffdata]="2.0.0-dev.6"
+             [roiinstitute.riffrtc]="3.0.0-dev.21"
+             [roiinstitute.riffdata]="2.0.0-dev.6"
              [surfx.riffrtc]="3.0.0-dev.19"
              [surfx.riffdata]="2.0.0-dev.6"
              [swedishdoulas.riffrtc]="3.0.0-dev.21"
