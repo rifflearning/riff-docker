@@ -10,6 +10,7 @@ DEPLOY_NAMES=( riffai
                clarovc
                digital-leaders
                esme
+               hackforthepeople
                knowfully
                learningseeds
                learnlaunch
@@ -42,6 +43,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [digital-leaders.email]="qnir.qebqtr@tznvy.pbz"
          [esme.name]="Julia Henderson"
          [esme.email]="whyvn@rfzryrneavat.pbz"
+         [hackforthepeople.name]="Kelly Ly"
+         [hackforthepeople.email]="xryyl@unpxsbegurcrbcyr.pbz"
          [knowfully.name]="Philip Salgado"
          [knowfully.email]="fnytnqbc@xabjshyyl.pbz"
          [learningseeds.name]="Erica Key"
@@ -86,6 +89,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.21"
              [digital-leaders.riffdata]="2.0.0-dev.6"
              [esme.riffrtc]="3.0.0-dev.21"
              [esme.riffdata]="2.0.0-dev.6"
+             [hackforthepeople.riffrtc]="3.0.0-dev.21"
+             [hackforthepeople.riffdata]="2.0.0-dev.6"
              [knowfully.riffrtc]="3.0.0-dev.21"
              [knowfully.riffdata]="2.0.0-dev.6"
              [learningseeds.riffrtc]="3.0.0-dev.19"
