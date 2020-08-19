@@ -1,12 +1,12 @@
 ---
-# override/additions to docker-stack.yml for deploying to the ude-vet (riffremote 1) swarm
+# override/additions to docker-stack.yml for deploying to the ude-vet swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: ude-vet.riffremote.com.key.1
+      - source: ude-vet.riffremote.com.key.2
         target: site.key
-      - source: ude-vet.riffremote.com.crt.1
+      - source: ude-vet.riffremote.com.crt.2
         target: site.crt
 
   pfm-riffrtc:
@@ -19,11 +19,11 @@ services:
         target: /app/config/local-production.yml
 
 
-# Your cert will expire on 2020-09-02 (ude-vet key.1 & crt.1)
+# Your cert will expire on 2020-11-17 (ude-vet key.2 & crt.2)
 secrets:
-  ude-vet.riffremote.com.key.1:
+  ude-vet.riffremote.com.key.2:
     external: true
-  ude-vet.riffremote.com.crt.1:
+  ude-vet.riffremote.com.crt.2:
     external: true
 
 configs:
