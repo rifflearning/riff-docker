@@ -1,17 +1,17 @@
 ---
-# override/additions to docker-stack.yml for deploying to the surfx (riffremote 1) swarm
+# override/additions to docker-stack.yml for deploying to the surfx swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: surfx.riffremote.com.key.1
+      - source: surfx.riffremote.com.key.2
         target: site.key
-      - source: surfx.riffremote.com.crt.1
+      - source: surfx.riffremote.com.crt.2
         target: site.crt
 
-# Your cert will expire on 2020-08-24 (surfx key.1 & crt.1)
+# Your cert will expire on 2020-10-27 (surfx key.2 & crt.2)
 secrets:
-  surfx.riffremote.com.key.1:
+  surfx.riffremote.com.key.2:
     external: true
-  surfx.riffremote.com.crt.1:
+  surfx.riffremote.com.crt.2:
     external: true
