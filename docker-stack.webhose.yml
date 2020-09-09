@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the webhose swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: webhose.riffremote.com.key.1
+        target: site.key
+      - source: webhose.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-12-08 (webhose key.1 & crt.1)
+secrets:
+  webhose.riffremote.com.key.1:
+    external: true
+  webhose.riffremote.com.crt.1:
+    external: true
