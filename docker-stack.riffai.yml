@@ -1,17 +1,17 @@
 ---
-# override/additions to docker-stack.yml for deploying to the riffai (riffremote 1) swarm
+# override/additions to docker-stack.yml for deploying to the riffai swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: riffai.riffremote.com.key.2
+      - source: riffai.riffremote.com.key.3
         target: site.key
-      - source: riffai.riffremote.com.crt.2
+      - source: riffai.riffremote.com.crt.3
         target: site.crt
 
-# Your cert will expire on 2020-09-23 (riffai key.2 & crt.2)
+# Your cert will expire on 2020-12-08 (riffai key.3 & crt.3)
 secrets:
-  riffai.riffremote.com.key.2:
+  riffai.riffremote.com.key.3:
     external: true
-  riffai.riffremote.com.crt.2:
+  riffai.riffremote.com.crt.3:
     external: true

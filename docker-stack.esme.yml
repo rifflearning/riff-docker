@@ -1,17 +1,17 @@
 ---
-# override/additions to docker-stack.yml for deploying to the esme (riffremote 1) swarm
+# override/additions to docker-stack.yml for deploying to the esme swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: esme.riffremote.com.key.2
+      - source: esme.riffremote.com.key.3
         target: site.key
-      - source: esme.riffremote.com.crt.2
+      - source: esme.riffremote.com.crt.3
         target: site.crt
 
-# Your cert will expire on 2020-09-23 (esme key.2 & crt.2)
+# Your cert will expire on 2020-12-08 (esme key.3 & crt.3)
 secrets:
-  esme.riffremote.com.key.2:
+  esme.riffremote.com.key.3:
     external: true
-  esme.riffremote.com.crt.2:
+  esme.riffremote.com.crt.3:
     external: true
