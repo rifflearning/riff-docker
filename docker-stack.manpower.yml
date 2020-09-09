@@ -1,12 +1,12 @@
 ---
-# override/additions to docker-stack.yml for deploying to the manpower (riffremote 1) swarm
+# override/additions to docker-stack.yml for deploying to the manpower swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: manpower.riffremote.com.key.2
+      - source: manpower.riffremote.com.key.3
         target: site.key
-      - source: manpower.riffremote.com.crt.2
+      - source: manpower.riffremote.com.crt.3
         target: site.crt
 
   pfm-riffrtc:
@@ -18,11 +18,11 @@ services:
       - source: riff-rtc.manpower-local-production.yml.2
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2020-09-23 (manpower key.2 & crt.2)
+# Your cert will expire on 2020-12-08 (manpower key.3 & crt.3)
 secrets:
-  manpower.riffremote.com.key.2:
+  manpower.riffremote.com.key.3:
     external: true
-  manpower.riffremote.com.crt.2:
+  manpower.riffremote.com.crt.3:
     external: true
 
 configs:
