@@ -23,6 +23,7 @@ DEPLOY_NAMES=( riffai
                teamwpoff
                ude-vet
                ventureuniversity
+               webhose
                wiwin-homeschooling
              )
 
@@ -69,6 +70,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [ude-vet.email]="wrffvpn.cnrffraf@hav-qhr.qr"
          [ventureuniversity.name]="Avery Ramin"
          [ventureuniversity.email]="nirel@ihshaq.ip"
+         [webhose.name]="Shai Schwartz"
+         [webhose.email]="funv@jroubfr.vb"
          [wiwin-homeschooling.name]="Wiwin UmmuHanif"
          [wiwin-homeschooling.email]="jvjva.hzzhunavs@tznvy.pbz"
        )
@@ -115,6 +118,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.22"
              [ude-vet.riffdata]="2.0.0-dev.6"
              [ventureuniversity.riffrtc]="3.0.0-dev.21"
              [ventureuniversity.riffdata]="2.0.0-dev.6"
+             [webhose.riffrtc]="3.0.0-dev.21"
+             [webhose.riffdata]="2.0.0-dev.6"
              [wiwin-homeschooling.riffrtc]="3.0.0-dev.21"
              [wiwin-homeschooling.riffdata]="2.0.0-dev.6"
            )
