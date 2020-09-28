@@ -1,17 +1,17 @@
 ---
-# override/additions to docker-stack.yml for deploying to the knowfully (riffremote 1) swarm
+# override/additions to docker-stack.yml for deploying to the knowfully swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: knowfully.riffremote.com.key.1
+      - source: knowfully.riffremote.com.key.2
         target: site.key
-      - source: knowfully.riffremote.com.crt.1
+      - source: knowfully.riffremote.com.crt.2
         target: site.crt
 
-# Your cert will expire on 2020-10-13 (knowfully key.1 & crt.1)
+# Your cert will expire on 2020-12-27 (knowfully key.2 & crt.2)
 secrets:
-  knowfully.riffremote.com.key.1:
+  knowfully.riffremote.com.key.2:
     external: true
-  knowfully.riffremote.com.crt.1:
+  knowfully.riffremote.com.crt.2:
     external: true
