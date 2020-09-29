@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the asb-my swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: asb-my.riffremote.com.key.1
+        target: site.key
+      - source: asb-my.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2020-12-28 (asb-my key.1 & crt.1)
+secrets:
+  asb-my.riffremote.com.key.1:
+    external: true
+  asb-my.riffremote.com.crt.1:
+    external: true

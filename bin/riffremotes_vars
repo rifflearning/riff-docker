@@ -5,6 +5,7 @@
 # keep alphabetical after 'riffai'
 DEPLOY_NAMES=( riffai
                my
+               asb-my
                boldly-app
                callcoach
                clarovc
@@ -34,6 +35,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [riffai.email]="orgu@evssnanylgvpf.nv"
          [my.name]="Beth Porter"
          [my.email]="orgu@evssnanylgvpf.nv"
+         [asb-my.name]="Ashley Chiampo"
+         [asb-my.email]="nfuyrl@arjtybonyzvaq.pbz"
          [boldly-app.name]="Rebecca Grover"
          [boldly-app.email]="erorppn@ynagrearebhtr.bayvar"
          [callcoach.name]="Antony Cockle"
@@ -82,6 +85,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.22"
              [riffai.riffdata]="2.0.0-dev.6"
              [my.riffrtc]="3.0.0-dev.21"
              [my.riffdata]="2.0.0-dev.6"
+             [asb-my.riffrtc]="3.0.0-dev.24"
+             [asb-my.riffdata]="2.0.0-dev.6"
              [boldly-app.riffrtc]="3.0.0-dev.21"
              [boldly-app.riffdata]="2.0.0-dev.6"
              [callcoach.riffrtc]="3.0.0-dev.21"
