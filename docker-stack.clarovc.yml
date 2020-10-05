@@ -1,17 +1,17 @@
 ---
-# override/additions to docker-stack.yml for deploying to the clarovc (riffremote) swarm
+# override/additions to docker-stack.yml for deploying to the clarovc swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: clarovc.riffremote.com.key.2
+      - source: clarovc.riffremote.com.key.3
         target: site.key
-      - source: clarovc.riffremote.com.crt.2
+      - source: clarovc.riffremote.com.crt.3
         target: site.crt
 
-# Your cert will expire on 2020-10-19 (clarovc key.2 & crt.2)
+# Your cert will expire on 2021-01-03 (clarovc key.3 & crt.3)
 secrets:
-  clarovc.riffremote.com.key.2:
+  clarovc.riffremote.com.key.3:
     external: true
-  clarovc.riffremote.com.crt.2:
+  clarovc.riffremote.com.crt.3:
     external: true
