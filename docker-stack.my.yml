@@ -1,12 +1,12 @@
 ---
-# override/additions to docker-stack.yml for deploying to the my (riffremote) swarm
+# override/additions to docker-stack.yml for deploying to the my swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: my.riffremote.com.key.2
+      - source: my.riffremote.com.key.3
         target: site.key
-      - source: my.riffremote.com.crt.2
+      - source: my.riffremote.com.crt.3
         target: site.crt
 
   pfm-riffrtc:
@@ -18,11 +18,11 @@ services:
       - source: riff-rtc.my-local-production.yml.1
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2020-10-19 (my key.2 & crt.2)
+# Your cert will expire on 2021-01-03 (my key.3 & crt.3)
 secrets:
-  my.riffremote.com.key.2:
+  my.riffremote.com.key.3:
     external: true
-  my.riffremote.com.crt.2:
+  my.riffremote.com.crt.3:
     external: true
 
 configs:

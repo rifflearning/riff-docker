@@ -1,17 +1,17 @@
 ---
-# override/additions to docker-stack.yml for deploying to the digital-leaders (riffremote) swarm
+# override/additions to docker-stack.yml for deploying to the digital-leaders swarm
 version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: digital-leaders.riffremote.com.key.2
+      - source: digital-leaders.riffremote.com.key.3
         target: site.key
-      - source: digital-leaders.riffremote.com.crt.2
+      - source: digital-leaders.riffremote.com.crt.3
         target: site.crt
 
-# Your cert will expire on 2020-10-19 (digital-leaders key.2 & crt.2)
+# Your cert will expire on 2021-01-03 (digital-leaders key.3 & crt.3)
 secrets:
-  digital-leaders.riffremote.com.key.2:
+  digital-leaders.riffremote.com.key.3:
     external: true
-  digital-leaders.riffremote.com.crt.2:
+  digital-leaders.riffremote.com.crt.3:
     external: true
