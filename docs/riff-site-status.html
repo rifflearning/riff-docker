@@ -96,12 +96,14 @@
                     const siteStatuses = sites.map(site => this._siteStatuses[site]);
 
                     const tbody = this._parent.select('tbody');
-                    const siteRows = tbody.selectAll('tr').data(siteStatuses);
-                    siteRows.exit().remove();
-                    const siteRowsEnter = siteRows.enter().append('tr');
-                    siteRowsEnter.append('td').text(d => d.site);
-                    siteRowsEnter.append('td').text(d => d.status);
-                    siteRowsEnter.append('td').text(d => d.lastUpdate);
+                    const siteRows = tbody.selectAll('tr').data(siteStatuses)
+                        .join(enter => {
+                            const rows = enter.append('tr')
+                            rows.append('td').text(d => d.site);
+                            rows.append('td').text(d => d.status);
+                            rows.append('td').text(d => d.lastUpdate);
+                            return rows;
+                        });
 
                     siteRows
                         .classed('up', d => d.status === 'up')
@@ -152,6 +154,9 @@
         <table class="riffremote site-status"></table>
 
         <script>
+            const eduSiteStatus = new SiteStatus({ group: 'riffedu', sites: eduSites });
+            eduSiteStatus.render('table.site-status.riffedu');
+
             const remoteSiteStatus = new SiteStatus({ group: 'riffremote', sites: remoteSites });
             remoteSiteStatus.render('table.site-status.riffremote');
 
