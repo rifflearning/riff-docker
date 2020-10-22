@@ -39,11 +39,39 @@
                 'staging',
             ];
 
+            const remoteSites = [
+                'asb-my',
+                'boldly-app',
+                'callcoach',
+                'clarovc',
+                'digital-leaders',
+                'esme',
+                'hackforthepeople',
+                'knowfully',
+                'learningseeds',
+                'learnlaunch',
+                'manpower',
+                'mfs',
+                'mikecardus',
+                'my',
+                'riffai',
+                'roiinstitute',
+                'surfx',
+                'swedishdoulas',
+                'teamwpoff',
+                'ude-vet',
+                'ventureuniversity',
+                'webhose',
+                'wiwin-homeschooling',
+            ];
+
             class SiteStatus {
-                constructor({ group }) {
+                constructor({ group, sites }) {
                     this._siteGroup = group;
                     this._siteStatuses = {};
                     this._parent = null;
+
+                    sites.forEach(site => this.updateStatus({ site }));
                 }
 
                 render(parentSelector) {
@@ -55,25 +83,29 @@
                     theadRow.append('th').text('Status');
                     theadRow.append('th').text('Last checked');
 
-                    const sites = Object.keys(this._siteStatuses).sort();
-                    const siteStatuses = sites.map(site => this._siteStatuses[site]);
-
                     const tbody = this._parent.append('tbody');
-                    const siteRows = tbody.selectAll('tr').data(siteStatuses);
-                    siteRows.exit().remove();
-                    const siteRowsEnter = siteRows.enter().append('tr');
-                    siteRowsEnter
-                        .classed('up', d => d.status === 'up')
-                        .classed('down', d => d.status === 'down');
-                    siteRowsEnter.append('td').text(d => d.site);
-                    siteRowsEnter.append('td').text(d => d.status);
-                    siteRowsEnter.append('td').text(d => d.lastUpdate);
+                    this.update();
                 }
 
                 update() {
                     if (this._parent === null) {
                         return;
                     }
+
+                    const sites = Object.keys(this._siteStatuses).sort();
+                    const siteStatuses = sites.map(site => this._siteStatuses[site]);
+
+                    const tbody = this._parent.select('tbody');
+                    const siteRows = tbody.selectAll('tr').data(siteStatuses);
+                    siteRows.exit().remove();
+                    const siteRowsEnter = siteRows.enter().append('tr');
+                    siteRowsEnter.append('td').text(d => d.site);
+                    siteRowsEnter.append('td').text(d => d.status);
+                    siteRowsEnter.append('td').text(d => d.lastUpdate);
+
+                    siteRows
+                        .classed('up', d => d.status === 'up')
+                        .classed('down', d => d.status === 'down');
                 }
 
                 updateStatus({ site, response }) {
@@ -93,42 +125,49 @@
 
                     this.update();
                 }
+
+                static async healthcheck(site, group) {
+                    const domain = `${site}.${group}.com`;
+                    const healthcheckUrl = `https://${domain}/healthcheck`;
+                    const resp = await ky(healthcheckUrl);
+                    const contentType = resp.headers.get('content-type');
+                    let parsedResp;
+                    if (contentType === 'application/json') {
+                        parsedResp = await resp.json();
+                    }
+                    else {
+                        parsedResp = await resp.text();
+                    }
+                    return parsedResp;
+                }
             }
-
-            (async () => {
-                const parsed = await ky('https://my.riffremote.com/healthcheck').json();
-
-                console.log({parsed, status: parsed.status});
-                //=> 'delectus aut autem
-            })();
         </script>
 
         <h1> Riff Analytics Site Status </h1>
+
         <h2> RiffEdu Sites </h2>
-        <table class="riffedu site-status">
-            <thead>
-                <tr><th> Site Name </th><th> Status </th><th> Last checked </th></tr>
-            </thead>
-            <tbody>
-                <tr id="riffedu.staging" class="up">
-                    <td> staging </td>
-                    <td> up </td>
-                    <td> 18:10 EST Tue Oct 20, 2020 </td>
-                </tr>
-                <tr id="riffedu.dev"  class="down">
-                    <td> dev </td>
-                    <td> down </td>
-                    <td> 18:10 EST Tue Oct 20, 2020 </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="test site-status"/>
+        <table class="riffedu site-status"></table>
+
+        <h2> RiffRemote Sites </h2>
+        <table class="riffremote site-status"></table>
+
         <script>
-            const remoteSiteStatus = new SiteStatus('riffremote');
-            remoteSiteStatus.updateStatus({ site: 'test', response: {} });
-            remoteSiteStatus.updateStatus({ site: 'dev', response: {} });
-            remoteSiteStatus.updateStatus({ site: 'mike', response: null });
-            remoteSiteStatus.render('table.site-status.test');
+            const remoteSiteStatus = new SiteStatus({ group: 'riffremote', sites: remoteSites });
+            remoteSiteStatus.render('table.site-status.riffremote');
+
+            remoteSites.forEach(async (site) => {
+                try {
+                    const response = await SiteStatus.healthcheck(site, 'riffremote');
+                    remoteSiteStatus.updateStatus({ site, response });
+                    console.info({ site, response });
+                }
+                catch (err) {
+                    remoteSiteStatus.updateStatus({ site });
+                    console.warn({ site, err });
+                }
+            });
+
+
         </script>
     </body>
 </html>
