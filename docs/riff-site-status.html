@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <script src="https://cdn.jsdelivr.net/npm/ky@latest/umd.js"></script>
+        <!-- script src="https://d3js.org/d3.v6.min.js"></script -->
+        <script src="https://cdn.jsdelivr.net/npm/d3-selection@2"></script>
+        <style>
+            table.site-status
+            {
+            }
+
+            tr.up
+            {
+                color:            black;
+                background-color: chartreuse;
+            }
+
+            tr.down
+            {
+                color:            white;
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            const eduSites = [
+                'ccob-wpu',
+                'cliffcollege',
+                'dev',              // not expected to be always up
+                'esme-learning',
+                'gv-mit',
+                'jordan',           // not expected to be always up
+                'newcollege',
+                'questrom-bu',
+                'said-oxford',
+                'sgu',
+                'staging',
+            ];
+
+            class SiteStatus {
+                constructor({ group }) {
+                    this._siteGroup = group;
+                    this._siteStatuses = {};
+                    this._parent = null;
+                }
+
+                render(parentSelector) {
+                    this._parent = d3.select(parentSelector);
+
+                    const thead = this._parent.append('thead');
+                    const theadRow = thead.append('tr');
+                    theadRow.append('th').text('Site Name');
+                    theadRow.append('th').text('Status');
+                    theadRow.append('th').text('Last checked');
+
+                    const sites = Object.keys(this._siteStatuses).sort();
+                    const siteStatuses = sites.map(site => this._siteStatuses[site]);
+
+                    const tbody = this._parent.append('tbody');
+                    const siteRows = tbody.selectAll('tr').data(siteStatuses);
+                    siteRows.exit().remove();
+                    const siteRowsEnter = siteRows.enter().append('tr');
+                    siteRowsEnter
+                        .classed('up', d => d.status === 'up')
+                        .classed('down', d => d.status === 'down');
+                    siteRowsEnter.append('td').text(d => d.site);
+                    siteRowsEnter.append('td').text(d => d.status);
+                    siteRowsEnter.append('td').text(d => d.lastUpdate);
+                }
+
+                update() {
+                    if (this._parent === null) {
+                        return;
+                    }
+                }
+
+                updateStatus({ site, response }) {
+                    if (!(site in this._siteStatuses)) {
+                        this._siteStatuses[site] = {
+                            site,
+                            lastResponse: null,
+                            status: 'down',
+                            lastUpdate: new Date(),
+                        };
+                    }
+
+                    const isSiteUp = Boolean(response);
+                    this._siteStatuses[site].lastResponse = response;
+                    this._siteStatuses[site].status = isSiteUp ? 'up' : 'down';;
+                    this._siteStatuses[site].lastUpdate = new Date();
+
+                    this.update();
+                }
+            }
+
+            (async () => {
+                const parsed = await ky('https://my.riffremote.com/healthcheck').json();
+
+                console.log({parsed, status: parsed.status});
+                //=> 'delectus aut autem
+            })();
+        </script>
+
+        <h1> Riff Analytics Site Status </h1>
+        <h2> RiffEdu Sites </h2>
+        <table class="riffedu site-status">
+            <thead>
+                <tr><th> Site Name </th><th> Status </th><th> Last checked </th></tr>
+            </thead>
+            <tbody>
+                <tr id="riffedu.staging" class="up">
+                    <td> staging </td>
+                    <td> up </td>
+                    <td> 18:10 EST Tue Oct 20, 2020 </td>
+                </tr>
+                <tr id="riffedu.dev"  class="down">
+                    <td> dev </td>
+                    <td> down </td>
+                    <td> 18:10 EST Tue Oct 20, 2020 </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="test site-status"/>
+        <script>
+            const remoteSiteStatus = new SiteStatus('riffremote');
+            remoteSiteStatus.updateStatus({ site: 'test', response: {} });
+            remoteSiteStatus.updateStatus({ site: 'dev', response: {} });
+            remoteSiteStatus.updateStatus({ site: 'mike', response: null });
+            remoteSiteStatus.render('table.site-status.test');
+        </script>
+    </body>
+</html>
