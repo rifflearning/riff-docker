@@ -22,8 +22,6 @@
                 background-color: red;
             }
         </style>
-    </head>
-    <body>
         <script>
             const eduSites = [
                 'ccob-wpu',
@@ -66,37 +64,68 @@
             ];
 
             class SiteStatus {
-                constructor({ group, sites }) {
+                constructor({ group, sites, title }) {
+                    this._siteTitle = title;
                     this._siteGroup = group;
                     this._siteStatuses = {};
                     this._parent = null;
+                    this._count = null;
+                    this._tbody = null;
 
                     sites.forEach(site => this.updateStatus({ site }));
+                }
+
+                get title() {
+                    return this._siteTitle;
+                }
+
+                get sites() {
+                    return Object.keys(this._siteStatuses);
+                }
+
+                get group() {
+                    return this._siteGroup;
                 }
 
                 render(parentSelector) {
                     this._parent = d3.select(parentSelector);
 
-                    const thead = this._parent.append('thead');
+                    const header = this._parent.append('h2');
+                    header.append('span').text(`${this.title} Sites (`);
+                    const count = header.append('span')
+                        .classed('count', true)
+                        .text(0);
+                    header.append('span').text(')');
+
+                    const table = this._parent.append('table')
+                        .classed('site-status', true);
+
+                    const thead = table.append('thead');
                     const theadRow = thead.append('tr');
                     theadRow.append('th').text('Site Name');
                     theadRow.append('th').text('Status');
                     theadRow.append('th').text('Last checked');
 
-                    const tbody = this._parent.append('tbody');
+                    const tbody = table.append('tbody');
+
+                    this._count = count;
+                    this._tbody = tbody;
+
                     this.update();
                 }
 
                 update() {
+                    // No updating until rendered
                     if (this._parent === null) {
                         return;
                     }
 
-                    const sites = Object.keys(this._siteStatuses).sort();
+                    const sites = this.sites.sort();
                     const siteStatuses = sites.map(site => this._siteStatuses[site]);
 
-                    const tbody = this._parent.select('tbody');
-                    const siteRows = tbody.selectAll('tr').data(siteStatuses)
+                    this._count.text(sites.length);
+
+                    const siteRows = this._tbody.selectAll('tr').data(siteStatuses)
                         .join(enter => {
                             const rows = enter.append('tr')
                             rows.append('td').text(d => d.site);
@@ -108,6 +137,8 @@
                     siteRows
                         .classed('up', d => d.status === 'up')
                         .classed('down', d => d.status === 'down');
+                    siteRows.selectAll('td')
+                        .text((d, i) => d[['site', 'status', 'lastUpdate'][i]]);
                 }
 
                 updateStatus({ site, response }) {
@@ -128,6 +159,20 @@
                     this.update();
                 }
 
+                async checkSites() {
+                    this.sites.forEach(async (site) => {
+                        try {
+                            const response = await SiteStatus.healthcheck(site, this.group);
+                            this.updateStatus({ site, response });
+                            console.info({ site, response });
+                        }
+                        catch (err) {
+                            this.updateStatus({ site });
+                            console.warn({ site, err });
+                        }
+                    });
+                }
+
                 static async healthcheck(site, group) {
                     const domain = `${site}.${group}.com`;
                     const healthcheckUrl = `https://${domain}/healthcheck`;
@@ -144,35 +189,25 @@
                 }
             }
         </script>
-
+    </head>
+    <body>
         <h1> Riff Analytics Site Status </h1>
 
-        <h2> RiffEdu Sites </h2>
-        <table class="riffedu site-status"></table>
-
-        <h2> RiffRemote Sites </h2>
-        <table class="riffremote site-status"></table>
+        <div class="riffedu site-status"></div>
+        <div class="riffremote site-status"></div>
 
         <script>
-            const eduSiteStatus = new SiteStatus({ group: 'riffedu', sites: eduSites });
-            eduSiteStatus.render('table.site-status.riffedu');
+            const eduSiteStatus = new SiteStatus({ group: 'riffedu',
+                                                   sites: eduSites,
+                                                   title: 'RiffEdu' });
+            eduSiteStatus.render('div.site-status.riffedu');
+            eduSiteStatus.checkSites();
 
-            const remoteSiteStatus = new SiteStatus({ group: 'riffremote', sites: remoteSites });
-            remoteSiteStatus.render('table.site-status.riffremote');
-
-            remoteSites.forEach(async (site) => {
-                try {
-                    const response = await SiteStatus.healthcheck(site, 'riffremote');
-                    remoteSiteStatus.updateStatus({ site, response });
-                    console.info({ site, response });
-                }
-                catch (err) {
-                    remoteSiteStatus.updateStatus({ site });
-                    console.warn({ site, err });
-                }
-            });
-
-
+            const remoteSiteStatus = new SiteStatus({ group: 'riffremote',
+                                                      sites: remoteSites,
+                                                      title: 'RiffRemote' });
+            remoteSiteStatus.render('div.site-status.riffremote');
+            remoteSiteStatus.checkSites();
         </script>
     </body>
 </html>
