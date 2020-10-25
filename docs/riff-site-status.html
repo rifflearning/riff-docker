@@ -63,6 +63,17 @@
                 'wiwin-homeschooling',
             ];
 
+            const platformSites = [
+                'dev',
+                'diagnostic',
+                'emeritus',
+                'grantthornton',
+                'jordan',
+                'mike',
+                'said-oxford',
+                'staging',
+            ];
+
             class SiteStatus {
                 constructor({ group, sites, title }) {
                     this._siteTitle = title;
@@ -195,6 +206,7 @@
 
         <div class="riffedu site-status"></div>
         <div class="riffremote site-status"></div>
+        <div class="riffplatform site-status"></div>
 
         <script>
             const eduSiteStatus = new SiteStatus({ group: 'riffedu',
@@ -208,6 +220,12 @@
                                                       title: 'RiffRemote' });
             remoteSiteStatus.render('div.site-status.riffremote');
             remoteSiteStatus.checkSites();
+
+            const platformSiteStatus = new SiteStatus({ group: 'riffplatform',
+                                                      sites: platformSites,
+                                                      title: 'RiffPlatform' });
+            platformSiteStatus.render('div.site-status.riffplatform');
+            platformSiteStatus.checkSites();
         </script>
     </body>
 </html>
