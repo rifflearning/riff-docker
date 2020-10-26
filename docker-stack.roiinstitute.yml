@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: roiinstitute.riffremote.com.key.1
+      - source: roiinstitute.riffremote.com.key.2
         target: site.key
-      - source: roiinstitute.riffremote.com.crt.1
+      - source: roiinstitute.riffremote.com.crt.2
         target: site.crt
 
-# Your cert will expire on 2020-11-10 (roiinstitute key.1 & crt.1)
+# Your cert will expire on 2021-01-24 (roiinstitute key.2 & crt.2)
 secrets:
-  roiinstitute.riffremote.com.key.1:
+  roiinstitute.riffremote.com.key.2:
     external: true
-  roiinstitute.riffremote.com.crt.1:
+  roiinstitute.riffremote.com.crt.2:
     external: true

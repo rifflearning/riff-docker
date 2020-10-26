@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: surfx.riffremote.com.key.2
+      - source: surfx.riffremote.com.key.3
         target: site.key
-      - source: surfx.riffremote.com.crt.2
+      - source: surfx.riffremote.com.crt.3
         target: site.crt
 
-# Your cert will expire on 2020-10-27 (surfx key.2 & crt.2)
+# Your cert will expire on 2021-01-24 (surfx key.3 & crt.3)
 secrets:
-  surfx.riffremote.com.key.2:
+  surfx.riffremote.com.key.3:
     external: true
-  surfx.riffremote.com.crt.2:
+  surfx.riffremote.com.crt.3:
     external: true
