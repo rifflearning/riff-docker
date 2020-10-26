@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: mfs.riffremote.com.key.1
+      - source: mfs.riffremote.com.key.2
         target: site.key
-      - source: mfs.riffremote.com.crt.1
+      - source: mfs.riffremote.com.crt.2
         target: site.crt
 
-# Your cert will expire on 2020-11-10 (mfs key.1 & crt.1)
+# Your cert will expire on 2021-01-24 (mfs key.2 & crt.2)
 secrets:
-  mfs.riffremote.com.key.1:
+  mfs.riffremote.com.key.2:
     external: true
-  mfs.riffremote.com.crt.1:
+  mfs.riffremote.com.crt.2:
     external: true
