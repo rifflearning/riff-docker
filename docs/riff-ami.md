@@ -5,7 +5,7 @@ Creating the base Riff AMI
 # Launch a new EC2 instance
 
 1. For the base AMI choose:  
-    `Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-0e84e211558a022c0 (64-bit x86)`
+    `Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-02ae530dacc099fc9 (64-bit x86)`
 
 
 1. Pick an instance type (`t3a.micro` works and is cheap)
@@ -70,11 +70,11 @@ docker swarm init
 
 Instructions copied from: [docker-compose installation][compose-install].
 
-**Note** The version (currently 1.25.5) is embedded in the install instructions
+**Note** The version (currently 1.26.2) is embedded in the install instructions
 so check for an updated version and modify the command accordingly.
 
 ```
-sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -102,16 +102,21 @@ aws --version
 rm -r aws*
 ```
 
-### Build tools
+### Build tools / home directories
+Note: I added getting `yaml2json` because I'm considering keeping deployment information in
+a yaml config file and yaml2json and jq will allow extracting information for use in
+bash scripts.
 
 ```
+mkdir bin tmp riff
 sudo apt install make vim jq git tmux curl
+curl -L https://github.com/bronze1man/yaml2json/releases/download/v1.3/yaml2json_linux_amd64 --output bin/yaml2json
+chmod +x bin/yaml2json
 ```
 
 ### Riff deployment repository
 
 ```
-mkdir ~/riff
 cd ~/riff
 git clone https://github.com/rifflearning/riff-docker.git
 ```

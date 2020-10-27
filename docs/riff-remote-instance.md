@@ -37,6 +37,14 @@ e.g. assuming the IP address is `18.210.22.47` and the key used is `~/.ssh/riffp
 $ ssh -i ~/.ssh/riffprod_1_useast1_key.pem ubuntu@18.210.22.47
 ```
 
+## Name the instance
+
+Not required but can be nice when ssh'ing in. It will be displayed in the command prompt on the
+_next_ login.
+```
+sudo hostnamectl set-hostname RR-<Deployment_name>
+```
+
 ## Update and upgrade
 
 ```

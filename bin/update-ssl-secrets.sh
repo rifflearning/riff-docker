@@ -20,7 +20,7 @@ then
 elif [[ "$RIFF_APP" = "edu" ]]
 then
     MAIN_DOMAIN_NAME=riffedu.com
-    WEB_SERVICE_NAME=${RIFF_APP}-stack_${RIFF_APP}-web
+    WEB_SERVICE_NAME=${RIFF_APP}-stk_${RIFF_APP}-web
 fi
 
 # Show help if wrong number of arguments is given
