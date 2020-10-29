@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
+        <title> Riff Analytics Site Status </title>
         <script src="https://cdn.jsdelivr.net/npm/ky@latest/umd.js"></script>
         <!-- script src="https://d3js.org/d3.v6.min.js"></script -->
         <script src="https://cdn.jsdelivr.net/npm/d3-selection@2"></script>
@@ -52,6 +53,7 @@
                 'mfs',
                 'mikecardus',
                 'my',
+                'nleadership',
                 'riffai',
                 'roiinstitute',
                 'surfx',
@@ -74,6 +76,56 @@
                 'staging',
             ];
 
+            class Logger {
+                static logFn = {
+                    noop() {}, // Noop function to use for disabled log levels
+                    log: console.log.bind(window.console),
+                    debug: null,
+                    info: null,
+                    warn: console.warn.bind(window.console),
+                    error: console.error.bind(window.console),
+                };
+
+                constructor() {
+                    /** enum debug, info, warn, error, none */
+                    this._level = 'none';
+                    this._disableLogging();
+                }
+
+                _disableLogging() {
+                    this.debug = Logger.logFn.noop;
+                    this.info = Logger.logFn.noop;
+                    this.warn = Logger.logFn.noop;
+                    this.eror = Logger.logFn.noop;
+                }
+
+                get level() {
+                    return this._level;
+                }
+
+                set level(newLevel) {
+                    this._level = newLevel;
+                    this._disableLogging();
+
+                    switch (this._level) {
+                        case 'debug':
+                            this.debug = Logger.logFn.debug;
+                        case 'info':
+                            this.info = Logger.logFn.info;
+                        case 'warn':
+                            this.warn = Logger.logFn.warn;
+                        case 'error':
+                            this.error = Logger.logFn.error;
+                        case 'none':
+                    }
+                }
+            }
+            Logger.logFn.debug = console.debug?.bind(window.console) ?? Logger.logFn.log;
+            Logger.logFn.info = console.info?.bind(window.console) ?? Logger.logFn.log;
+
+            const logger = new Logger();
+            logger.level = 'debug';
+
             class SiteStatus {
                 constructor({ group, sites, title }) {
                     this._siteTitle = title;
@@ -82,6 +134,9 @@
                     this._parent = null;
                     this._count = null;
                     this._tbody = null;
+
+                    // bind checkSites to the instance so it can be used as a callback by setInterval
+                    this.checkSites = this.checkSites.bind(this);
 
                     sites.forEach(site => this.updateStatus({ site }));
                 }
@@ -175,11 +230,11 @@
                         try {
                             const response = await SiteStatus.healthcheck(site, this.group);
                             this.updateStatus({ site, response });
-                            console.info({ site, response });
+                            logger.debug({ site, response });
                         }
                         catch (err) {
                             this.updateStatus({ site });
-                            console.warn({ site, err });
+                            logger.warn({ site, err });
                         }
                     });
                 }
@@ -209,6 +264,8 @@
         <div class="riffplatform site-status"></div>
 
         <script>
+            logger.level = 'warn';
+
             const eduSiteStatus = new SiteStatus({ group: 'riffedu',
                                                    sites: eduSites,
                                                    title: 'RiffEdu' });
@@ -226,6 +283,12 @@
                                                       title: 'RiffPlatform' });
             platformSiteStatus.render('div.site-status.riffplatform');
             platformSiteStatus.checkSites();
+
+            // Recheck the sites on a regular interval
+            const recheckInterval = 30 * 1000; // 30 seconds
+            const eduCheckTimerId = setInterval(eduSiteStatus.checkSites, recheckInterval);
+            const remoteCheckTimerId = setInterval(remoteSiteStatus.checkSites, recheckInterval);
+            const platformCheckTimerId = setInterval(platformSiteStatus.checkSites, recheckInterval);
         </script>
     </body>
 </html>
