@@ -18,6 +18,7 @@ DEPLOY_NAMES=( riffai
                manpower
                mfs
                mikecardus
+               nleadership
                roiinstitute
                surfx
                swedishdoulas
@@ -61,6 +62,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [mfs.email]="yrr@fpubby.zr"
          [mikecardus.name]="Mike Cardus"
          [mikecardus.email]="Zvxr@ZvxrPneqhf.pbz"
+         [nleadership.name]="Ulrich Nettesheim"
+         [nleadership.email]="Hyevpu@ayrnqrefuvc.pbz"
          [roiinstitute.name]="Patti Phillips"
          [roiinstitute.email]="cnggv@ebvvafgvghgr.arg"
          [surfx.name]="Dmitry Repin"
@@ -111,6 +114,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.22"
              [mfs.riffdata]="2.0.0-dev.6"
              [mikecardus.riffrtc]="3.0.0-dev.21"
              [mikecardus.riffdata]="2.0.0-dev.6"
+             [nleadership.riffrtc]="3.0.0-dev.24"
+             [nleadership.riffdata]="2.0.0-dev.7"
              [roiinstitute.riffrtc]="3.0.0-dev.21"
              [roiinstitute.riffdata]="2.0.0-dev.6"
              [surfx.riffrtc]="3.0.0-dev.19"
