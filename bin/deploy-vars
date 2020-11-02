@@ -6,5 +6,5 @@
 # . deploy-vars
 
 # The docker-compose.yml file uses these values to determine which image to deploy to the swarm
-export RIFF_RTC_TAG=3.0.0-dev.26
+export RIFF_RTC_TAG=3.0.0-dev.27
 export RIFF_SERVER_TAG=2.0.0-dev.8
