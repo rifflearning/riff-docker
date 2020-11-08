@@ -13,8 +13,6 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-      restart_policy:
-        condition: on-failure
       placement:
         constraints: [node.labels.mongo == true]
     configs:
@@ -27,8 +25,6 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-      restart_policy:
-        condition: on-failure
       placement:
         constraints: [node.labels.web == true]
     configs:
@@ -41,8 +37,6 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-      restart_policy:
-        condition: on-failure
       placement:
         constraints: [node.labels.mongo == true]
 
@@ -52,8 +46,6 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-      restart_policy:
-        condition: on-failure
       placement:
         constraints: [node.labels.web == true]
 
@@ -63,8 +55,6 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-      restart_policy:
-        condition: on-failure
     configs:
       - source: signalmaster.local-production.yml.2
         target: /app/config/local-production.yml
@@ -75,8 +65,6 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-      restart_policy:
-        condition: on-failure
       placement:
         constraints: [node.labels.web == true]
     volumes:
