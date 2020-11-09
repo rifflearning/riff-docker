@@ -3,6 +3,9 @@
 version: '3.7'
 services:
   pfm-web:
+    configs:
+      - source: doc-ude-vet.html
+        target: /usr/share/nginx/html/custom/doc-ude-vet.html
     secrets:
       - source: ude-vet.riffremote.com.key.2
         target: site.key
@@ -27,5 +30,7 @@ secrets:
     external: true
 
 configs:
+  doc-ude-vet.html:
+    external: true
   riff-rtc.ude-vet-local-production.yml.1:
     external: true
