@@ -18,7 +18,7 @@ services:
       - source: riff-rtc.local-production.yml.8.debug
         target: /app/config/unused1
       # UDE-VET riff-rtc specific config replaces the above default config
-      - source: riff-rtc.ude-vet-local-production.yml.1
+      - source: riff-rtc.ude-vet-local-production.yml.2
         target: /app/config/local-production.yml
 
 
@@ -32,5 +32,5 @@ secrets:
 configs:
   doc-ude-vet.html:
     external: true
-  riff-rtc.ude-vet-local-production.yml.1:
+  riff-rtc.ude-vet-local-production.yml.2:
     external: true
