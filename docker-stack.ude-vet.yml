@@ -12,6 +12,15 @@ services:
       - source: ude-vet.riffremote.com.crt.2
         target: site.crt
 
+  pfm-riffdata:
+    configs:
+      # override the normal config defined in docker-stack.yml so that it can be replaced
+      - source: riffdata.local-production.yml.1
+        target: /app/config/unused1
+      # this riffdata config include the googledoc api key replaces the above default config
+      - source: riffdata.local-production.yml.2
+        target: /app/config/local-production.yml
+
   pfm-riffrtc:
     configs:
       # override the normal config defined in docker-stack.yml so that it can be replaced
@@ -20,7 +29,6 @@ services:
       # UDE-VET riff-rtc specific config replaces the above default config
       - source: riff-rtc.ude-vet-local-production.yml.2
         target: /app/config/local-production.yml
-
 
 # Your cert will expire on 2020-11-17 (ude-vet key.2 & crt.2)
 secrets:
@@ -31,6 +39,8 @@ secrets:
 
 configs:
   doc-ude-vet.html:
+    external: true
+  riffdata.local-production.yml.2:
     external: true
   riff-rtc.ude-vet-local-production.yml.2:
     external: true
