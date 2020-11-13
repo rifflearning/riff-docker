@@ -27,7 +27,7 @@ services:
       - source: riff-rtc.local-production.yml.8.debug
         target: /app/config/unused1
       # UDE-VET riff-rtc specific config replaces the above default config
-      - source: riff-rtc.ude-vet-local-production.yml.2
+      - source: riff-rtc.ude-vet-local-production.yml.3
         target: /app/config/local-production.yml
 
 # Your cert will expire on 2021-02-11 (ude-vet key.3 & crt.3)
@@ -42,5 +42,5 @@ configs:
     external: true
   riffdata.local-production.yml.2:
     external: true
-  riff-rtc.ude-vet-local-production.yml.2:
+  riff-rtc.ude-vet-local-production.yml.3:
     external: true
