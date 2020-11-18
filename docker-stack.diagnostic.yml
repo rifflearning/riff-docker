@@ -15,7 +15,7 @@ services:
       - source: riffdata.local-production.yml.1
         target: /app/config/unused1
       # diagnostic riffdata specific config replaces the above default config
-      - source: riffdata.diag-local-production.yml.1
+      - source: riffdata.local-production.yml.2
         target: /app/config/local-production.yml
 
   pfm-riffrtc:
@@ -35,7 +35,7 @@ secrets:
     external: true
 
 configs:
-  riffdata.diag-local-production.yml.1:
+  riffdata.local-production.yml.2:
     external: true
   riff-rtc.diag-local-production.yml.3:
     external: true
