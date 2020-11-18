@@ -4,9 +4,9 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: diagnostic.riffplatform.com.key.4
+      - source: diagnostic.riffplatform.com.key.5
         target: site.key
-      - source: diagnostic.riffplatform.com.crt.4
+      - source: diagnostic.riffplatform.com.crt.5
         target: site.crt
 
   pfm-riffdata:
@@ -27,11 +27,11 @@ services:
       - source: riff-rtc.diag-local-production.yml.3
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2020-11-08 (diagnostic key.4 & crt.4)
+# Your cert will expire on 2021-02-16 (diagnostic key.5 & crt.5)
 secrets:
-  diagnostic.riffplatform.com.key.4:
+  diagnostic.riffplatform.com.key.5:
     external: true
-  diagnostic.riffplatform.com.crt.4:
+  diagnostic.riffplatform.com.crt.5:
     external: true
 
 configs:
