@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: esme.riffremote.com.key.3
+      - source: esme.riffremote.com.key.4
         target: site.key
-      - source: esme.riffremote.com.crt.3
+      - source: esme.riffremote.com.crt.4
         target: site.crt
 
-# Your cert will expire on 2020-12-08 (esme key.3 & crt.3)
+# Your cert will expire on 2021-03-07 (esme key.4 & crt.4)
 secrets:
-  esme.riffremote.com.key.3:
+  esme.riffremote.com.key.4:
     external: true
-  esme.riffremote.com.crt.3:
+  esme.riffremote.com.crt.4:
     external: true
