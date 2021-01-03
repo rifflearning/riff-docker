@@ -4,9 +4,9 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: my.riffremote.com.key.3
+      - source: my.riffremote.com.key.4
         target: site.key
-      - source: my.riffremote.com.crt.3
+      - source: my.riffremote.com.crt.4
         target: site.crt
 
   pfm-riffrtc:
@@ -18,11 +18,11 @@ services:
       - source: riff-rtc.my-local-production.yml.1
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2021-01-03 (my key.3 & crt.3)
+# Your cert will expire on 2021-04-03 (my key.4 & crt.4)
 secrets:
-  my.riffremote.com.key.3:
+  my.riffremote.com.key.4:
     external: true
-  my.riffremote.com.crt.3:
+  my.riffremote.com.crt.4:
     external: true
 
 configs:
