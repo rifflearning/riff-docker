@@ -1,6 +1,11 @@
-# ignore everything except .gitignore and encrypted files (*.gpg) and scripts
+# start by ignoring everything
 *
-!.gitignore
+
+# It is not possible to exclude a file from being ignored if a parent directory of that file is ignored.
+# So exclude (don't ignore) the secret directory
 !secret/
+
+# except .gitignore and encrypted files (*.gpg) and scripts
+!.gitignore
 !*.gpg
 !*.sh
