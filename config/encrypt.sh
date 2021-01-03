@@ -26,6 +26,6 @@ do
     [[ $f == *.gpg || $f == *.sh ]] && { echo "ignoring $f"; continue; }
     [[ -f $f.gpg ]] && { echo "already encrypted, delete $f.gpg to encrypt again"; continue; }
     echo -n encrypting $f ...
-    gpg2 --encrypt --sign ${R_OPTS} --output $f.gpg $f
+    gpg --encrypt --sign ${R_OPTS} --output $f.gpg $f
     echo done
 done
