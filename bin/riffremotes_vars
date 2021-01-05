@@ -5,10 +5,8 @@
 # keep alphabetical after 'riffai'
 DEPLOY_NAMES=( riffai
                my
-               asb-my
                boldly-app
                esme
-               knowfully
                learningseeds
                learnlaunch
                roiinstitute
@@ -22,14 +20,10 @@ OWNERS=( [riffai.name]="Beth Porter"
          [riffai.email]="orgu@evssnanylgvpf.nv"
          [my.name]="Beth Porter"
          [my.email]="orgu@evssnanylgvpf.nv"
-         [asb-my.name]="Ashley Chiampo"
-         [asb-my.email]="nfuyrl@arjtybonyzvaq.pbz"
          [boldly-app.name]="Rebecca Grover"
          [boldly-app.email]="erorppn@ynagrearebhtr.bayvar"
          [esme.name]="Julia Henderson"
          [esme.email]="whyvn@rfzryrneavat.pbz"
-         [knowfully.name]="Philip Salgado"
-         [knowfully.email]="fnytnqbc@xabjshyyl.pbz"
          [learningseeds.name]="Erica Key"
          [learningseeds.email]="revpn@YrneavatFrrqf.pbz"
          [learnlaunch.name]="Ben Bungert"
@@ -46,14 +40,10 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.28"
              [riffai.riffdata]="2.0.0-dev.9"
              [my.riffrtc]="3.0.0-dev.28"
              [my.riffdata]="2.0.0-dev.9"
-             [asb-my.riffrtc]="3.0.0-dev.24"
-             [asb-my.riffdata]="2.0.0-dev.6"
              [boldly-app.riffrtc]="3.0.0-dev.28"
              [boldly-app.riffdata]="2.0.0-dev.9"
              [esme.riffrtc]="3.0.0-dev.28"
              [esme.riffdata]="2.0.0-dev.9"
-             [knowfully.riffrtc]="3.0.0-dev.21"
-             [knowfully.riffdata]="2.0.0-dev.6"
              [learningseeds.riffrtc]="3.0.0-dev.28"
              [learningseeds.riffdata]="2.0.0-dev.9"
              [learnlaunch.riffrtc]="3.0.0-dev.28"
