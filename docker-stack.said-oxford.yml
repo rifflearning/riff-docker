@@ -15,7 +15,7 @@ services:
       - source: riff-rtc.local-production.yml.8.debug
         target: /app/config/unused1
       # said-oxford riff-rtc specific config replaces the above default config
-      - source: riff-rtc.said-local-production.yml.1
+      - source: riff-rtc.said-local-production.yml.2
         target: /app/config/local-production.yml
 
 # Your cert will expire on 2021-04-03 (said-oxford key.5 & crt.5)
@@ -26,5 +26,5 @@ secrets:
     external: true
 
 configs:
-  riff-rtc.said-local-production.yml.1:
+  riff-rtc.said-local-production.yml.2:
     external: true
