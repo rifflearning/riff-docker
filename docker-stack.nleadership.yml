@@ -1,0 +1,17 @@
+---
+# override/additions to docker-stack.yml for deploying to the nleadership swarm
+version: '3.7'
+services:
+  pfm-web:
+    secrets:
+      - source: nleadership.riffremote.com.key.1
+        target: site.key
+      - source: nleadership.riffremote.com.crt.1
+        target: site.crt
+
+# Your cert will expire on 2021-05-23 (nleadership key.1 & crt.1)
+secrets:
+  nleadership.riffremote.com.key.1:
+    external: true
+  nleadership.riffremote.com.crt.1:
+    external: true

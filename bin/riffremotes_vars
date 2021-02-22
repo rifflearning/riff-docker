@@ -9,6 +9,7 @@ DEPLOY_NAMES=( riffai
                esme
                learningseeds
                learnlaunch
+               nleadership
                roiinstitute
                ude-vet
              )
@@ -28,6 +29,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [learningseeds.email]="revpn@YrneavatFrrqf.pbz"
          [learnlaunch.name]="Ben Bungert"
          [learnlaunch.email]="ora@yrneaynhapu.pbz"
+         [nleadership.name]="Ulrich Nettesheim"
+         [nleadership.email]="Hyevpu@ayrnqrefuvc.pbz"
          [roiinstitute.name]="Patti Phillips"
          [roiinstitute.email]="cnggv@ebvvafgvghgr.arg"
          [ude-vet.name]="Esther Winther"
@@ -48,6 +51,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0-dev.28"
              [learningseeds.riffdata]="2.0.0-dev.9"
              [learnlaunch.riffrtc]="3.0.0-dev.28"
              [learnlaunch.riffdata]="2.0.0-dev.9"
+             [nleadership.riffrtc]="3.0.0"
+             [nleadership.riffdata]="2.0.0-dev.10"
              [roiinstitute.riffrtc]="3.0.0-dev.28"
              [roiinstitute.riffdata]="2.0.0-dev.9"
              [ude-vet.riffrtc]="3.0.0-dev.28"
