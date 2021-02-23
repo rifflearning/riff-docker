@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: boldly-app.riffremote.com.key.3
+      - source: boldly-app.riffremote.com.key.4
         target: site.key
-      - source: boldly-app.riffremote.com.crt.3
+      - source: boldly-app.riffremote.com.crt.4
         target: site.crt
 
-# Your cert will expire on 2021-03-07 (boldly-app key.3 & crt.3)
+# Your cert will expire on 2021-05-23 (boldly-app key.4 & crt.4)
 secrets:
-  boldly-app.riffremote.com.key.3:
+  boldly-app.riffremote.com.key.4:
     external: true
-  boldly-app.riffremote.com.crt.3:
+  boldly-app.riffremote.com.crt.4:
     external: true
