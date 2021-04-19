@@ -1,20 +1,8 @@
 ---
 # support stack (private registry and visualizer services)
 # $ docker stack deploy -c docker-stack.support.yml support-stack
-version: '3.7'
+version: '3.8'
 services:
-  # The visualizer service is only needed when running in a swarm stack
-  visualizer:
-    image: dockersamples/visualizer:stable
-    ports:
-      - "8080:8080"
-    stop_grace_period: 1m30s
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-
   # The registry service is only needed when running in a swarm stack
   registry:
     image: registry:2
@@ -25,6 +13,23 @@ services:
     deploy:
       placement:
         constraints: [node.labels.registry == true]
+
+# The visualizer was useful when we first started deploying to swarms and the swarms
+# had multiple nodes. Now that we've been running the swarm on a single instance
+# the visualizer isn't useful. In addition it hasn't been maintained and probably is
+# has some security issues. Therefore I'm commenting it out, leaving it just in case
+# we want to revive running it for some scenario. - mjl 2021-04-19
+#  # The visualizer service is only needed when running in a swarm stack
+#  visualizer:
+#    image: dockersamples/visualizer:stable
+#    ports:
+#      - "8080:8080"
+#    stop_grace_period: 1m30s
+#    volumes:
+#      - "/var/run/docker.sock:/var/run/docker.sock"
+#    deploy:
+#      placement:
+#        constraints: [node.role == manager]
 
 volumes:
   registry-data:
