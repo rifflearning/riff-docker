@@ -6,6 +6,7 @@
 DEPLOY_NAMES=( riffai
                my
                boldly-app
+               emeritus
                esme
                learningseeds
                learnlaunch
@@ -23,6 +24,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [my.email]="orgu@evssnanylgvpf.nv"
          [boldly-app.name]="Rebecca Grover"
          [boldly-app.email]="erorppn@ynagrearebhtr.bayvar"
+         [emeritus.name]="Ashley Chiampo"
+         [emeritus.email]="nfuyrl.puvnzcb@rzrevghf.bet"
          [esme.name]="Julia Henderson"
          [esme.email]="whyvn@rfzryrneavat.pbz"
          [learningseeds.name]="Erica Key"
@@ -45,6 +48,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0"
              [my.riffdata]="2.0.0-dev.9"
              [boldly-app.riffrtc]="3.0.0"
              [boldly-app.riffdata]="2.0.0-dev.10"
+             [emeritus.riffrtc]="3.1.0-dev.1"
+             [emeritus.riffdata]="2.0.0-dev.11"
              [esme.riffrtc]="3.0.0"
              [esme.riffdata]="2.0.0-dev.10"
              [learningseeds.riffrtc]="3.0.0-dev.28"
