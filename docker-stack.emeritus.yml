@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: emeritus.riffplatform.com.key.8
+      - source: emeritus.riffplatform.com.key.10
         target: site.key
-      - source: emeritus.riffplatform.com.crt.8
+      - source: emeritus.riffplatform.com.crt.10
         target: site.crt
 
-# Your cert will expire on 2021-01-03 (emeritus key.8 & crt.8)
+# Your cert will expire on 2021-07-18 (emeritus key.10 & crt.10)
 secrets:
-  emeritus.riffplatform.com.key.8:
+  emeritus.riffplatform.com.key.10:
     external: true
-  emeritus.riffplatform.com.crt.8:
+  emeritus.riffplatform.com.crt.10:
     external: true
