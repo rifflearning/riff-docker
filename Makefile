@@ -152,7 +152,10 @@ init-signalmaster : _nodeapp-init
 .PHONY : _nodeapp-init
 _nodeapp-init : build-init-image
 	$(call ndef,NODEAPP_PATH)
-	docker run --rm --tty --mount type=bind,src=$(NODEAPP_PATH),dst=/app rifflearning/nodeapp-init
+	docker run --rm --tty \
+		--mount type=bind,src=$(NODEAPP_PATH),dst=/app \
+		--mount type=bind,src=$(HOME)/.npmrc,dst=/home/mmuser/.npmrc \
+		rifflearning/nodeapp-init
 
 .PHONY : logs-web logs-rtc logs-server logs-mongo
 logs-web : SERVICE_NAME = pfm-web ## run docker-compose logs for the pfm-web service
