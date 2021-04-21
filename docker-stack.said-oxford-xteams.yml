@@ -1,0 +1,35 @@
+---
+# override/additions to docker-stack.yml for deploying to the said-oxford-xteams swarm
+version: '3.7'
+services:
+  pfm-web:
+    configs:
+      - source: doc-said-oxford-xteams.html
+        target: /usr/share/nginx/html/custom/doc-said-oxford-xteams.html
+    secrets:
+      - source: xteams.said-oxford.riffremote.com.key.1
+        target: site.key
+      - source: xteams.said-oxford.riffremote.com.crt.1
+        target: site.crt
+
+  pfm-riffrtc:
+    configs:
+      # override the normal config defined in docker-stack.yml so that it can be replaced
+      - source: riff-rtc.local-production.yml.8.debug
+        target: /app/config/unused1
+      # UDE-VET riff-rtc specific config replaces the above default config
+      - source: riff-rtc.said-oxford-xteams-local-production.yml.1
+        target: /app/config/local-production.yml
+
+# Your cert will expire on 2021-07-20 (xteams.said-oxford key.1 & crt.1)
+secrets:
+  xteams.said-oxford.riffremote.com.key.1:
+    external: true
+  xteams.said-oxford.riffremote.com.crt.1:
+    external: true
+
+configs:
+  doc-said-oxford-xteams.html:
+    external: true
+  riff-rtc.said-oxford-xteams-local-production.yml.1:
+    external: true

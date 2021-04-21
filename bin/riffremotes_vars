@@ -12,6 +12,7 @@ DEPLOY_NAMES=( riffai
                learnlaunch
                nleadership
                roiinstitute
+               said-oxford-xteams
                ude-vet
              )
 
@@ -36,6 +37,8 @@ OWNERS=( [riffai.name]="Beth Porter"
          [nleadership.email]="Hyevpu@ayrnqrefuvc.pbz"
          [roiinstitute.name]="Patti Phillips"
          [roiinstitute.email]="cnggv@ebvvafgvghgr.arg"
+         [said-oxford-xteams.name]="Julia Henderson"
+         [said-oxford-xteams.email]="whyvn@rfzryrneavat.pbz"
          [ude-vet.name]="Esther Winther"
          [ude-vet.email]="wrffvpn.cnrffraf@hav-qhr.qr"
        )
@@ -60,6 +63,8 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0"
              [nleadership.riffdata]="2.0.0-dev.10"
              [roiinstitute.riffrtc]="3.0.0-dev.28"
              [roiinstitute.riffdata]="2.0.0-dev.9"
+             [said-oxford-xteams.riffrtc]="3.1.0-dev.1"
+             [said-oxford-xteams.riffdata]="2.0.0-dev.11"
              [ude-vet.riffrtc]="3.1.0-dev.1"
              [ude-vet.riffdata]="2.0.0-dev.11"
            )
