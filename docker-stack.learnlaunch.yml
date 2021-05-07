@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: learnlaunch.riffremote.com.key.5
+      - source: learnlaunch.riffremote.com.key.6
         target: site.key
-      - source: learnlaunch.riffremote.com.crt.5
+      - source: learnlaunch.riffremote.com.crt.6
         target: site.crt
 
-# Your cert will expire on 2021-05-23 (learnlaunch key.5 & crt.5)
+# Your cert will expire on 2021-08-05 (learnlaunch key.6 & crt.6)
 secrets:
-  learnlaunch.riffremote.com.key.5:
+  learnlaunch.riffremote.com.key.6:
     external: true
-  learnlaunch.riffremote.com.crt.5:
+  learnlaunch.riffremote.com.crt.6:
     external: true
