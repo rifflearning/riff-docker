@@ -38,8 +38,7 @@ BASE_IMAGES := \
 # The pull-support-images target is a helper to update the support docker images used
 # by the support stack services. This is a list of those images.
 SUPPORT_IMAGES := \
-	registry:2 \
-	dockersamples/visualizer:stable
+	registry:2
 
 
 # These environment variables are used as deploy arguments by the docker-compose
