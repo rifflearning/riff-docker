@@ -11,6 +11,7 @@ this relative directory layout.
 ```
 .
 ├── riff-docker
+├── riff-metrics
 ├── riff-rtc
 ├── riff-server
 └── signalmaster
@@ -25,15 +26,50 @@ this relative directory layout.
 - docker
 - make (GNU Make 4.1 is known to work)
 - Python 3.8+ (only for needed for deploying)
-- docker-compose 1.26.0+ (https://docs.docker.com/compose/install/)
-- node 12+ (https://nodejs.org/en/download/)
+- docker-compose 1.29.2+ (https://docs.docker.com/compose/install/)
+- node 14+ (https://nodejs.org/en/download/)
+
+#### Access to private packages and images
+
+Some of our repositories are private and import private packages from the GitHub Package
+Registry (GPR). You will need to create a GitHub Personal Access Token with permissions
+to allow these to be used.
+
+You create a Personal access token via your GitHub account Settings.
+ - Go to _Developer Settings_ | _Personal access tokens_
+ - Generate a new token
+ - For the note I used: _all repo & package access_
+ - Permissions (only):
+    - **repo** (and all things under it)
+    - **write:packages** (includes **read:packages**)
+    - **delete:packages**
+
+Login to npm for the GitHub Package Registry. The password it asks for is the personal
+access token you just created. This should create the file `~/.npmrc`.
+
+```
+npm login --scope=@rifflearning --registry=https://npm.pkg.github.com  
+```
+
+Login to docker for the GitHub Package Registry. The password it asks for is the personal
+access token you just created. On linux docker stores configuration in `~/.docker/config.json`.
+
+```
+docker login docker.pkg.github.com
+```
 
 ### Clone and initialize working directories
+
+If you've added an ssh key to your GitHub account you might prefer to clone the repos using
+ssh rather than https (change `https://github.com/` to `git@github.com:` below).
+
+(riff-metrics is optional, and only needed if you are going to work on it.)
 
 ```sh
 mkdir riff
 cd riff
 git clone https://github.com/rifflearning/riff-docker.git
+git clone https://github.com/rifflearning/riff-metrics.git
 git clone https://github.com/rifflearning/riff-rtc.git
 git clone https://github.com/rifflearning/riff-server.git
 git clone https://github.com/rifflearning/signalmaster.git
