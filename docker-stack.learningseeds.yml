@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: learningseeds.riffremote.com.key.5
+      - source: learningseeds.riffremote.com.key.6
         target: site.key
-      - source: learningseeds.riffremote.com.crt.5
+      - source: learningseeds.riffremote.com.crt.6
         target: site.crt
 
-# Your cert will expire on 2021-07-18 (learningseeds key.5 & crt.5)
+# Your cert will expire on 2021-10-12 (learningseeds key.6 & crt.6)
 secrets:
-  learningseeds.riffremote.com.key.5:
+  learningseeds.riffremote.com.key.6:
     external: true
-  learningseeds.riffremote.com.crt.5:
+  learningseeds.riffremote.com.crt.6:
     external: true
