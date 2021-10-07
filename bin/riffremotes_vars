@@ -66,7 +66,7 @@ IMAGE_VERS=( [riffai.riffrtc]="3.0.0"
              [said-oxford-xteams.riffrtc]="3.1.0-dev.1"
              [said-oxford-xteams.riffdata]="2.0.0-dev.11"
              [ude-vet.riffrtc]="3.1.0-dev.1"
-             [ude-vet.riffdata]="2.0.0-dev.11"
+             [ude-vet.riffdata]="2.2.0"
            )
 
 # If we were given a swarm name as an argument, make sure that all the derived parameters are
