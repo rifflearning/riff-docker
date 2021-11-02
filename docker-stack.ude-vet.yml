@@ -4,8 +4,8 @@ version: '3.7'
 services:
   pfm-web:
     configs:
-      - source: doc-ude-vet.html
-        target: /usr/share/nginx/html/custom/doc-ude-vet.html
+      - source: doc-ude-vet-2.html
+        target: /usr/share/nginx/html/custom/doc-ude-vet-2.html
     secrets:
       - source: ude-vet.riffremote.com.key.7
         target: site.key
@@ -27,7 +27,7 @@ services:
       - source: riff-rtc.local-production.yml.8.debug
         target: /app/config/unused1
       # UDE-VET riff-rtc specific config replaces the above default config
-      - source: riff-rtc.ude-vet-local-production.yml.3
+      - source: riff-rtc.ude-vet-local-production.yml.4
         target: /app/config/local-production.yml
 
 # Your cert will expire on 2022-01-05 (ude-vet key.7 & crt.7)
@@ -38,9 +38,9 @@ secrets:
     external: true
 
 configs:
-  doc-ude-vet.html:
+  doc-ude-vet-2.html:
     external: true
   riffdata.local-production.yml.2:
     external: true
-  riff-rtc.ude-vet-local-production.yml.3:
+  riff-rtc.ude-vet-local-production.yml.4:
     external: true
