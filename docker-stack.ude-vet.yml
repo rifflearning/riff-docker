@@ -7,9 +7,9 @@ services:
       - source: doc-ude-vet-2.html
         target: /usr/share/nginx/html/custom/doc-ude-vet-2.html
     secrets:
-      - source: ude-vet.riffremote.com.key.7
+      - source: ude-vet.riffremote.com.key.8
         target: site.key
-      - source: ude-vet.riffremote.com.crt.7
+      - source: ude-vet.riffremote.com.crt.8
         target: site.crt
 
   pfm-riffdata:
@@ -30,11 +30,11 @@ services:
       - source: riff-rtc.ude-vet-local-production.yml.4
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2022-01-05 (ude-vet key.7 & crt.7)
+# Your cert will expire on 2022-04-03 (ude-vet key.8 & crt.8)
 secrets:
-  ude-vet.riffremote.com.key.7:
+  ude-vet.riffremote.com.key.8:
     external: true
-  ude-vet.riffremote.com.crt.7:
+  ude-vet.riffremote.com.crt.8:
     external: true
 
 configs:

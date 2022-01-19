@@ -4,14 +4,14 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: emeritus.riffremote.com.key.3
+      - source: emeritus.riffremote.com.key.4
         target: site.key
-      - source: emeritus.riffremote.com.crt.3
+      - source: emeritus.riffremote.com.crt.4
         target: site.crt
 
-# Your cert will expire on 2022-01-05 (emeritus key.3 & crt.3)
+# Your cert will expire on 2022-04-03 (emeritus key.4 & crt.4)
 secrets:
-  emeritus.riffremote.com.key.3:
+  emeritus.riffremote.com.key.4:
     external: true
-  emeritus.riffremote.com.crt.3:
+  emeritus.riffremote.com.crt.4:
     external: true
