@@ -69,6 +69,14 @@ SSL_FILES := \
 .PHONY : build-init-image init-rtc init-server init-signalmaster rtc-build-image
 .PHONY : show-env build-dev build-prod push-prod
 
+init : VER ?= 3
+init : ## create python3 virtual env, install requirements (define VER for other than python3)
+	@python$(VER) -m venv venv
+	-@ln -s venv/bin/activate activate
+	@source activate                        	; \
+	pip install --upgrade pip setuptools wheel  ; \
+	pip install -r requirements.txt
+
 up : up-dev ## run docker-compose up (w/ dev config)
 
 up-dev :
