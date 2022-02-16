@@ -3,68 +3,28 @@
 
 # Valid swarm names (used to index into OWNERS and IMAGE_VERS)
 # keep alphabetical after 'riffai'
-DEPLOY_NAMES=( riffai
-               my
-               boldly-app
-               emeritus
-               esme
+DEPLOY_NAMES=( emeritus
                learningseeds
-               learnlaunch
-               nleadership
-               roiinstitute
-               said-oxford-xteams
                ude-vet
              )
 
 # OWNERS is an associative array of the DEPLOY_NAMES site owner names and email addresses
 # Email is rot13. in vim use 'g?'
 declare -A OWNERS
-OWNERS=( [riffai.name]="Beth Porter"
-         [riffai.email]="orgu@evssnanylgvpf.nv"
-         [my.name]="Beth Porter"
-         [my.email]="orgu@evssnanylgvpf.nv"
-         [boldly-app.name]="Rebecca Grover"
-         [boldly-app.email]="erorppn@ynagrearebhtr.bayvar"
-         [emeritus.name]="Ashley Chiampo"
+OWNERS=( [emeritus.name]="Ashley Chiampo"
          [emeritus.email]="nfuyrl.puvnzcb@rzrevghf.bet"
-         [esme.name]="Julia Henderson"
-         [esme.email]="whyvn@rfzryrneavat.pbz"
          [learningseeds.name]="Erica Key"
          [learningseeds.email]="revpn@YrneavatFrrqf.pbz"
-         [learnlaunch.name]="Ben Bungert"
-         [learnlaunch.email]="ora@yrneaynhapu.pbz"
-         [nleadership.name]="Ulrich Nettesheim"
-         [nleadership.email]="Hyevpu@ayrnqrefuvc.pbz"
-         [roiinstitute.name]="Patti Phillips"
-         [roiinstitute.email]="cnggv@ebvvafgvghgr.arg"
-         [said-oxford-xteams.name]="Julia Henderson"
-         [said-oxford-xteams.email]="whyvn@rfzryrneavat.pbz"
          [ude-vet.name]="Esther Winther"
          [ude-vet.email]="wrffvpn.cnrffraf@hav-qhr.qr"
        )
 
 # IMAGE_VERS is an associative array of the DEPLOY_NAMES image versions deployed on that instance
 declare -A IMAGE_VERS
-IMAGE_VERS=( [riffai.riffrtc]="3.0.0"
-             [riffai.riffdata]="2.0.0-dev.10"
-             [my.riffrtc]="3.0.0-dev.28"
-             [my.riffdata]="2.0.0-dev.9"
-             [boldly-app.riffrtc]="3.1.0-dev.1"
-             [boldly-app.riffdata]="2.0.0-dev.11"
-             [emeritus.riffrtc]="3.1.0-dev.1"
+IMAGE_VERS=( [emeritus.riffrtc]="3.1.0-dev.1"
              [emeritus.riffdata]="2.2.0"
-             [esme.riffrtc]="3.0.0"
-             [esme.riffdata]="2.0.0-dev.10"
              [learningseeds.riffrtc]="3.1.0-dev.1"
              [learningseeds.riffdata]="2.2.0"
-             [learnlaunch.riffrtc]="3.1.0-dev.1"
-             [learnlaunch.riffdata]="2.0.0-dev.11"
-             [nleadership.riffrtc]="3.0.0"
-             [nleadership.riffdata]="2.0.0-dev.10"
-             [roiinstitute.riffrtc]="3.0.0-dev.28"
-             [roiinstitute.riffdata]="2.0.0-dev.9"
-             [said-oxford-xteams.riffrtc]="3.1.0-dev.1"
-             [said-oxford-xteams.riffdata]="2.0.0-dev.11"
              [ude-vet.riffrtc]="3.1.0-dev.1"
              [ude-vet.riffdata]="2.2.0"
            )
