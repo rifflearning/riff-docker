@@ -22,11 +22,11 @@ OWNERS=( [emeritus.name]="Ashley Chiampo"
 # IMAGE_VERS is an associative array of the DEPLOY_NAMES image versions deployed on that instance
 declare -A IMAGE_VERS
 IMAGE_VERS=( [emeritus.riffrtc]="3.1.0-dev.1"
-             [emeritus.riffdata]="2.2.0"
+             [emeritus.riffdata]="2.2.1"
              [learningseeds.riffrtc]="3.1.0-dev.1"
-             [learningseeds.riffdata]="2.2.0"
+             [learningseeds.riffdata]="2.2.1"
              [ude-vet.riffrtc]="3.1.0-dev.1"
-             [ude-vet.riffdata]="2.2.0"
+             [ude-vet.riffdata]="2.2.1"
            )
 
 # If we were given a swarm name as an argument, make sure that all the derived parameters are
