@@ -28,7 +28,7 @@ services:
       placement:
         constraints: [node.labels.web == true]
     configs:
-      - source: riff-rtc.local-production.yml.8.debug
+      - source: riff-rtc.local-production.yml.9.debug
         target: /app/config/local-production.yml
 
   pfm-riffdata-db:
@@ -74,7 +74,7 @@ volumes:
   pfm-web-html-certbot:
 
 configs:
-  riff-rtc.local-production.yml.8.debug:
+  riff-rtc.local-production.yml.9.debug:
     external: true
   riffdata.local-production.yml.1:
     external: true
