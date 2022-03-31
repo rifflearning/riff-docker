@@ -7,9 +7,9 @@ services:
       - source: doc-ude-vet-2.html
         target: /usr/share/nginx/html/custom/doc-ude-vet-2.html
     secrets:
-      - source: ude-vet.riffremote.com.key.8
+      - source: ude-vet.riffremote.com.key.9
         target: site.key
-      - source: ude-vet.riffremote.com.crt.8
+      - source: ude-vet.riffremote.com.crt.9
         target: site.crt
 
   pfm-riffdata:
@@ -24,17 +24,17 @@ services:
   pfm-riffrtc:
     configs:
       # override the normal config defined in docker-stack.yml so that it can be replaced
-      - source: riff-rtc.local-production.yml.8.debug
+      - source: riff-rtc.local-production.yml.9.debug
         target: /app/config/unused1
       # UDE-VET riff-rtc specific config replaces the above default config
       - source: riff-rtc.ude-vet-local-production.yml.4
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2022-04-03 (ude-vet key.8 & crt.8)
+# Your cert will expire on 2022-06-26 (ude-vet key.9 & crt.9)
 secrets:
-  ude-vet.riffremote.com.key.8:
+  ude-vet.riffremote.com.key.9:
     external: true
-  ude-vet.riffremote.com.crt.8:
+  ude-vet.riffremote.com.crt.9:
     external: true
 
 configs:
