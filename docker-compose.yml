@@ -14,18 +14,18 @@
 version: '3.7'
 services:
   pfm-riffdata:
-    image: 'docker.pkg.github.com/rifflearning/riff-server/riffdata:${RIFF_SERVER_TAG-latest}'
+    image: 'ghcr.io/rifflearning/riff-server/riffdata:${RIFF_SERVER_TAG-latest}'
     hostname: pfm-riffdata
     depends_on:
       - pfm-riffdata-db
 
   pfm-riffrtc:
-    image: 'docker.pkg.github.com/rifflearning/riff-docker/riffrtc:${RIFF_RTC_TAG-latest}'
+    image: 'ghcr.io/rifflearning/riff-docker/riffrtc:${RIFF_RTC_TAG-latest}'
     depends_on:
       - pfm-redis
 
   pfm-web:
-    image: 'docker.pkg.github.com/rifflearning/riff-docker/pfm-web:${RIFF_RTC_TAG-latest}'
+    image: 'ghcr.io/rifflearning/riff-docker/pfm-web:${RIFF_RTC_TAG-latest}'
     ports:
       - '80:80'
       - '443:443'
@@ -35,7 +35,7 @@ services:
       - pfm-signalmaster
 
   pfm-signalmaster:
-    image: 'docker.pkg.github.com/rifflearning/signalmaster/signalmaster:2.1.2'
+    image: 'ghcr.io/rifflearning/signalmaster/signalmaster:2.1.2'
 
   pfm-riffdata-db:
     image: mongo:${MONGO_VER-latest}
