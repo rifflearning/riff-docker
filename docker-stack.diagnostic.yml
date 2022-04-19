@@ -4,9 +4,9 @@ version: '3.7'
 services:
   pfm-web:
     secrets:
-      - source: diagnostic.riffplatform.com.key.10
+      - source: diagnostic.riffplatform.com.key.11
         target: site.key
-      - source: diagnostic.riffplatform.com.crt.10
+      - source: diagnostic.riffplatform.com.crt.11
         target: site.crt
 
   pfm-riffdata:
@@ -21,17 +21,17 @@ services:
   pfm-riffrtc:
     configs:
       # override the normal config defined in docker-stack.yml so that it can be replaced
-      - source: riff-rtc.local-production.yml.8.debug
+      - source: riff-rtc.local-production.yml.9.debug
         target: /app/config/unused1
       # diagnostic riff-rtc specific config replaces the above default config
       - source: riff-rtc.diag-local-production.yml.3
         target: /app/config/local-production.yml
 
-# Your cert will expire on 2022-04-22 (diagnostic key.10 & crt.10)
+# Your cert will expire on 2022-07-18 (diagnostic key.11 & crt.11)
 secrets:
-  diagnostic.riffplatform.com.key.10:
+  diagnostic.riffplatform.com.key.11:
     external: true
-  diagnostic.riffplatform.com.crt.10:
+  diagnostic.riffplatform.com.crt.11:
     external: true
 
 configs:
