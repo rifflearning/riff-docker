@@ -35,7 +35,7 @@ services:
       - pfm-signalmaster
 
   pfm-signalmaster:
-    image: 'ghcr.io/rifflearning/signalmaster/signalmaster:2.1.2'
+    image: 'ghcr.io/rifflearning/signalmaster/signalmaster:2.1.3'
 
   pfm-riffdata-db:
     image: mongo:${MONGO_VER-latest}
