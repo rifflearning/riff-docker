@@ -50,7 +50,6 @@ declare -a RECIPIENTS=(
         beth@rifflearning.com\
         mike@riffanalytics.ai\
         jordan@rifflearning.com\
-        larissa.djuikom@esmelearning.com\
     )
 
 
