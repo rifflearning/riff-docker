@@ -27,20 +27,20 @@ fi
 # Listing multiple filters here allows manually editing this script to set the
 # filter used to define the MONGO_CONTAINER shell parameter
 #
-# This should work if executed on the docker node actually running the riffdata db
+# This should work if executed on the docker node actually running the riffcollector db
 # mongo container or w/ an active tunnel to that node.
 #  Note: It seems that the ancestor image must be local for it to be recognized ???
 #        so I've replaced the ancestor filter: --filter="ancestor=mongo"
-#        with the volume filter: --filter="volume=pfm-stk_pfm-riffdata-db-data"
-VOLUME_FILTER_EDU_PROD="volume=edu-stk_edu-riffdata-db-data"
-VOLUME_FILTER_EDU_DEV="volume=edu-docker_edu-riffdata-db-data"
-VOLUME_FILTER_PFM_PROD="volume=pfm-stk_pfm-riffdata-db-data"
-VOLUME_FILTER_PFM_DEV="volume=riff-docker_pfm-riffdata-db-data"
+#        with the volume filter: --filter="volume=pfm-stk_pfm-riffcollector-db-data"
+VOLUME_FILTER_EDU_PROD="volume=edu-stk_edu-riffcollector-db-data"
+VOLUME_FILTER_EDU_DEV="volume=edu-docker_edu-riffcollector-db-data"
+VOLUME_FILTER_PFM_PROD="volume=pfm-stk_pfm-riffcollector-db-data"
+VOLUME_FILTER_PFM_DEV="volume=riff-docker_pfm-riffcollector-db-data"
 VOLUME_FILTER_AD="volume=analyze-data_anl-riffdata-db-data"
 MONGO_CNTR_FILTER=$VOLUME_FILTER_PFM_PROD
 
-# default riffdata mongo database name
-DB_NAME_DEFAULT="riff-test"
+# default riffcollector mongo database name
+DB_NAME_DEFAULT="riff-rawdata"
 
 # default path to the directory where the specified archive should be found
 ARCHIVE_PATH_DEFAULT=~/tmp
