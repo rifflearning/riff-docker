@@ -16,18 +16,23 @@
 #   - SIGNALMASTER_PATH
 version: '3.7'
 services:
-  pfm-riffdata:
-    image: 'rifflearning/riffdata:dev'
+  pfm-riffcollector:
+    image: 'rifflearning/riffcollector:dev'
     build:
-      context: ${RIFF_SERVER_PATH-../riff-server}/docker
-      dockerfile: Dockerfile-dev
+      context: ${RIFFCOLLECTOR_PATH-../riffcollector}
+      dockerfile: Dockerfile
+      target: dev
       args:
         NODE_VER: 16
         PORT: 3000
     ports:
       - '3000:3000'
     volumes:
-      - ${RIFF_SERVER_PATH-../riff-server}:/app
+      - ${RIFFCOLLECTOR_PATH-../riffcollector}:/app
+
+  pfm-riffcollector-db:
+    ports:
+      - '27017:27017'
 
   pfm-riffrtc:
     image: 'rifflearning/riffrtc:dev'
@@ -57,7 +62,3 @@ services:
 #      dockerfile: Dockerfile-dev
 #    volumes:
 #        - ${SIGNALMASTER_PATH-../signalmaster}:/app
-
-  pfm-riffdata-db:
-    ports:
-      - '27017:27017'

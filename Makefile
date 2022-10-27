@@ -45,7 +45,7 @@ SUPPORT_IMAGES := \
 # and docker-stack configuration files.
 DEPLOY_ARGS := \
 	RIFF_RTC_TAG \
-	RIFF_SERVER_TAG \
+	RIFFCOLLECTOR_TAG \
 	DEPLOY_SWARM \
 
 # command string which displays the values of all DEPLOY_ARGS
@@ -64,9 +64,9 @@ SSL_FILES := \
 
 .DEFAULT_GOAL := help
 .DELETE_ON_ERROR :
-.PHONY : help up down stop up-dev up-prod clean dev-server dev-rtc
-.PHONY : logs logs-rtc logs-server logs-web logs-mongo
-.PHONY : build-init-image init-rtc init-server init-signalmaster rtc-build-image
+.PHONY : help up down stop up-dev up-prod clean dev-collector dev-rtc
+.PHONY : logs logs-rtc logs-collector logs-web logs-mongo
+.PHONY : build-init-image init-rtc init-collector init-signalmaster rtc-build-image
 .PHONY : show-env build-dev build-prod push-prod
 
 init : VER ?= 3
@@ -98,7 +98,7 @@ clean : ## remove all build artifacts (including the tracking files for created 
 	-rm $(IMAGE_DIR)/*
 
 clean-dev-images : down ## remove dev docker images
-	docker rmi rifflearning/{pfm-riffrtc:dev,pfm-riffdata:dev,pfm-signalmaster:dev,pfm-web:dev}
+	docker rmi rifflearning/{riffrtc:dev,riffcollector:dev,signalmaster:dev,pfm-web:dev}
 
 show-env : ## displays the env var values used for building
 	@echo ""                                          ; \
@@ -121,8 +121,8 @@ pull-images : ## Update base docker images
 	echo $(BASE_IMAGES) | xargs -n 1 docker pull
 	docker images
 
-dev-server : SERVICE_NAME = pfm-riffdata ## start a dev container for the riff-server
-dev-server : _start-dev
+dev-collector : SERVICE_NAME = pfm-riffcollector ## start a dev container for the riffcollector
+dev-collector : _start-dev
 
 dev-rtc : SERVICE_NAME = pfm-riffrtc ## start a dev container for the riff-rtc
 dev-rtc : _start-dev
@@ -148,9 +148,9 @@ init-rtc : ## initialize the riff-rtc repo using the init-image to run 'make ini
 init-rtc : NODEAPP_PATH = $(realpath ../riff-rtc)
 init-rtc : _nodeapp-init
 
-init-server : ## initialize the riff-server repo using the init-image to run 'make init'
-init-server : NODEAPP_PATH = $(realpath ../riff-server)
-init-server : _nodeapp-init
+init-collector : ## initialize the riffcollector repo using the init-image to run 'make init'
+init-collector : NODEAPP_PATH = $(realpath ../riffcollector)
+init-collector : _nodeapp-init
 
 init-signalmaster : ## initialize the signalmaster repo using the init-image to run 'make init'
 init-signalmaster : NODEAPP_PATH = $(realpath ../signalmaster)
@@ -171,10 +171,10 @@ logs-web : logs
 logs-rtc : SERVICE_NAME = pfm-riffrtc ## run docker-compose logs for the pfm-riffrtc service
 logs-rtc : logs
 
-logs-server : SERVICE_NAME = pfm-riffdata ## run docker-compose logs for the pfm-riffdata service
-logs-server : logs
+logs-collector : SERVICE_NAME = pfm-riffcollector ## run docker-compose logs for the pfm-riffcollector service
+logs-collector : logs
 
-logs-mongo : SERVICE_NAME = pfm-riffdata-db ## run docker-compose logs for the pfm-riffdata-db service
+logs-mongo : SERVICE_NAME = pfm-riffcollector-db ## run docker-compose logs for the pfm-riffcollector-db service
 logs-mongo : logs
 
 # Add all constraint labels to the single docker node running in swarm mode on a development machine
