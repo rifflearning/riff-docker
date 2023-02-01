@@ -193,6 +193,46 @@ gpg2 --import GPG_namehereSecretSubkeys.asc
 When you list the secret keys on that machine (`gpg2 --list-secret-keys`) you should see your
 master key identified with `sec#`. The `#` suffix means that the secret master key is not present.
 
+## Maintenance
+
+### Extending the expiration date
+See [How to change the expiration date of a GPG key][extend_expiration]
+
+The gist of the article is to edit the key (`gpg --edit-key <key-id>`) and use the `expire` command,
+first on the primary key (key 0) and then on any subkeys (key 1...). Make sure you `save` when done.
+
+### Adding another uid (email address)
+See this Stack Exchange superuser [answer][add_email_to_key]
+
+Basically, edit the key (`gpg --edit-key <key-id>`) and use the `adduid` command. Then select that
+new uid (`uid <uid-index>`), then use the `trust` command to give it ultimate trust (`5`), and `save`.
+
+As when the key was initially created, you probably should not enter a value for the _Comment_.
+
+From the link above:
+```console
+$ gpg --edit-key <key-id>
+  gpg> adduid
+  Real Name: <name>
+  Email address: <email>
+  Comment: <comment or Return to none>
+  Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+  Enter passphrase: <password>
+  gpg> uid <uid>
+  gpg> trust
+  Your decision? 5
+  Do you really want to set this key to ultimate trust? (y/N) y
+  gpg> save
+$ gpg --send-keys <key-id>
+```
+
+If you add a new uid and want it to be the primary uid, you can do that with the `primary` command
+when it is selected while editing the key. I.e. in the above sequence issue the `primary` command
+right before `save`.
+
+Also, the new uid(s) are not automatically signed by those people who signed your previous key/uid,
+so you should see about getting your updated public key with the additional uid(s) signed.
+
 ## Resources
 
 - [The GNU Privacy Handbook: Key Management][gpg_keymgmt]
@@ -220,6 +260,8 @@ master key identified with `sec#`. The `#` suffix means that the secret master k
 [gpg2-man]: <https://www.linux.org/docs/man1/gpg2.html>
 [Creating gpg key guide]: <https://blog.tinned-software.net/create-gnupg-key-with-sub-keys-to-sign-encrypt-authenticate/>
 [debian subkeys]: <https://wiki.debian.org/Subkeys>
+[extend_expiration]: <https://www.g-loaded.eu/2010/11/01/change-expiration-date-gpg-key/>
+[add_email_to_key]: <https://superuser.com/a/293283/283518>
 
 
 [OpenPGPkeyserver]: <http://keys.gnupg.net/>
