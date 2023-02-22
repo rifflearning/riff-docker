@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
       target: dev
       args:
-        NODE_VER: 16
+        NODE_VER: 18
         PORT: 3000
     ports:
       - '3000:3000'
@@ -40,7 +40,7 @@ services:
       context: ${RIFF_RTC_PATH-../riff-rtc}/docker
       dockerfile: Dockerfile-dev
       args:
-        NODE_VER: 16
+        NODE_VER: 18
         PORT: 3001
     volumes:
       - ${RIFF_RTC_PATH-../riff-rtc}:/app

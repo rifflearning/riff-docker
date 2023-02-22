@@ -1,5 +1,5 @@
 # Args for FROM directives
-ARG NODE_VER=16
+ARG NODE_VER=18
 
 #
 # ---- Node app initialization image ----

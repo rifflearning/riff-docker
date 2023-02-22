@@ -106,14 +106,14 @@ BuildImage()
         riffcollector)
             CONTEXT="https://${TOKEN}:@github.com/rifflearning/riffcollector.git#${REF}"
             DOCKERFILE="Dockerfile"
-            BUILD_ARGS=( [NODE_VER]=16
+            BUILD_ARGS=( [NODE_VER]=18
                          [PORT]=3000
                        )
             ;;
         riffdata)
             CONTEXT="https://${TOKEN}:@github.com/rifflearning/riff-server.git#${REF}"
             DOCKERFILE="Dockerfile"
-            BUILD_ARGS=( [NODE_VER]=16
+            BUILD_ARGS=( [NODE_VER]=18
                          [PORT]=3000
                        )
             ;;
@@ -121,14 +121,14 @@ BuildImage()
             CONTEXT="https://${TOKEN}:@github.com/rifflearning/riff-rtc.git#${REF}"
             DOCKERFILE="Dockerfile"
             BUILD_STAGE=build
-            BUILD_ARGS=( [NODE_VER]=16
+            BUILD_ARGS=( [NODE_VER]=18
                          [NPM_GPR_TOKEN]=${TOKEN}
                        )
             ;;
         riffrtc-server)
             CONTEXT="https://${TOKEN}:@github.com/rifflearning/riff-rtc.git#${REF}"
             DOCKERFILE="docker/Dockerfile-prod-server"
-            BUILD_ARGS=( [NODE_VER]=16
+            BUILD_ARGS=( [NODE_VER]=18
                          [RTC_BUILD_TAG]=${TAG}
                          [PORT]=3001
                        )
