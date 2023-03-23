@@ -154,7 +154,7 @@ read -rsp $'Press any key to continue or Ctrl-C to abort\n' -n1 key
 
 echo
 echo "copy the archive to the mongo container"
-docker cp ${ARCHIVE_PATH}/${ARCHIVE_NAME} ${MONGO_CONTAINER}:/data/
+docker cp --quiet ${ARCHIVE_PATH}/${ARCHIVE_NAME} ${MONGO_CONTAINER}:/data/
 echo "restore the mongo archive"
 docker exec -t ${MONGO_CONTAINER} mongorestore --nsInclude="${DB_NAME_FROM}.*" --nsFrom="${DB_NAME_FROM}.*" --nsTo="${DB_NAME_TO}.*" $DROP_OPT --gzip --archive=/data/${ARCHIVE_NAME}
 
